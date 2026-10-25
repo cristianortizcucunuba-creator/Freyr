@@ -1,0 +1,22 @@
+# Node / Web dependencies & builds
+node_modules/
+dist/
+coverage/
+
+# Android & Gradle generated artifacts
+.gradle/
+build/
+**/build/
+app/build/
+*.iml
+.idea/
+local.properties
+.cxx/
+captures/
+
+# Environment & Logs
+.DS_Store
+*.log
+.env*
+!.env.example
+

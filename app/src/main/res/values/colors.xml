@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Freyr Dark Minimalist Palette -->
+    <!-- Primary / Accent -->
+    <color name="freyr_primary">#69042A</color>
+    <color name="freyr_primary_dark">#4A031E</color>
+    <color name="freyr_primary_light">#85123A</color>
+
+    <!-- Backgrounds (Dominant background: #2E110E) -->
+    <color name="freyr_background">#2E110E</color>
+    <color name="freyr_surface">#3D1814</color>
+    <color name="freyr_surface_variant">#481E19</color>
+    <color name="freyr_surface_card">#3D1814</color>
+
+    <!-- Contrast & Text (Dominant text & contrast: #E1CCD4) -->
+    <color name="freyr_secondary">#E1CCD4</color>
+    <color name="freyr_secondary_light">#26E1CCD4</color>
+    <color name="freyr_secondary_subtle">#1AE1CCD4</color>
+    <color name="freyr_text_primary">#E1CCD4</color>
+    <color name="freyr_text_secondary">#B3E1CCD4</color>
+    <color name="freyr_border">#33E1CCD4</color>
+
+    <!-- Status Indicators in Dark Palette -->
+    <color name="freyr_status_paid">#A5D6A7</color>
+    <color name="freyr_status_paid_bg">#1D3D24</color>
+    <color name="freyr_status_pending">#E1CCD4</color>
+    <color name="freyr_status_pending_bg">#69042A</color>
+</resources>

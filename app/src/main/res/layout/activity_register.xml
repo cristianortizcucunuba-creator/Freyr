@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/freyr_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_register"
+            android:textColor="@color/freyr_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Únete a Freyr para gestionar tus finanzas personales y familiares"
+            android:textColor="@color/freyr_text_secondary"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#D32F2F"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Nombre Completo -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre completo *"
+            android:textColor="@color/freyr_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/et_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_edit_text"
+            android:hint="Ej. Sofía Navarro"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            android:textColor="@color/freyr_text_primary"
+            android:textSize="14sp"
+            android:layout_marginBottom="14dp" />
+
+        <!-- Nombre de Usuario -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre de usuario *"
+            android:textColor="@color/freyr_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_edit_text"
+            android:hint="sofia_n"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/freyr_text_primary"
+            android:textSize="14sp"
+            android:layout_marginBottom="14dp" />
+
+        <!-- Correo Electrónico -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Correo electrónico *"
+            android:textColor="@color/freyr_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_edit_text"
+            android:hint="sofia@ejemplo.com"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:textColor="@color/freyr_text_primary"
+            android:textSize="14sp"
+            android:layout_marginBottom="14dp" />
+
+        <!-- Contraseña -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contraseña (mínimo 6 caracteres) *"
+            android:textColor="@color/freyr_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_edit_text"
+            android:hint="••••••••"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColor="@color/freyr_text_primary"
+            android:textSize="14sp"
+            android:layout_marginBottom="14dp" />
+
+        <!-- Confirmar Contraseña -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirmar contraseña *"
+            android:textColor="@color/freyr_text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/et_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_edit_text"
+            android:hint="••••••••"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColor="@color/freyr_text_primary"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Botón de Registro -->
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_button_primary"
+            android:text="Registrar cuenta e ingresar"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:backgroundTint="@null" />
+
+        <!-- Volver a Login -->
+        <TextView
+            android:id="@+id/tv_go_to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Ya tienes cuenta? Inicia sesión aquí"
+            android:textColor="@color/freyr_primary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </LinearLayout>
+</ScrollView>
+

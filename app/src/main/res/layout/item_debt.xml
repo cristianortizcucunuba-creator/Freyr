@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="@color/freyr_surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Encabezado: Título y Estado -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_debt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Portátil"
+                    android:textColor="@color/freyr_text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_debt_scope"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Deuda Personal"
+                    android:textColor="@color/freyr_text_secondary"
+                    android:textSize="11sp"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_debt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pendiente"
+                android:textColor="@color/freyr_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_status_pending"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp" />
+        </LinearLayout>
+
+        <!-- Descripción (si existe) -->
+        <TextView
+            android:id="@+id/tv_debt_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cuota del portátil de trabajo"
+            android:textColor="@color/freyr_text_secondary"
+            android:textSize="12sp"
+            android:layout_marginTop="6dp"
+            android:visibility="gone" />
+
+        <!-- Cifras: Total, Pagado, Pendiente -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:textColor="@color/freyr_text_secondary"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/tv_debt_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$3.000.000"
+                    android:textColor="@color/freyr_text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pagado"
+                    android:textColor="@color/freyr_text_secondary"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/tv_debt_paid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$1.000.000"
+                    android:textColor="@color/freyr_status_paid"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pendiente"
+                    android:textColor="@color/freyr_text_secondary"
+                    android:textSize="10sp" />
+                <TextView
+                    android:id="@+id/tv_debt_remaining"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$2.000.000"
+                    android:textColor="@color/freyr_secondary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="monospace" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Barra de Progreso -->
+        <ProgressBar
+            android:id="@+id/pb_debt_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:progress="33"
+            android:progressTint="@color/freyr_primary"
+            android:progressBackgroundTint="@color/freyr_secondary_subtle"
+            android:layout_marginTop="8dp" />
+
+        <!-- Acciones -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/btn_debt_history"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Historial"
+                android:textSize="11sp"
+                android:background="@drawable/bg_button_secondary"
+                android:textColor="@color/freyr_text_primary"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:backgroundTint="@null" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_debt_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="+ Añadir pago"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_button_primary"
+                android:textColor="#FFFFFF"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                app:backgroundTint="@null" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

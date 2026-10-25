@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Freyr" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary color palette -->
+        <item name="colorPrimary">@color/freyr_primary</item>
+        <item name="colorPrimaryDark">@color/freyr_primary_dark</item>
+        <item name="colorSecondary">@color/freyr_secondary</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorOnSecondary">@color/freyr_primary</item>
+
+        <!-- Background & Surface in Dark Palette #2E110E & #3D1814 -->
+        <item name="android:colorBackground">@color/freyr_background</item>
+        <item name="colorSurface">@color/freyr_surface</item>
+        <item name="colorOnSurface">@color/freyr_text_primary</item>
+
+        <!-- Status & Navigation bars -->
+        <item name="android:statusBarColor">@color/freyr_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/freyr_background</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        
+        <!-- Text & controls -->
+        <item name="android:textColor">@color/freyr_text_primary</item>
+        <item name="android:textColorHint">@color/freyr_text_secondary</item>
+        <item name="colorControlNormal">@color/freyr_secondary</item>
+        <item name="colorControlActivated">@color/freyr_primary</item>
+    </style>
+</resources>

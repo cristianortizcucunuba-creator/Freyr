@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/freyr_background">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Image 2: Detailed Freyr Logo (Splash / Startup Screen Logo) -->
+        <ImageView
+            android:id="@+id/iv_splash_logo"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@drawable/ic_freyr_logo_detailed"
+            android:contentDescription="Freyr Logo Detallado" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FREYR"
+            android:textColor="@color/freyr_secondary"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.18"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gestión Financiera Personal y Familiar"
+            android:textColor="@color/freyr_text_secondary"
+            android:textSize="13sp"
+            android:letterSpacing="0.04"
+            android:layout_marginTop="6dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:text="Registro manual · Privacidad total"
+        android:textColor="@color/freyr_text_secondary"
+        android:textSize="11sp"
+        android:letterSpacing="0.03" />
+
+</RelativeLayout>

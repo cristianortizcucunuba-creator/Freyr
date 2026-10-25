@@ -1,0 +1,6 @@
+{
+  "name": "Freyr",
+  "description": "Herramienta minimalista y moderna para la gestión de deudas y abonos personales y familiares.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

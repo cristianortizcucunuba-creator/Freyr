@@ -1,0 +1,113 @@
+<resources>
+    <!-- Identidad de la Aplicación -->
+    <string name="app_name">Freyr</string>
+    <string name="app_tagline">Control minimalista de deudas y abonos personales y familiares</string>
+    <string name="app_description">Registro financiero manual y privado. Sin necesidad de credenciales ni tarjetas bancarias.</string>
+
+    <!-- Navegación y Pestañas Principales -->
+    <string name="nav_dashboard">Inicio</string>
+    <string name="nav_personal">Personal</string>
+    <string name="nav_family">Familia</string>
+    <string name="nav_invitations">Invitaciones</string>
+
+    <!-- Botones y Acciones Globales -->
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="btn_register">Registrarse</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_back">Volver</string>
+    <string name="btn_close">Cerrar</string>
+    <string name="btn_accept">Aceptar</string>
+    <string name="btn_reject">Rechazar</string>
+    <string name="btn_delete">Eliminar</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_add_debt">Añadir deuda</string>
+    <string name="btn_add_payment">Añadir abono</string>
+    <string name="btn_edit_profile">Editar perfil</string>
+    <string name="btn_create_group">Crear grupo familiar</string>
+    <string name="btn_send_invitation">Enviar invitación</string>
+    <string name="btn_quick_demo">Acceso rápido de prueba</string>
+
+    <!-- Resumen y Métricas Financieras -->
+    <string name="historial_financiero">Historial de abonos</string>
+    <string name="resumen_financiero">Resumen financiero</string>
+    <string name="total_debido">Total deudas</string>
+    <string name="total_pagado">Total abonado</string>
+    <string name="total_pendiente">Saldo pendiente</string>
+    <string name="progreso_pago">Progreso de pago</string>
+    <string name="deudas_personales_metrica">Deudas personales</string>
+    <string name="deudas_familiares_metrica">Deudas familiares</string>
+
+    <!-- Estados -->
+    <string name="status_pending">Pendiente</string>
+    <string name="status_paid">Pagada</string>
+    <string name="status_rejected">Rechazada</string>
+
+    <!-- Tipos y Ámbitos de Deuda -->
+    <string name="debt_scope_personal">Deuda personal</string>
+    <string name="debt_scope_family">Deuda familiar</string>
+    <string name="assigned_all_family">Toda la familia (Compartida)</string>
+    <string name="unknown_user">Usuario desconocido</string>
+
+    <!-- Formulario Deuda -->
+    <string name="title_add_debt">Añadir deuda</string>
+    <string name="title_edit_debt">Editar deuda</string>
+    <string name="label_debt_name">Nombre o concepto de la deuda *</string>
+    <string name="hint_debt_name">Ej. Computador portátil, Factura de internet, Mercado</string>
+    <string name="label_debt_amount">Monto total ($) *</string>
+    <string name="hint_debt_amount">Ej. 3000000 o 120000</string>
+    <string name="label_debt_group">Grupo familiar</string>
+    <string name="label_assigned_member">Persona asignada</string>
+    <string name="label_debt_description">Descripción o notas (Opcional)</string>
+    <string name="hint_debt_description">Ej. Financiación a cuotas, reparto 50/50</string>
+    <string name="btn_save_debt">Guardar deuda</string>
+
+    <!-- Formulario Abono / Pago -->
+    <string name="title_add_payment">Registrar abono</string>
+    <string name="label_payment_amount">Monto del abono ($) *</string>
+    <string name="hint_payment_amount">Ej. 500000 o 60000</string>
+    <string name="label_payment_date">Fecha del abono *</string>
+    <string name="label_payment_note">Nota o descripción (Opcional)</string>
+    <string name="hint_payment_note">Ej. Cuota 1 de 3, transferencia bancaria</string>
+    <string name="btn_save_payment">Guardar abono</string>
+
+    <!-- Formulario Grupo Familiar -->
+    <string name="title_create_group">Crear grupo familiar</string>
+    <string name="label_group_name">Nombre del grupo familiar *</string>
+    <string name="hint_group_name">Ej. Familia Gómez, Hogar Central</string>
+    <string name="btn_submit_group">Crear grupo</string>
+
+    <!-- Invitaciones -->
+    <string name="title_invitations">Invitaciones</string>
+    <string name="subtitle_invitations">Gestiona las invitaciones a grupos familiares</string>
+    <string name="empty_invitations">No tienes invitaciones pendientes.</string>
+    <string name="invite_username_or_email">Usuario o correo electrónico</string>
+    <string name="btn_accept_invite">Aceptar y unirse</string>
+    <string name="btn_reject_invite">Rechazar</string>
+
+    <!-- Autenticación y Perfil -->
+    <string name="title_login">Iniciar sesión</string>
+    <string name="title_register">Crear cuenta</string>
+    <string name="label_fullname">Nombre completo</string>
+    <string name="label_username">Nombre de usuario</string>
+    <string name="label_email">Correo electrónico</string>
+    <string name="label_password">Contraseña</string>
+    <string name="label_confirm_password">Confirmar contraseña</string>
+    <string name="hint_password_optional">Dejar en blanco para conservar la actual</string>
+    <string name="btn_update_profile">Actualizar perfil</string>
+
+    <!-- Mensajes de Error y Validación -->
+    <string name="error_fill_all_fields">Por favor completa todos los campos requeridos.</string>
+    <string name="error_invalid_amount">El monto ingresado debe ser mayor a cero.</string>
+    <string name="error_amount_exceeds_remaining">El abono no puede superar el saldo pendiente.</string>
+    <string name="error_passwords_mismatch">Las contraseñas no coinciden.</string>
+    <string name="error_user_not_found">No se encontró ningún usuario con ese correo o nombre de usuario.</string>
+    <string name="error_already_member">Ese usuario ya es miembro de este grupo familiar.</string>
+    <string name="error_already_invited">Ya existe una invitación pendiente para ese usuario.</string>
+    <string name="error_cannot_invite_self">No puedes invitarte a ti mismo.</string>
+    <string name="msg_payment_recorded">¡Abono registrado con éxito!</string>
+    <string name="msg_debt_created">¡Deuda creada exitosamente!</string>
+    <string name="msg_group_created">¡Grupo familiar creado exitosamente!</string>
+    <string name="msg_invitation_sent">¡Invitación enviada con éxito!</string>
+</resources>
+

@@ -1,0 +1,45 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Image 2: Detailed Freyr Logo (Splash / Startup Screen Logo) -->
+    <!-- Ambient circular halo -->
+    <path
+        android:fillColor="#1A69042A"
+        android:pathData="M100,10 A90,90 0 1,1 99.9,10 Z" />
+    
+    <!-- Outer ornate multifaceted diamond in Primary #69042A -->
+    <path
+        android:fillColor="#69042A"
+        android:pathData="M100,24 L164,60 L164,140 L100,176 L36,140 L36,60 Z" />
+    
+    <!-- Delicate precision inner trim in #E1CCD4 -->
+    <path
+        android:strokeColor="#E1CCD4"
+        android:strokeWidth="2.5"
+        android:pathData="M100,32 L156,64 L156,136 L100,168 L44,136 L44,64 Z" />
+    
+    <!-- Secondary internal diamond facets in #2E110E -->
+    <path
+        android:fillColor="#2E110E"
+        android:pathData="M100,42 L146,70 L146,130 L100,158 L54,130 L54,70 Z" />
+    
+    <!-- Inner geometric core in #69042A -->
+    <path
+        android:fillColor="#69042A"
+        android:pathData="M100,52 L136,76 L136,124 L100,148 L64,124 L64,76 Z" />
+
+    <!-- Freyr Stylized Central Emblem (Runic Fehu / Modern F) in #E1CCD4 -->
+    <path
+        android:fillColor="#E1CCD4"
+        android:pathData="M84,68 L124,68 L124,78 L96,78 L96,92 L118,92 L118,102 L96,102 L96,132 L84,132 Z" />
+    
+    <!-- Prosperity twin stars / accent diamonds -->
+    <path
+        android:fillColor="#E1CCD4"
+        android:pathData="M124,116 L128,122 L124,128 L120,122 Z" />
+    <path
+        android:fillColor="#E1CCD4"
+        android:pathData="M100,136 L103,141 L100,146 L97,141 Z" />
+</vector>
