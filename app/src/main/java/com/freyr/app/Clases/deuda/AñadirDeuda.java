@@ -1,4 +1,4 @@
-package com.freyr.app.ui.deuda;
+package com.freyr.app.Clases.deuda;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.FamilyGroup;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Deuda;
+import com.freyr.app.data.model.Grupofamiliar;
+import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 
 public class AñadirDeuda extends AppCompatActivity {
@@ -30,8 +30,8 @@ public class AñadirDeuda extends AppCompatActivity {
     private FreyrRepository repository;
 
     // Datos de la pantalla guardados en arreglos.
-    private FamilyGroup[] userGroups = new FamilyGroup[0];
-    private User[] allUsers = new User[0];
+    private Grupofamiliar[] userGroups = new Grupofamiliar[0];
+    private Usuario[] allUsers = new Usuario[0];
     private String[] memberNames = new String[0];
     private String[] memberIds = new String[0];
 
@@ -117,7 +117,7 @@ public class AñadirDeuda extends AppCompatActivity {
         repository.getAllUsersLive().observe(this, users -> {
             if (users != null) {
                 // El repositorio entrega una lista; la convertimos a arreglo.
-                allUsers = users.toArray(new User[0]);
+                allUsers = users.toArray(new Usuario[0]);
 
                 int selectedPosition = spinnerFamilyGroup.getSelectedItemPosition();
                 if (userGroups.length > 0
@@ -133,10 +133,10 @@ public class AñadirDeuda extends AppCompatActivity {
                 String currentUid = repository.getCurrentUserId();
 
                 // Primero guardamos los grupos coincidentes en un arreglo temporal.
-                FamilyGroup[] matchingGroups = new FamilyGroup[groups.size()];
+                Grupofamiliar[] matchingGroups = new Grupofamiliar[groups.size()];
                 int count = 0;
 
-                for (FamilyGroup group : groups) {
+                for (Grupofamiliar group : groups) {
                     if (group.getMemberIds() != null
                             && group.getMemberIds().contains(currentUid)) {
                         matchingGroups[count] = group;
@@ -145,7 +145,7 @@ public class AñadirDeuda extends AppCompatActivity {
                 }
 
                 // Copiamos solo los grupos encontrados al arreglo definitivo.
-                userGroups = new FamilyGroup[count];
+                userGroups = new Grupofamiliar[count];
                 System.arraycopy(matchingGroups, 0, userGroups, 0, count);
 
                 String[] groupNames = new String[count];
@@ -168,7 +168,7 @@ public class AñadirDeuda extends AppCompatActivity {
     }
 
     // Actualiza las opciones de responsable del grupo seleccionado.
-    private void updateMemberSpinner(FamilyGroup group) {
+    private void updateMemberSpinner(Grupofamiliar group) {
         int groupMemberCount = 0;
         if (group != null && group.getMemberIds() != null) {
             groupMemberCount = group.getMemberIds().size();
@@ -187,7 +187,7 @@ public class AñadirDeuda extends AppCompatActivity {
             for (String userId : group.getMemberIds()) {
                 String name = "Miembro (" + userId + ")";
 
-                for (User user : allUsers) {
+                for (Usuario user : allUsers) {
                     if (user.getId().equals(userId)) {
                         name = user.getNomCompl() + " (@" + user.getNomUsuario() + ")";
                         break;
@@ -260,7 +260,7 @@ public class AñadirDeuda extends AppCompatActivity {
                 return;
             }
 
-            FamilyGroup selectedGroup = userGroups[groupPosition];
+            Grupofamiliar selectedGroup = userGroups[groupPosition];
             familyGroupId = selectedGroup.getId();
 
             int memberPosition = spinnerAssignedMember.getSelectedItemPosition();
@@ -279,9 +279,9 @@ public class AñadirDeuda extends AppCompatActivity {
                 amount,
                 assignedUserId,
                 familyGroupId,
-                new FreyrRepository.Callback<Debt>() {
+                new FreyrRepository.Callback<Deuda>() {
                     @Override
-                    public void onSuccess(Debt result) {
+                    public void onSuccess(Deuda result) {
                         runOnUiThread(() -> {
                             Toast.makeText(
                                     AñadirDeuda.this,

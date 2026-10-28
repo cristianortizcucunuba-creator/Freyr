@@ -1,4 +1,4 @@
-package com.freyr.app.ui.autenticacion;
+package com.freyr.app.Clases.autenticacion;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.MainActivity;
+import com.freyr.app.Clases.MainActivity;
 
 /**
  * Actividad de inicio de sesión de usuario en Freyr.
@@ -95,9 +95,9 @@ public class LoguearUsuario extends AppCompatActivity {
         tvError.setVisibility(View.GONE);
         btnLogin.setEnabled(false);
 
-        repository.login(identifier, password, new FreyrRepository.Callback<User>() {
+        repository.login(identifier, password, new FreyrRepository.Callback<Usuario>() {
             @Override
-            public void onSuccess(User result) {
+            public void onSuccess(Usuario result) {
                 runOnUiThread(() -> {
                     Intent intent = new Intent(LoguearUsuario.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

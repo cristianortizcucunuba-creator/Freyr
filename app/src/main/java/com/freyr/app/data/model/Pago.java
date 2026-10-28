@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "payments")
-public class Payment {
+public class Pago {
     @PrimaryKey
     @NonNull
     private String id;
@@ -16,7 +16,7 @@ public class Payment {
     private String description;
     private String createdAt;
 
-    public Payment(@NonNull String id, String debtId, String userId, double amount, String date, String description, String createdAt) {
+    public Pago(@NonNull String id, String debtId, String userId, double amount, String date, String description, String createdAt) {
         this.id = id;
         this.debtId = debtId;
         this.userId = userId;

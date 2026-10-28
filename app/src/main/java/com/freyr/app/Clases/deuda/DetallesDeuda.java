@@ -1,4 +1,4 @@
-package com.freyr.app.ui.deuda;
+package com.freyr.app.Clases.deuda;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.Payment;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Deuda;
+import com.freyr.app.data.model.Pago;
+import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.adapter.PagosRecycler;
+import com.freyr.app.Clases.listas.listaPagos;
 
 public class DetallesDeuda extends AppCompatActivity {
 
@@ -41,15 +41,15 @@ public class DetallesDeuda extends AppCompatActivity {
     private TextView tvNoPayments;
     private Button btnAddPayment;
     private RecyclerView rvPayments;
-    private PagosRecycler paymentAdapter;
+    private listaPagos paymentAdapter;
 
     private FreyrRepository repository;
     private String debtId;
-    private Debt currentDebt;
+    private Deuda currentDebt;
 
     // Conservan en arreglos los datos recibidos.
-    private User[] allUsers = new User[0];
-    private Payment[] allPayments = new Payment[0];
+    private Usuario[] allUsers = new Usuario[0];
+    private Pago[] allPayments = new Pago[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +133,7 @@ public class DetallesDeuda extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        paymentAdapter = new PagosRecycler(this, payment -> {
+        paymentAdapter = new listaPagos(this, payment -> {
             new AlertDialog.Builder(this)
                     .setTitle("Eliminar abono")
                     .setMessage(
@@ -156,7 +156,7 @@ public class DetallesDeuda extends AppCompatActivity {
         repository.getAllUsersLive().observe(this, users -> {
             if (users != null) {
                 // El repositorio entrega una lista; la convertimos a arreglo.
-                allUsers = users.toArray(new User[0]);
+                allUsers = users.toArray(new Usuario[0]);
 
                 paymentAdapter.setUsers(allUsers);
                 updateAssignedLabel();
@@ -165,7 +165,7 @@ public class DetallesDeuda extends AppCompatActivity {
 
         repository.getAllDebtsLive().observe(this, debts -> {
             if (debts != null) {
-                for (Debt debt : debts) {
+                for (Deuda debt : debts) {
                     if (debt.getId().equals(debtId)) {
                         currentDebt = debt;
                         updateDebtInfo();
@@ -179,7 +179,7 @@ public class DetallesDeuda extends AppCompatActivity {
         repository.getPaymentsForDebtLive(debtId).observe(this, payments -> {
             if (payments != null) {
                 // El adapter trabaja con arreglos.
-                allPayments = payments.toArray(new Payment[0]);
+                allPayments = payments.toArray(new Pago[0]);
                 paymentAdapter.setPayments(allPayments);
 
                 int paymentCount = allPayments.length;
@@ -216,7 +216,7 @@ public class DetallesDeuda extends AppCompatActivity {
         double total = currentDebt.getAmount();
         double paid = 0.0;
 
-        for (Payment payment : allPayments) {
+        for (Pago payment : allPayments) {
             paid += payment.getAmount();
         }
 
@@ -266,7 +266,7 @@ public class DetallesDeuda extends AppCompatActivity {
         }
 
         String name = "Miembro (" + assignedUserId + ")";
-        for (User user : allUsers) {
+        for (Usuario user : allUsers) {
             if (user.getId().equals(assignedUserId)) {
                 name = user.getNomCompl() + " (@" + user.getNomUsuario() + ")";
                 break;

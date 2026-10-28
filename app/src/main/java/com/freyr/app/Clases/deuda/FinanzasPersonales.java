@@ -1,4 +1,4 @@
-package com.freyr.app.ui.deuda;
+package com.freyr.app.Clases.deuda;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,23 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.Payment;
+import com.freyr.app.data.model.Deuda;
+import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.adapter.DeudasRecycler;
+import com.freyr.app.Clases.listas.listaDeudas;
 
 public class FinanzasPersonales extends Fragment {
 
     private Button btnAddPersonalDebt;
     private RadioGroup rgFilter;
     private RecyclerView rvPersonalDebts;
-    private DeudasRecycler debtAdapter;
+    private listaDeudas debtAdapter;
 
     private FreyrRepository repository;
 
     // Guarda las deudas y los pagos en arreglos.
-    private Debt[] allDebts = new Debt[0];
-    private Payment[] allPayments = new Payment[0];
+    private Deuda[] allDebts = new Deuda[0];
+    private Pago[] allPayments = new Pago[0];
     private String currentFilter = "all";
 
     @Nullable
@@ -85,11 +85,11 @@ public class FinanzasPersonales extends Fragment {
     }
 
     private void setupRecyclerView() {
-        debtAdapter = new DeudasRecycler(
+        debtAdapter = new listaDeudas(
                 requireContext(),
-                new DeudasRecycler.OnDebtClickListener() {
+                new listaDeudas.OnDebtClickListener() {
                     @Override
-                    public void onDebtClick(Debt debt) {
+                    public void onDebtClick(Deuda debt) {
                         Intent intent = new Intent(
                                 getActivity(),
                                 DetallesDeuda.class
@@ -99,7 +99,7 @@ public class FinanzasPersonales extends Fragment {
                     }
 
                     @Override
-                    public void onPayClick(Debt debt) {
+                    public void onPayClick(Deuda debt) {
                         Intent intent = new Intent(
                                 getActivity(),
                                 RegistrarAbonosDeuda.class
@@ -120,7 +120,7 @@ public class FinanzasPersonales extends Fragment {
         repository.getAllDebtsLive().observe(getViewLifecycleOwner(), debts -> {
             if (debts != null) {
                 // Convierte los datos del repositorio a arreglos.
-                allDebts = debts.toArray(new Debt[0]);
+                allDebts = debts.toArray(new Deuda[0]);
                 updateFilteredList();
             }
         });
@@ -129,8 +129,8 @@ public class FinanzasPersonales extends Fragment {
                 getViewLifecycleOwner(),
                 payments -> {
                     if (payments != null) {
-                        allPayments = payments.toArray(new Payment[0]);
-                        debtAdapter.setPayments(allPayments);
+                        allPayments = payments.toArray(new Pago[0]);
+                        debtAdapter.setPagos(allPayments);
                         updateFilteredList();
                     }
                 }
@@ -142,10 +142,10 @@ public class FinanzasPersonales extends Fragment {
         String uid = repository.getCurrentUserId();
 
         // El arreglo temporal puede contener como máximo todas las deudas.
-        Debt[] filteredDebts = new Debt[allDebts.length];
+        Deuda[] filteredDebts = new Deuda[allDebts.length];
         int count = 0;
 
-        for (Debt debt : allDebts) {
+        for (Deuda debt : allDebts) {
             boolean isPersonal = debt.getFamilyGroupId() == null
                     && (uid.equals(debt.getAssignedUserId())
                     || uid.equals(debt.getCreatedBy()));
@@ -155,7 +155,7 @@ public class FinanzasPersonales extends Fragment {
             }
 
             double paid = 0.0;
-            for (Payment payment : allPayments) {
+            for (Pago payment : allPayments) {
                 if (payment.getDebtId().equals(debt.getId())) {
                     paid += payment.getAmount();
                 }
@@ -175,8 +175,8 @@ public class FinanzasPersonales extends Fragment {
         }
 
         // Envía al adapter un arreglo del tamaño justo.
-        Debt[] result = new Debt[count];
+        Deuda[] result = new Deuda[count];
         System.arraycopy(filteredDebts, 0, result, 0, count);
-        debtAdapter.setDebts(result);
+        debtAdapter.setDeudas(result);
     }
 }

@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "users")
-public class User {
+public class Usuario {
     @PrimaryKey
     @NonNull
     private String id;
@@ -16,7 +16,7 @@ public class User {
     private String avatarColor;
     private String createdAt;
 
-    public User(@NonNull String id, String fullName, String username, String email, String password, String avatarColor, String createdAt) {
+    public Usuario(@NonNull String id, String fullName, String username, String email, String password, String avatarColor, String createdAt) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;

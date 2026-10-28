@@ -14,7 +14,7 @@
 
         <!-- Splash / Startup Screen with Detailed Freyr Logo -->
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".Clases.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,55 +24,55 @@
 
         <!-- Main Dashboard Activity with Bottom Navigation -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".Clases.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Authentication -->
         <activity
-            android:name=".ui.autenticacion.LoguearUsuario"
+            android:name=".Clases.autenticacion.LoguearUsuario"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.autenticacion.RegistrarUsuario"
+            android:name=".Clases.autenticacion.RegistrarUsuario"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Debt Operations -->
         <activity
-            android:name=".ui.deuda.AñadirDeuda"
+            android:name=".Clases.deuda.AñadirDeuda"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.deuda.DetallesDeuda"
+            android:name=".Clases.deuda.DetallesDeuda"
             android:exported="false" />
 
         <activity
-            android:name=".ui.deuda.RegistrarAbonosDeuda"
+            android:name=".Clases.deuda.RegistrarAbonosDeuda"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Family Groups -->
         <activity
-            android:name=".ui.grupo.CrearGrupoFamiliar"
+            android:name=".Clases.grupo.CrearGrupoFamiliar"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.grupo.ConfigurarCuentaFamiliar"
+            android:name=".Clases.grupo.ConfigurarCuentaFamiliar"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- User Profile -->
         <activity
-            android:name=".ui.profile.VerPerfilActivity"
+            android:name=".Clases.profile.VerPerfilActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.profile.EditProfileActivity"
+            android:name=".Clases.profile.EditProfileActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 

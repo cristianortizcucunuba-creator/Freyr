@@ -1,4 +1,4 @@
-package com.freyr.app.ui.resumen;
+package com.freyr.app.Clases.resumen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +16,13 @@ import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.*;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.MainActivity;
-import com.freyr.app.ui.adapter.DeudasRecycler;
-import com.freyr.app.ui.deuda.AñadirDeuda;
-import com.freyr.app.ui.deuda.RegistrarAbonosDeuda;
-import com.freyr.app.ui.deuda.DetallesDeuda;
-import com.freyr.app.ui.grupo.CrearGrupoFamiliar;
-import com.freyr.app.ui.profile.EditProfileActivity;
+import com.freyr.app.Clases.MainActivity;
+import com.freyr.app.Clases.listas.listaDeudas;
+import com.freyr.app.Clases.deuda.AñadirDeuda;
+import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
+import com.freyr.app.Clases.deuda.DetallesDeuda;
+import com.freyr.app.Clases.grupo.CrearGrupoFamiliar;
+import com.freyr.app.Clases.profile.EditProfileActivity;
 
 public class RecapMesFinancieroFragment extends Fragment {
 
@@ -34,16 +34,16 @@ public class RecapMesFinancieroFragment extends Fragment {
     private TextView tvTotalPendingAmount, tvPendingDebtsCount, tvPaidDebtsCount;
     private TextView tvPersonalPaymentsTotal, tvFamilyDebtsTotal;
     private RecyclerView rvActiveDebts;
-    private DeudasRecycler debtAdapter;
+    private listaDeudas debtAdapter;
     private FreyrRepository repository;
 
     // Guardan los datos usando arreglos.
-    private Debt[] allDebts = new Debt[0];
-    private Payment[] allPayments = new Payment[0];
-    private FamilyGroup[] allGroups = new FamilyGroup[0];
+    private Deuda[] allDebts = new Deuda[0];
+    private Pago[] allPayments = new Pago[0];
+    private Grupofamiliar[] allGroups = new Grupofamiliar[0];
     private Invitation[] allInvitations = new Invitation[0];
-    private User[] allUsers = new User[0];
-    private User currentUser;
+    private Usuario[] allUsers = new Usuario[0];
+    private Usuario currentUser;
 
     @Nullable
     @Override
@@ -87,13 +87,13 @@ public class RecapMesFinancieroFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        debtAdapter = new DeudasRecycler(requireContext(), new DeudasRecycler.OnDebtClickListener() {
-            @Override public void onDebtClick(Debt debt) {
+        debtAdapter = new listaDeudas(requireContext(), new listaDeudas.OnDebtClickListener() {
+            @Override public void onDebtClick(Deuda debt) {
                 Intent intent = new Intent(getActivity(), DetallesDeuda.class);
                 intent.putExtra("debt_id", debt.getId());
                 startActivity(intent);
             }
-            @Override public void onPayClick(Debt debt) {
+            @Override public void onPayClick(Deuda debt) {
                 Intent intent = new Intent(getActivity(), RegistrarAbonosDeuda.class);
                 intent.putExtra("debt_id", debt.getId());
                 startActivity(intent);
@@ -106,10 +106,10 @@ public class RecapMesFinancieroFragment extends Fragment {
     private void observeData() {
         repository.getAllUsersLive().observe(getViewLifecycleOwner(), users -> {
             if (users != null) {
-                allUsers = users.toArray(new User[0]);
-                debtAdapter.setUsers(allUsers);
+                allUsers = users.toArray(new Usuario[0]);
+                debtAdapter.setUsuarios(allUsers);
                 String curId = repository.getCurrentUserId();
-                for (User u : allUsers) if (u.getId().equals(curId)) {
+                for (Usuario u : allUsers) if (u.getId().equals(curId)) {
                     currentUser = u;
                     tvWelcomeName.setText("Hola, " + u.getNomCompl());
                     break;
@@ -119,23 +119,23 @@ public class RecapMesFinancieroFragment extends Fragment {
         });
         repository.getAllDebtsLive().observe(getViewLifecycleOwner(), debts -> {
             if (debts != null) {
-                allDebts = debts.toArray(new Debt[0]);
-                debtAdapter.setDebts(filterActiveDebts());
+                allDebts = debts.toArray(new Deuda[0]);
+                debtAdapter.setDeudas(filterActiveDebts());
                 recalculateSummary();
             }
         });
         repository.getAllPaymentsLive().observe(getViewLifecycleOwner(), payments -> {
             if (payments != null) {
-                allPayments = payments.toArray(new Payment[0]);
-                debtAdapter.setPayments(allPayments);
+                allPayments = payments.toArray(new Pago[0]);
+                debtAdapter.setPagos(allPayments);
                 recalculateSummary();
             }
         });
         repository.getAllGroupsLive().observe(getViewLifecycleOwner(), groups -> {
             if (groups != null) {
-                allGroups = groups.toArray(new FamilyGroup[0]);
-                debtAdapter.setGroups(allGroups);
-                debtAdapter.setDebts(filterActiveDebts());
+                allGroups = groups.toArray(new Grupofamiliar[0]);
+                debtAdapter.setGrupos(allGroups);
+                debtAdapter.setDeudas(filterActiveDebts());
                 recalculateSummary();
             }
         });
@@ -154,12 +154,12 @@ public class RecapMesFinancieroFragment extends Fragment {
     }
 
     // Devuelve hasta tres deudas activas que correspondan al usuario.
-    private Debt[] filterActiveDebts() {
+    private Deuda[] filterActiveDebts() {
         String uid = repository.getCurrentUserId();
         String[] userGroupIds = getUserGroupIds(uid);
-        Debt[] active = new Debt[Math.min(3, allDebts.length)];
+        Deuda[] active = new Deuda[Math.min(3, allDebts.length)];
         int count = 0;
-        for (Debt d : allDebts) {
+        for (Deuda d : allDebts) {
             boolean relevant = (d.getFamilyGroupId() == null && (uid.equals(d.getAssignedUserId()) || uid.equals(d.getCreatedBy())))
                     || (d.getFamilyGroupId() != null && contains(userGroupIds, d.getFamilyGroupId()));
             if (relevant) {
@@ -171,7 +171,7 @@ public class RecapMesFinancieroFragment extends Fragment {
                 }
             }
         }
-        Debt[] result = new Debt[count];
+        Deuda[] result = new Deuda[count];
         System.arraycopy(active, 0, result, 0, count);
         return result;
     }
@@ -182,7 +182,7 @@ public class RecapMesFinancieroFragment extends Fragment {
         String[] userGroupIds = getUserGroupIds(uid);
         int pendingCount = 0, paidCount = 0;
         double totalDebido = 0.0, totalPagado = 0.0, totalPending = 0.0;
-        for (Debt d : allDebts) {
+        for (Deuda d : allDebts) {
             boolean relevant = (d.getFamilyGroupId() == null && (uid.equals(d.getAssignedUserId()) || uid.equals(d.getCreatedBy())))
                     || (d.getFamilyGroupId() != null && contains(userGroupIds, d.getFamilyGroupId()));
             if (relevant) {
@@ -195,9 +195,9 @@ public class RecapMesFinancieroFragment extends Fragment {
             }
         }
         double personalPayments = 0.0;
-        for (Payment p : allPayments) if (uid.equals(p.getUserId())) personalPayments += p.getAmount();
+        for (Pago p : allPayments) if (uid.equals(p.getUserId())) personalPayments += p.getAmount();
         double familyPending = 0.0;
-        for (Debt d : allDebts) if (d.getFamilyGroupId() != null && contains(userGroupIds, d.getFamilyGroupId()))
+        for (Deuda d : allDebts) if (d.getFamilyGroupId() != null && contains(userGroupIds, d.getFamilyGroupId()))
             familyPending += Math.max(0.0, d.getAmount() - getPaidAmount(d));
         double totalPendiente = Math.max(0.0, totalDebido - totalPagado);
         if (tvHistorialTotalDebido != null) tvHistorialTotalDebido.setText(FreyrRepository.formatCurrency(totalDebido));
@@ -214,7 +214,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     private String[] getUserGroupIds(String userId) {
         String[] ids = new String[allGroups.length];
         int count = 0;
-        for (FamilyGroup group : allGroups)
+        for (Grupofamiliar group : allGroups)
             if (group.getMemberIds() != null && group.getMemberIds().contains(userId)) ids[count++] = group.getId();
         String[] result = new String[count];
         System.arraycopy(ids, 0, result, 0, count);
@@ -226,9 +226,9 @@ public class RecapMesFinancieroFragment extends Fragment {
         return false;
     }
 
-    private double getPaidAmount(Debt debt) {
+    private double getPaidAmount(Deuda debt) {
         double paid = 0.0;
-        for (Payment payment : allPayments) if (payment.getDebtId().equals(debt.getId())) paid += payment.getAmount();
+        for (Pago payment : allPayments) if (payment.getDebtId().equals(debt.getId())) paid += payment.getAmount();
         return paid;
     }
 }

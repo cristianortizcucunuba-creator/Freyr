@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import java.util.List;
 
 @Entity(tableName = "family_groups")
-public class FamilyGroup {
+public class Grupofamiliar {
     @PrimaryKey
     @NonNull
     private String id;
@@ -15,7 +15,7 @@ public class FamilyGroup {
     private List<String> memberIds;
     private String createdAt;
 
-    public FamilyGroup(@NonNull String id, String name, String creatorId, List<String> memberIds, String createdAt) {
+    public Grupofamiliar(@NonNull String id, String name, String creatorId, List<String> memberIds, String createdAt) {
         this.id = id;
         this.name = name;
         this.creatorId = creatorId;

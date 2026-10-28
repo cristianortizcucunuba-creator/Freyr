@@ -2,29 +2,30 @@ package com.freyr.app.data.local;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
-import com.freyr.app.data.model.FamilyGroup;
+import com.freyr.app.data.model.Grupofamiliar;
+
 import java.util.List;
 
 @Dao
 public interface FamilyGroupDao {
-    @Query("SELECT * FROM family_groups")
-    LiveData<List<FamilyGroup>> getAllGroupsLive();
+    @Query("SELECT * FROM Grupofamiliar")
+    LiveData<List<Grupofamiliar>> getAllGroupsLive();
 
-    @Query("SELECT * FROM family_groups")
-    List<FamilyGroup> getAllGroups();
+    @Query("SELECT * FROM Grupofamiliar")
+    List<Grupofamiliar> getAllGroups();
 
-    @Query("SELECT * FROM family_groups WHERE id = :id LIMIT 1")
-    FamilyGroup getGroupById(String id);
+    @Query("SELECT * FROM Grupofamiliar WHERE id = :id LIMIT 1")
+    Grupofamiliar getGroupById(String id);
 
-    @Query("SELECT * FROM family_groups WHERE id = :id LIMIT 1")
-    LiveData<FamilyGroup> getGroupByIdLive(String id);
+    @Query("SELECT * FROM Grupofamiliar WHERE id = :id LIMIT 1")
+    LiveData<Grupofamiliar> getGroupByIdLive(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertGroup(FamilyGroup group);
+    void insertGroup(Grupofamiliar group);
 
     @Update
-    void updateGroup(FamilyGroup group);
+    void updateGroup(Grupofamiliar group);
 
     @Delete
-    void deleteGroup(FamilyGroup group);
+    void deleteGroup(Grupofamiliar group);
 }

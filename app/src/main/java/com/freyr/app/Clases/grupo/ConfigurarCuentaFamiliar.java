@@ -1,4 +1,4 @@
-package com.freyr.app.ui.grupo;
+package com.freyr.app.Clases.grupo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,15 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.FamilyGroup;
-import com.freyr.app.data.model.Payment;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Deuda;
+import com.freyr.app.data.model.Grupofamiliar;
+import com.freyr.app.data.model.Pago;
+import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.adapter.DeudasRecycler;
-import com.freyr.app.ui.deuda.AñadirDeuda;
-import com.freyr.app.ui.deuda.RegistrarAbonosDeuda;
-import com.freyr.app.ui.deuda.DetallesDeuda;
+import com.freyr.app.Clases.listas.listaDeudas;
+import com.freyr.app.Clases.deuda.AñadirDeuda;
+import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
+import com.freyr.app.Clases.deuda.DetallesDeuda;
 
 public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
@@ -40,15 +40,15 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     private TextView tvNoGroupDebts;
     private RecyclerView rvGroupDebts;
 
-    private DeudasRecycler debtAdapter;
+    private listaDeudas debtAdapter;
     private FreyrRepository repository;
     private String groupId;
-    private FamilyGroup currentGroup;
+    private Grupofamiliar currentGroup;
 
     // Mantiene los datos de la pantalla en arreglos.
-    private User[] allUsers = new User[0];
-    private Debt[] groupDebts = new Debt[0];
-    private Payment[] allPayments = new Payment[0];
+    private Usuario[] allUsers = new Usuario[0];
+    private Deuda[] groupDebts = new Deuda[0];
+    private Pago[] allPayments = new Pago[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,11 +144,11 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        debtAdapter = new DeudasRecycler(
+        debtAdapter = new listaDeudas(
                 this,
-                new DeudasRecycler.OnDebtClickListener() {
+                new listaDeudas.OnDebtClickListener() {
                     @Override
-                    public void onDebtClick(Debt debt) {
+                    public void onDebtClick(Deuda debt) {
                         Intent intent = new Intent(
                                 ConfigurarCuentaFamiliar.this,
                                 DetallesDeuda.class
@@ -158,7 +158,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onPayClick(Debt debt) {
+                    public void onPayClick(Deuda debt) {
                         Intent intent = new Intent(
                                 ConfigurarCuentaFamiliar.this,
                                 RegistrarAbonosDeuda.class
@@ -176,20 +176,20 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     private void observeData() {
         repository.getAllUsersLive().observe(this, users -> {
             if (users != null) {
-                allUsers = users.toArray(new User[0]);
+                allUsers = users.toArray(new Usuario[0]);
                 updateMembersDisplay();
             }
         });
 
         repository.getAllGroupsLive().observe(this, groups -> {
             if (groups != null) {
-                for (FamilyGroup group : groups) {
+                for (Grupofamiliar group : groups) {
                     if (group.getId().equals(groupId)) {
                         currentGroup = group;
                         tvGroupTitle.setText(group.getName());
 
                         // El adapter recibe un arreglo de grupos.
-                        debtAdapter.setGroups(new FamilyGroup[]{group});
+                        debtAdapter.setGrupos(new Grupofamiliar[]{group});
                         updateMembersDisplay();
                         break;
                     }
@@ -199,10 +199,10 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         repository.getAllDebtsLive().observe(this, debts -> {
             if (debts != null) {
-                Debt[] matchingDebts = new Debt[debts.size()];
+                Deuda[] matchingDebts = new Deuda[debts.size()];
                 int count = 0;
 
-                for (Debt debt : debts) {
+                for (Deuda debt : debts) {
                     if (groupId.equals(debt.getFamilyGroupId())) {
                         matchingDebts[count] = debt;
                         count++;
@@ -210,10 +210,10 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
                 }
 
                 // Recorta el arreglo temporal al número de deudas del grupo.
-                groupDebts = new Debt[count];
+                groupDebts = new Deuda[count];
                 System.arraycopy(matchingDebts, 0, groupDebts, 0, count);
 
-                debtAdapter.setDebts(groupDebts);
+                debtAdapter.setDeudas(groupDebts);
                 tvNoGroupDebts.setVisibility(
                         groupDebts.length == 0 ? View.VISIBLE : View.GONE
                 );
@@ -223,8 +223,8 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         repository.getAllPaymentsLive().observe(this, payments -> {
             if (payments != null) {
-                allPayments = payments.toArray(new Payment[0]);
-                debtAdapter.setPayments(allPayments);
+                allPayments = payments.toArray(new Pago[0]);
+                debtAdapter.setPagos(allPayments);
                 recalculateTotals();
             }
         });
@@ -244,7 +244,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             boolean isCreator = userId.equals(currentGroup.getCreatorId());
             String name = "Usuario (" + userId + ")";
 
-            for (User user : allUsers) {
+            for (Usuario user : allUsers) {
                 if (user.getId().equals(userId)) {
                     name = user.getNomCompl()
                             + (isCreator ? " (Creador)" : "");
@@ -264,10 +264,10 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         double total = 0.0;
         double paid = 0.0;
 
-        for (Debt debt : groupDebts) {
+        for (Deuda debt : groupDebts) {
             total += debt.getAmount();
 
-            for (Payment payment : allPayments) {
+            for (Pago payment : allPayments) {
                 if (payment.getDebtId().equals(debt.getId())) {
                     paid += payment.getAmount();
                 }

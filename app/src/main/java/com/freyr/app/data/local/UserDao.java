@@ -2,29 +2,30 @@ package com.freyr.app.data.local;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Usuario;
+
 import java.util.List;
 
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM users")
-    LiveData<List<User>> getAllUsersLive();
+    @Query("SELECT * FROM Usuario")
+    LiveData<List<Usuario>> getAllUsersLive();
 
-    @Query("SELECT * FROM users")
-    List<User> getAllUsers();
+    @Query("SELECT * FROM Usuario")
+    List<Usuario> getAllUsers();
 
-    @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
-    User getUserById(String id);
+    @Query("SELECT * FROM Usuario WHERE id = :id LIMIT 1")
+    Usuario getUserById(String id);
 
-    @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
-    LiveData<User> getUserByIdLive(String id);
+    @Query("SELECT * FROM Usuario WHERE id = :id LIMIT 1")
+    LiveData<Usuario> getUserByIdLive(String id);
 
-    @Query("SELECT * FROM users WHERE LOWER(email) = LOWER(:identifier) OR LOWER(username) = LOWER(:identifier) LIMIT 1")
-    User getUserByIdentifier(String identifier);
+    @Query("SELECT * FROM Usuario WHERE LOWER(email) = LOWER(:identifier) OR LOWER(username) = LOWER(:identifier) LIMIT 1")
+    Usuario getUserByIdentifier(String identifier);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertUser(User user);
+    void insertUser(Usuario user);
 
     @Update
-    void updateUser(User user);
+    void updateUser(Usuario user);
 }

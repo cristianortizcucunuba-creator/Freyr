@@ -1,4 +1,4 @@
-package com.freyr.app.ui;
+package com.freyr.app.Clases;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.autenticacion.LoguearUsuario;
+import com.freyr.app.Clases.autenticacion.LoguearUsuario;
 
 /**
  * Pantalla de inicio (Splash / Startup Screen) que muestra el logo detallado

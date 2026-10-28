@@ -2,32 +2,34 @@ package com.freyr.app.data.local;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
-import com.freyr.app.data.model.Payment;
+
+import com.freyr.app.data.model.Pago;
+
 import java.util.List;
 
 @Dao
 public interface PaymentDao {
-    @Query("SELECT * FROM payments ORDER BY date DESC, createdAt DESC")
-    LiveData<List<Payment>> getAllPaymentsLive();
+    @Query("SELECT * FROM Pagos ORDER BY date DESC, createdAt DESC")
+    LiveData<List<Pago>> getAllPaymentsLive();
 
-    @Query("SELECT * FROM payments ORDER BY date DESC, createdAt DESC")
-    List<Payment> getAllPayments();
+    @Query("SELECT * FROM Pagos ORDER BY date DESC, createdAt DESC")
+    List<Pago> getAllPayments();
 
-    @Query("SELECT * FROM payments WHERE debtId = :debtId ORDER BY date DESC")
-    LiveData<List<Payment>> getPaymentsForDebtLive(String debtId);
+    @Query("SELECT * FROM Pagos WHERE debtId = :debtId ORDER BY date DESC")
+    LiveData<List<Pago>> getPaymentsForDebtLive(String debtId);
 
-    @Query("SELECT * FROM payments WHERE debtId = :debtId ORDER BY date DESC")
-    List<Payment> getPaymentsForDebt(String debtId);
+    @Query("SELECT * FROM Pagos WHERE debtId = :debtId ORDER BY date DESC")
+    List<Pago> getPaymentsForDebt(String debtId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertPayment(Payment payment);
+    void insertPayment(Pago payment);
 
     @Delete
-    void deletePayment(Payment payment);
+    void deletePayment(Pago payment);
 
-    @Query("DELETE FROM payments WHERE id = :id")
+    @Query("DELETE FROM Pagos WHERE id = :id")
     void deletePaymentById(String id);
 
-    @Query("DELETE FROM payments WHERE debtId = :debtId")
+    @Query("DELETE FROM Pagos WHERE debtId = :debtId")
     void deletePaymentsForDebt(String debtId);
 }

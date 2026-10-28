@@ -1,5 +1,5 @@
 
-package com.freyr.app.ui.adapter;
+package com.freyr.app.Clases.listas;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,49 +11,49 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.R;
-import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.FamilyGroup;
-import com.freyr.app.data.model.Payment;
+import com.freyr.app.data.model.Deuda;
+import com.freyr.app.data.model.Grupofamiliar;
+import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.repository.FreyrRepository;
 
-public class GruposFamiliaresRecycler extends RecyclerView.Adapter<GruposFamiliaresRecycler.GroupViewHolder> {
+public class listaGruposFamiliares extends RecyclerView.Adapter<listaGruposFamiliares.GroupViewHolder> {
 
     // Interfaz para responder cuando el usuario selecciona un grupo.
     public interface OnGroupClickListener {
-        void onGroupClick(FamilyGroup group);
+        void onGroupClick(Grupofamiliar group);
     }
 
     private final Context context;
     private final OnGroupClickListener listener;
 
     // Arreglos que almacenan los grupos, las deudas y los pagos.
-    private FamilyGroup[] groups = new FamilyGroup[0];
-    private Debt[] allDebts = new Debt[0];
-    private Payment[] allPayments = new Payment[0];
+    private Grupofamiliar[] groups = new Grupofamiliar[0];
+    private Deuda[] allDebts = new Deuda[0];
+    private Pago[] allPayments = new Pago[0];
 
     // Identificador del usuario que inició sesión.
     private String currentUserId = "";
 
-    public GruposFamiliaresRecycler(Context context, OnGroupClickListener listener) {
+    public listaGruposFamiliares(Context context, OnGroupClickListener listener) {
         this.context = context;
         this.listener = listener;
     }
 
     // Actualiza los grupos familiares que se mostrarán.
-    public void setGroups(FamilyGroup[] groups) {
-        this.groups = groups != null ? groups : new FamilyGroup[0];
+    public void setGroups(Grupofamiliar[] groups) {
+        this.groups = groups != null ? groups : new Grupofamiliar[0];
         notifyDataSetChanged();
     }
 
     // Actualiza las deudas disponibles.
-    public void setDebts(Debt[] debts) {
-        this.allDebts = debts != null ? debts : new Debt[0];
+    public void setDebts(Deuda[] debts) {
+        this.allDebts = debts != null ? debts : new Deuda[0];
         notifyDataSetChanged();
     }
 
     // Actualiza los pagos disponibles.
-    public void setPayments(Payment[] payments) {
-        this.allPayments = payments != null ? payments : new Payment[0];
+    public void setPayments(Pago[] payments) {
+        this.allPayments = payments != null ? payments : new Pago[0];
         notifyDataSetChanged();
     }
 
@@ -80,7 +80,7 @@ public class GruposFamiliaresRecycler extends RecyclerView.Adapter<GruposFamilia
             @NonNull GroupViewHolder holder, int position) {
 
         // Obtiene el grupo correspondiente a la posición actual.
-        FamilyGroup group = groups[position];
+        Grupofamiliar group = groups[position];
 
         holder.tvName.setText(group.getName());
 
@@ -98,7 +98,7 @@ public class GruposFamiliaresRecycler extends RecyclerView.Adapter<GruposFamilia
         double totalPaid = 0.0;
 
         // Recorre las deudas y selecciona las que pertenecen al grupo.
-        for (Debt debt : allDebts) {
+        for (Deuda debt : allDebts) {
 
             if (group.getId().equals(debt.getFamilyGroupId())) {
 
@@ -106,7 +106,7 @@ public class GruposFamiliaresRecycler extends RecyclerView.Adapter<GruposFamilia
                 totalDebt += debt.getAmount();
 
                 // Suma los pagos relacionados con la deuda actual.
-                for (Payment payment : allPayments) {
+                for (Pago payment : allPayments) {
 
                     if (payment.getDebtId().equals(debt.getId())) {
                         totalPaid += payment.getAmount();

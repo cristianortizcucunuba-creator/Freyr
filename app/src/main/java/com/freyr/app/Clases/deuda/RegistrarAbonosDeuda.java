@@ -1,4 +1,4 @@
-package com.freyr.app.ui.deuda;
+package com.freyr.app.Clases.deuda;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.Payment;
+import com.freyr.app.data.model.Deuda;
+import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.repository.FreyrRepository;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +36,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
 
     private FreyrRepository repository;
     private String debtId;
-    private Debt currentDebt;
+    private Deuda currentDebt;
     private double currentRemaining = 0.0;
 
     @Override
@@ -122,7 +122,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
     private void observeData() {
         repository.getAllDebtsLive().observe(this, debts -> {
             if (debts != null) {
-                for (Debt debt : debts) {
+                for (Deuda debt : debts) {
                     if (debt.getId().equals(debtId)) {
                         currentDebt = debt;
                         tvForDebtName.setText("Para: " + debt.getName());
@@ -149,15 +149,15 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
         }
 
         // El repositorio entrega una lista; se convierte a arreglo para recorrerla.
-        java.util.List<Payment> paymentList =
+        java.util.List<Pago> paymentList =
                 repository.getPaymentsForDebtLive(debtId).getValue();
 
-        Payment[] payments = paymentList == null
-                ? new Payment[0]
-                : paymentList.toArray(new Payment[0]);
+        Pago[] payments = paymentList == null
+                ? new Pago[0]
+                : paymentList.toArray(new Pago[0]);
 
         double paid = 0.0;
-        for (Payment payment : payments) {
+        for (Pago payment : payments) {
             paid += payment.getAmount();
         }
 
@@ -232,9 +232,9 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
                 amount,
                 date,
                 description,
-                new FreyrRepository.Callback<Payment>() {
+                new FreyrRepository.Callback<Pago>() {
                     @Override
-                    public void onSuccess(Payment result) {
+                    public void onSuccess(Pago result) {
                         runOnUiThread(() -> {
                             Toast.makeText(
                                     RegistrarAbonosDeuda.this,

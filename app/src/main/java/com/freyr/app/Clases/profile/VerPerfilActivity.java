@@ -1,4 +1,4 @@
-package com.freyr.app.ui.profile;
+package com.freyr.app.Clases.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +8,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.FamilyGroup;
-import com.freyr.app.data.model.Payment;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Deuda;
+import com.freyr.app.data.model.Grupofamiliar;
+import com.freyr.app.data.model.Pago;
+import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,10 +34,10 @@ public class VerPerfilActivity extends AppCompatActivity {
     private Button btnGoToEdit;
 
     private FreyrRepository repository;
-    private User currentUser;
-    private List<Debt> allDebts = new LinkedList<>();
-    private List<Payment> allPayments = new LinkedList<>();
-    private List<FamilyGroup> allGroups = new LinkedList<>();
+    private Usuario currentUser;
+    private List<Deuda> allDebts = new LinkedList<>();
+    private List<Pago> allPayments = new LinkedList<>();
+    private List<Grupofamiliar> allGroups = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class VerPerfilActivity extends AppCompatActivity {
         repository.getAllUsersLive().observe(this, users -> {
             if (users != null) {
                 String curId = repository.getCurrentUserId();
-                for (User u : users) {
+                for (Usuario u : users) {
                     if (u.getId().equals(curId)) {
                         currentUser = u;
                         tvFullName.setText(u.getNomCompl());
@@ -121,21 +121,21 @@ public class VerPerfilActivity extends AppCompatActivity {
         String uid = currentUser.getId();
 
         int debtsCount = 0;
-        for (Debt d : allDebts) {
+        for (Deuda d : allDebts) {
             if (uid.equals(d.getAssignedUserId()) || uid.equals(d.getCreatedBy())) {
                 debtsCount++;
             }
         }
 
         double paidTotal = 0.0;
-        for (Payment p : allPayments) {
+        for (Pago p : allPayments) {
             if (uid.equals(p.getUserId())) {
                 paidTotal += p.getAmount();
             }
         }
 
         int groupsCount = 0;
-        for (FamilyGroup g : allGroups) {
+        for (Grupofamiliar g : allGroups) {
             if (g.getMemberIds() != null && g.getMemberIds().contains(uid)) {
                 groupsCount++;
             }

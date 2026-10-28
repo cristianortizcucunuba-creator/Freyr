@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
  * esta clase abstracta, las entidades en `com.freyr.app.data.model` o las interfaces DAO.
  */
 @Database(
-    entities = {User.class, FamilyGroup.class, Debt.class, Payment.class, Invitation.class},
+    entities = {Usuario.class, Grupofamiliar.class, Deuda.class, Pago.class, Invitation.class},
     version = 1,
     exportSchema = false
 )
@@ -78,15 +78,15 @@ public abstract class FreyrDatabase extends RoomDatabase {
                 InvitationDao invitationDao = INSTANCE.invitationDao();
 
                 // 1. Usuarios iniciales de prueba
-                User juan = new User("user-juan", "Juan Pérez", "juan", "juan@ejemplo.com", "password123", "#69042A", "2026-01-15T10:00:00Z");
-                User maria = new User("user-maria", "María González", "maria", "maria@ejemplo.com", "password123", "#9C27B0", "2026-01-16T11:00:00Z");
-                User carlos = new User("user-carlos", "Carlos Rodríguez", "carlos", "carlos@ejemplo.com", "password123", "#00897B", "2026-02-01T09:30:00Z");
+                Usuario juan = new Usuario("user-juan", "Juan Pérez", "juan", "juan@ejemplo.com", "password123", "#69042A", "2026-01-15T10:00:00Z");
+                Usuario maria = new Usuario("user-maria", "María González", "maria", "maria@ejemplo.com", "password123", "#9C27B0", "2026-01-16T11:00:00Z");
+                Usuario carlos = new Usuario("user-carlos", "Carlos Rodríguez", "carlos", "carlos@ejemplo.com", "password123", "#00897B", "2026-02-01T09:30:00Z");
                 userDao.insertUser(juan);
                 userDao.insertUser(maria);
                 userDao.insertUser(carlos);
 
                 // 2. Grupo familiar demostrativo
-                FamilyGroup familyGroup = new FamilyGroup(
+                Grupofamiliar familyGroup = new Grupofamiliar(
                     "group-perez-gonzalez",
                     "Familia Pérez González",
                     juan.getId(),
@@ -96,7 +96,7 @@ public abstract class FreyrDatabase extends RoomDatabase {
                 groupDao.insertGroup(familyGroup);
 
                 // 3. Deudas iniciales de ejemplo (Portátil 3M, Internet 120k, Mercado 350k, Gimnasio 360k)
-                Debt laptopDebt = new Debt(
+                Deuda laptopDebt = new Deuda(
                     "debt-laptop",
                     "Computador portátil",
                     "Financiación a cuotas para trabajo y estudio",
@@ -107,7 +107,7 @@ public abstract class FreyrDatabase extends RoomDatabase {
                     "2026-02-10T12:00:00Z",
                     juan.getId()
                 );
-                Debt internetDebt = new Debt(
+                Deuda internetDebt = new Deuda(
                     "debt-internet",
                     "Factura de internet fibra",
                     "Servicio mensual de internet fibra óptica hogar",
@@ -118,7 +118,7 @@ public abstract class FreyrDatabase extends RoomDatabase {
                     "2026-02-15T08:30:00Z",
                     juan.getId()
                 );
-                Debt groceriesDebt = new Debt(
+                Deuda groceriesDebt = new Deuda(
                     "debt-groceries",
                     "Mercado quincenal familiar",
                     "Víveres y despensa básica del supermercado",
@@ -129,7 +129,7 @@ public abstract class FreyrDatabase extends RoomDatabase {
                     "2026-02-18T16:00:00Z",
                     maria.getId()
                 );
-                Debt gymDebt = new Debt(
+                Deuda gymDebt = new Deuda(
                     "debt-gym",
                     "Membresía anual de gimnasio",
                     "Plan de entrenamiento físico ya liquidado",
@@ -146,16 +146,16 @@ public abstract class FreyrDatabase extends RoomDatabase {
                 debtDao.insertDebt(gymDebt);
 
                 // 4. Abonos y pagos iniciales
-                paymentDao.insertPayment(new Payment(
+                paymentDao.insertPayment(new Pago(
                     "pay-laptop-1", laptopDebt.getId(), juan.getId(), 1000000.0, "2026-02-15", "Cuota inicial y primer abono", "2026-02-15T14:00:00Z"
                 ));
-                paymentDao.insertPayment(new Payment(
+                paymentDao.insertPayment(new Pago(
                     "pay-internet-1", internetDebt.getId(), juan.getId(), 60000.0, "2026-02-20", "Abono de primera mitad de la mensualidad", "2026-02-20T09:00:00Z"
                 ));
-                paymentDao.insertPayment(new Payment(
+                paymentDao.insertPayment(new Pago(
                     "pay-groceries-1", groceriesDebt.getId(), maria.getId(), 150000.0, "2026-02-22", "Compra víveres en el supermercado", "2026-02-22T17:00:00Z"
                 ));
-                paymentDao.insertPayment(new Payment(
+                paymentDao.insertPayment(new Pago(
                     "pay-gym-1", gymDebt.getId(), juan.getId(), 360000.0, "2026-01-12", "Pago total de membresía", "2026-01-12T11:00:00Z"
                 ));
 

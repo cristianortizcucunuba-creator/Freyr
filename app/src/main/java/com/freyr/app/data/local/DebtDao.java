@@ -2,35 +2,36 @@ package com.freyr.app.data.local;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
-import com.freyr.app.data.model.Debt;
+import com.freyr.app.data.model.Deuda;
+
 import java.util.List;
 
 @Dao
 public interface DebtDao {
-    @Query("SELECT * FROM debts ORDER BY createdAt DESC")
-    LiveData<List<Debt>> getAllDebtsLive();
+    @Query("SELECT * FROM Deuda ORDER BY createdAt DESC")
+    LiveData<List<Deuda>> getAllDebtsLive();
 
-    @Query("SELECT * FROM debts ORDER BY createdAt DESC")
-    List<Debt> getAllDebts();
+    @Query("SELECT * FROM Deuda ORDER BY createdAt DESC")
+    List<Deuda> getAllDebts();
 
-    @Query("SELECT * FROM debts WHERE id = :id LIMIT 1")
-    Debt getDebtById(String id);
+    @Query("SELECT * FROM Deuda WHERE id = :id LIMIT 1")
+    Deuda getDebtById(String id);
 
-    @Query("SELECT * FROM debts WHERE id = :id LIMIT 1")
-    LiveData<Debt> getDebtByIdLive(String id);
+    @Query("SELECT * FROM Deuda WHERE id = :id LIMIT 1")
+    LiveData<Deuda> getDebtByIdLive(String id);
 
-    @Query("SELECT * FROM debts WHERE familyGroupId = :groupId ORDER BY createdAt DESC")
-    LiveData<List<Debt>> getDebtsForGroupLive(String groupId);
+    @Query("SELECT * FROM Deuda WHERE familyGroupId = :groupId ORDER BY createdAt DESC")
+    LiveData<List<Deuda>> getDebtsForGroupLive(String groupId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertDebt(Debt debt);
+    void insertDebt(Deuda debt);
 
     @Update
-    void updateDebt(Debt debt);
+    void updateDebt(Deuda debt);
 
     @Delete
-    void deleteDebt(Debt debt);
+    void deleteDebt(Deuda debt);
 
-    @Query("DELETE FROM debts WHERE id = :id")
+    @Query("DELETE FROM Deuda WHERE id = :id")
     void deleteDebtById(String id);
 }

@@ -1,4 +1,4 @@
-package com.freyr.app.ui.grupo;
+package com.freyr.app.Clases.grupo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,17 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.FamilyGroup;
+import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Invitation;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.adapter.InvitacionesRecycler;
+import com.freyr.app.Clases.listas.listaInvitaciones;
 
 public class InvitarGrupoFamiliar extends Fragment {
 
     private RecyclerView rvInvitations;
     private TextView tvNoInvitations;
-    private InvitacionesRecycler invitationAdapter;
+    private listaInvitaciones invitationAdapter;
 
     private FreyrRepository repository;
     private Invitation[] allInvitations = new Invitation[0];
@@ -59,9 +59,9 @@ public class InvitarGrupoFamiliar extends Fragment {
     }
 
     private void setupRecyclerView() {
-        invitationAdapter = new InvitacionesRecycler(
+        invitationAdapter = new listaInvitaciones(
                 requireContext(),
-                new InvitacionesRecycler.OnInvitationResponseListener() {
+                new listaInvitaciones.OnInvitationResponseListener() {
                     @Override
                     public void onAccept(Invitation invitation) {
                         repository.respondToInvitation(
@@ -148,7 +148,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                 groups -> {
                     if (groups != null) {
                         invitationAdapter.setGroups(
-                                groups.toArray(new FamilyGroup[0])
+                                groups.toArray(new Grupofamiliar[0])
                         );
                     }
                 }
@@ -159,7 +159,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                 users -> {
                     if (users != null) {
                         invitationAdapter.setUsers(
-                                users.toArray(new User[0])
+                                users.toArray(new Usuario[0])
                         );
                     }
                 }

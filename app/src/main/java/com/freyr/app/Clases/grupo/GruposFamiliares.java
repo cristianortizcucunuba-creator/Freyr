@@ -1,4 +1,4 @@
-package com.freyr.app.ui.grupo;
+package com.freyr.app.Clases.grupo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,17 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.FamilyGroup;
-import com.freyr.app.data.model.Payment;
+import com.freyr.app.data.model.Deuda;
+import com.freyr.app.data.model.Grupofamiliar;
+import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.adapter.GruposFamiliaresRecycler;
+import com.freyr.app.Clases.listas.listaGruposFamiliares;
 
 public class GruposFamiliares extends Fragment {
 
     private Button btnCreateGroup;
     private RecyclerView rvFamilyGroups;
-    private GruposFamiliaresRecycler groupAdapter;
+    private listaGruposFamiliares groupAdapter;
 
     private FreyrRepository repository;
 
@@ -69,7 +69,7 @@ public class GruposFamiliares extends Fragment {
     }
 
     private void setupRecyclerView() {
-        groupAdapter = new GruposFamiliaresRecycler(
+        groupAdapter = new listaGruposFamiliares(
                 requireContext(),
                 group -> {
                     Intent intent = new Intent(
@@ -96,11 +96,11 @@ public class GruposFamiliares extends Fragment {
                 groups -> {
                     if (groups != null) {
                         // Filtra los grupos del usuario en un arreglo.
-                        FamilyGroup[] matchingGroups =
-                                new FamilyGroup[groups.size()];
+                        Grupofamiliar[] matchingGroups =
+                                new Grupofamiliar[groups.size()];
                         int count = 0;
 
-                        for (FamilyGroup group : groups) {
+                        for (Grupofamiliar group : groups) {
                             if (group.getMemberIds() != null
                                     && group.getMemberIds().contains(uid)) {
                                 matchingGroups[count] = group;
@@ -109,7 +109,7 @@ public class GruposFamiliares extends Fragment {
                         }
 
                         // Ajusta el tamaño al número de grupos encontrados.
-                        FamilyGroup[] userGroups = new FamilyGroup[count];
+                        Grupofamiliar[] userGroups = new Grupofamiliar[count];
                         System.arraycopy(
                                 matchingGroups,
                                 0,
@@ -128,7 +128,7 @@ public class GruposFamiliares extends Fragment {
                 debts -> {
                     if (debts != null) {
                         groupAdapter.setDebts(
-                                debts.toArray(new Debt[0])
+                                debts.toArray(new Deuda[0])
                         );
                     }
                 }
@@ -139,7 +139,7 @@ public class GruposFamiliares extends Fragment {
                 payments -> {
                     if (payments != null) {
                         groupAdapter.setPayments(
-                                payments.toArray(new Payment[0])
+                                payments.toArray(new Pago[0])
                         );
                     }
                 }

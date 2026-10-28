@@ -44,19 +44,19 @@ public class FreyrRepository {
         currentUserIdLive.postValue(userId);
     }
 
-    public LiveData<List<User>> getAllUsersLive() {
+    public LiveData<List<Usuario>> getAllUsersLive() {
         return database.userDao().getAllUsersLive();
     }
 
-    public LiveData<List<FamilyGroup>> getAllGroupsLive() {
+    public LiveData<List<Grupofamiliar>> getAllGroupsLive() {
         return database.familyGroupDao().getAllGroupsLive();
     }
 
-    public LiveData<List<Debt>> getAllDebtsLive() {
+    public LiveData<List<Deuda>> getAllDebtsLive() {
         return database.debtDao().getAllDebtsLive();
     }
 
-    public LiveData<List<Payment>> getAllPaymentsLive() {
+    public LiveData<List<Pago>> getAllPaymentsLive() {
         return database.paymentDao().getAllPaymentsLive();
     }
 
@@ -64,14 +64,14 @@ public class FreyrRepository {
         return database.invitationDao().getAllInvitationsLive();
     }
 
-    public LiveData<List<Payment>> getPaymentsForDebtLive(String debtId) {
+    public LiveData<List<Pago>> getPaymentsForDebtLive(String debtId) {
         return database.paymentDao().getPaymentsForDebtLive(debtId);
     }
 
-    public void login(String identifier, String password, Callback<User> callback) {
+    public void login(String identifier, String password, Callback<Usuario> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
             String clean = identifier.trim().toLowerCase(Locale.ROOT);
-            User user = database.userDao().getUserByIdentifier(clean);
+            Usuario user = database.userDao().getUserByIdentifier(clean);
             if (user == null) {
                 callback.onError("User not found with username or email: " + identifier);
                 return;
@@ -85,7 +85,7 @@ public class FreyrRepository {
         });
     }
 
-    public void register(String fullName, String username, String email, String password, Callback<User> callback) {
+    public void register(String fullName, String username, String email, String password, Callback<Usuario> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
             String trimmedUsername = username.trim().toLowerCase(Locale.ROOT);
             String trimmedEmail = email.trim().toLowerCase(Locale.ROOT);
@@ -107,7 +107,7 @@ public class FreyrRepository {
                 return;
             }
 
-            User existing = database.userDao().getUserByIdentifier(trimmedUsername);
+            Usuario existing = database.userDao().getUserByIdentifier(trimmedUsername);
             if (existing != null) {
                 callback.onError("Username is already taken.");
                 return;
@@ -122,7 +122,7 @@ public class FreyrRepository {
             String randomColor = colors[new Random().nextInt(colors.length)];
 
             String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
-            User newUser = new User(
+            Usuario newUser = new Usuario(
                 "user-" + System.currentTimeMillis(),
                 fullName.trim(),
                 trimmedUsername,
@@ -141,7 +141,7 @@ public class FreyrRepository {
     public void updateProfile(String fullName, String username, String email, String password, Callback<Void> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
             String currentId = getCurrentUserId();
-            User current = database.userDao().getUserById(currentId);
+            Usuario current = database.userDao().getUserById(currentId);
             if (current == null) {
                 callback.onError("Not logged in.");
                 return;
@@ -163,8 +163,8 @@ public class FreyrRepository {
                 return;
             }
 
-            List<User> users = database.userDao().getAllUsers();
-            for (User u : users) {
+            List<Usuario> users = database.userDao().getAllUsers();
+            for (Usuario u : users) {
                 if (!u.getId().equals(currentId)) {
                     if (u.getNomUsuario().equalsIgnoreCase(trimmedUsername)) {
                         callback.onError("Username already in use.");
@@ -189,7 +189,7 @@ public class FreyrRepository {
         });
     }
 
-    public void addDebt(String name, String description, double amount, String assignedUserId, String familyGroupId, Callback<Debt> callback) {
+    public void addDebt(String name, String description, double amount, String assignedUserId, String familyGroupId, Callback<Deuda> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
             String currentId = getCurrentUserId();
             if (name == null || name.trim().isEmpty()) {
@@ -202,7 +202,7 @@ public class FreyrRepository {
             }
 
             String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
-            Debt debt = new Debt(
+            Deuda debt = new Deuda(
                 "debt-" + System.currentTimeMillis(),
                 name.trim(),
                 (description != null && !description.trim().isEmpty()) ? description.trim() : null,
@@ -227,7 +227,7 @@ public class FreyrRepository {
         });
     }
 
-    public void addPayment(String debtId, double amount, String date, String description, Callback<Payment> callback) {
+    public void addPayment(String debtId, double amount, String date, String description, Callback<Pago> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
             String currentId = getCurrentUserId();
             if (amount <= 0.0) {
@@ -235,21 +235,21 @@ public class FreyrRepository {
                 return;
             }
 
-            Debt debt = database.debtDao().getDebtById(debtId);
+            Deuda debt = database.debtDao().getDebtById(debtId);
             if (debt == null) {
                 callback.onError("Debt not found.");
                 return;
             }
 
-            List<Payment> payments = database.paymentDao().getPaymentsForDebt(debtId);
+            List<Pago> payments = database.paymentDao().getPaymentsForDebt(debtId);
             double currentPaid = 0.0;
-            for (Payment p : payments) {
+            for (Pago p : payments) {
                 currentPaid += p.getAmount();
             }
 
             double newTotalPaid = currentPaid + amount;
             String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
-            Payment payment = new Payment(
+            Pago payment = new Pago(
                 "pay-" + System.currentTimeMillis(),
                 debtId,
                 currentId,
@@ -273,11 +273,11 @@ public class FreyrRepository {
     public void deletePayment(String paymentId, String debtId, Callback<Void> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
             database.paymentDao().deletePaymentById(paymentId);
-            Debt debt = database.debtDao().getDebtById(debtId);
+            Deuda debt = database.debtDao().getDebtById(debtId);
             if (debt != null) {
-                List<Payment> remainingPayments = database.paymentDao().getPaymentsForDebt(debtId);
+                List<Pago> remainingPayments = database.paymentDao().getPaymentsForDebt(debtId);
                 double totalPaid = 0.0;
-                for (Payment p : remainingPayments) {
+                for (Pago p : remainingPayments) {
                     totalPaid += p.getAmount();
                 }
                 if (totalPaid < debt.getAmount()) {
@@ -289,7 +289,7 @@ public class FreyrRepository {
         });
     }
 
-    public void createFamilyGroup(String name, Callback<FamilyGroup> callback) {
+    public void createFamilyGroup(String name, Callback<Grupofamiliar> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
             String currentId = getCurrentUserId();
             if (name == null || name.trim().isEmpty()) {
@@ -298,7 +298,7 @@ public class FreyrRepository {
             }
 
             String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
-            FamilyGroup group = new FamilyGroup(
+            Grupofamiliar group = new Grupofamiliar(
                 "group-" + System.currentTimeMillis(),
                 name.trim(),
                 currentId,
@@ -314,13 +314,13 @@ public class FreyrRepository {
     public void inviteUser(String groupId, String identifier, Callback<Void> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
             String currentId = getCurrentUserId();
-            FamilyGroup group = database.familyGroupDao().getGroupById(groupId);
+            Grupofamiliar group = database.familyGroupDao().getGroupById(groupId);
             if (group == null) {
                 callback.onError("Family group not found.");
                 return;
             }
 
-            User target = database.userDao().getUserByIdentifier(identifier.trim().toLowerCase(Locale.ROOT));
+            Usuario target = database.userDao().getUserByIdentifier(identifier.trim().toLowerCase(Locale.ROOT));
             if (target == null) {
                 callback.onError("No user found with username or email: " + identifier);
                 return;
@@ -359,7 +359,7 @@ public class FreyrRepository {
             if (invite == null) return;
 
             if (accept) {
-                FamilyGroup group = database.familyGroupDao().getGroupById(invite.getFamilyGroupId());
+                Grupofamiliar group = database.familyGroupDao().getGroupById(invite.getFamilyGroupId());
                 if (group != null && !group.getMemberIds().contains(invite.getInvitedUserId())) {
                     List<String> updated = new ArrayList<>(group.getMemberIds());
                     updated.add(invite.getInvitedUserId());

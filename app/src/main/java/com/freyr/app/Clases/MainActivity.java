@@ -1,4 +1,4 @@
-package com.freyr.app.ui;
+package com.freyr.app.Clases;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,17 +9,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.freyr.app.data.model.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.User;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.autenticacion.LoguearUsuario;
-import com.freyr.app.ui.profile.VerPerfilActivity;
-import com.freyr.app.ui.resumen.RecapMesFinancieroFragment;
-import com.freyr.app.ui.deuda.FinanzasPersonales;
-import com.freyr.app.ui.grupo.GruposFamiliares;
-import com.freyr.app.ui.grupo.InvitarGrupoFamiliar;
+import com.freyr.app.Clases.autenticacion.LoguearUsuario;
+import com.freyr.app.Clases.profile.VerPerfilActivity;
+import com.freyr.app.Clases.resumen.RecapMesFinancieroFragment;
+import com.freyr.app.Clases.deuda.FinanzasPersonales;
+import com.freyr.app.Clases.grupo.GruposFamiliares;
+import com.freyr.app.Clases.grupo.InvitarGrupoFamiliar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private FreyrRepository repository;
 
     // Guarda los usuarios en un arreglo.
-    private User[] allUsers = new User[0];
-    private User currentUser;
+    private Usuario[] allUsers = new Usuario[0];
+    private Usuario currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
         repository.getAllUsersLive().observe(this, users -> {
             if (users != null) {
                 // El repositorio entrega una lista; la convertimos a arreglo.
-                allUsers = users.toArray(new User[0]);
+                allUsers = users.toArray(new Usuario[0]);
 
                 String currentUid = repository.getCurrentUserId();
 
-                for (User user : allUsers) {
+                for (Usuario user : allUsers) {
                     if (user.getId().equals(currentUid)) {
                         currentUser = user;
 
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         CharSequence[] userOptions = new CharSequence[allUsers.length + 2];
 
         for (int i = 0; i < allUsers.length; i++) {
-            User user = allUsers[i];
+            Usuario user = allUsers[i];
             String label = user.getNomCompl()
                     + " (@"
                     + user.getNomUsuario()
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, VerPerfilActivity.class));
                     } else if (which >= 0 && which < allUsers.length) {
                         // Cambia a la cuenta seleccionada.
-                        User selectedUser = allUsers[which];
+                        Usuario selectedUser = allUsers[which];
                         repository.setLoggedInUser(selectedUser.getId());
                         loadFragment(new RecapMesFinancieroFragment());
                         bottomNav.setSelectedItemId(R.id.nav_dashboard);

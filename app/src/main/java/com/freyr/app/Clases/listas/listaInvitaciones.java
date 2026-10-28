@@ -1,5 +1,5 @@
 
-package com.freyr.app.ui.adapter;
+package com.freyr.app.Clases.listas;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.R;
-import com.freyr.app.data.model.FamilyGroup;
+import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Invitation;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Usuario;
 
-public class InvitacionesRecycler extends RecyclerView.Adapter<InvitacionesRecycler.InvitationViewHolder> {
+public class listaInvitaciones extends RecyclerView.Adapter<listaInvitaciones.InvitationViewHolder> {
 
     // Define las acciones que se ejecutan al aceptar o rechazar una invitación.
     public interface OnInvitationResponseListener {
@@ -29,10 +29,10 @@ public class InvitacionesRecycler extends RecyclerView.Adapter<InvitacionesRecyc
 
     // Arreglos que almacenan las invitaciones, grupos familiares y usuarios.
     private Invitation[] invitations = new Invitation[0];
-    private FamilyGroup[] allGroups = new FamilyGroup[0];
-    private User[] allUsers = new User[0];
+    private Grupofamiliar[] allGroups = new Grupofamiliar[0];
+    private Usuario[] allUsers = new Usuario[0];
 
-    public InvitacionesRecycler(Context context, OnInvitationResponseListener listener) {
+    public listaInvitaciones(Context context, OnInvitationResponseListener listener) {
         this.context = context;
         this.listener = listener;
     }
@@ -46,17 +46,17 @@ public class InvitacionesRecycler extends RecyclerView.Adapter<InvitacionesRecyc
     }
 
     // Actualiza los grupos familiares disponibles.
-    public void setGroups(FamilyGroup[] groups) {
+    public void setGroups(Grupofamiliar[] groups) {
         this.allGroups = groups != null
-                ? groups : new FamilyGroup[0];
+                ? groups : new Grupofamiliar[0];
 
         notifyDataSetChanged();
     }
 
     // Actualiza la información de los usuarios.
-    public void setUsers(User[] users) {
+    public void setUsers(Usuario[] users) {
         this.allUsers = users != null
-                ? users : new User[0];
+                ? users : new Usuario[0];
 
         notifyDataSetChanged();
     }
@@ -83,7 +83,7 @@ public class InvitacionesRecycler extends RecyclerView.Adapter<InvitacionesRecyc
         // Busca el nombre del grupo familiar al que pertenece la invitación.
         String groupName = "Grupo Familiar";
 
-        for (FamilyGroup group : allGroups) {
+        for (Grupofamiliar group : allGroups) {
             if (group.getId().equals(invitation.getFamilyGroupId())) {
                 groupName = group.getName();
                 break;
@@ -95,7 +95,7 @@ public class InvitacionesRecycler extends RecyclerView.Adapter<InvitacionesRecyc
         // Busca al usuario que envió la invitación.
         String inviterName = "Un miembro familiar";
 
-        for (User user : allUsers) {
+        for (Usuario user : allUsers) {
             if (user.getId().equals(invitation.getInvitedByUserId())) {
                 inviterName = user.getNomCompl()
                         + " (@" + user.getNomUsuario() + ")";

@@ -1,4 +1,4 @@
-package com.freyr.app.ui.profile;
+package com.freyr.app.Clases.profile;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.User;
+import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 
 /**
@@ -29,7 +29,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button btnSaveProfile;
 
     private FreyrRepository repository;
-    private User currentUser;
+    private Usuario currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class EditProfileActivity extends AppCompatActivity {
         repository.getAllUsersLive().observe(this, users -> {
             if (users != null) {
                 String curId = repository.getCurrentUserId();
-                for (User u : users) {
+                for (Usuario u : users) {
                     if (u.getId().equals(curId)) {
                         currentUser = u;
                         if (etFullName.getText().toString().isEmpty()) {
