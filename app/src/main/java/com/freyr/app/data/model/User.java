@@ -31,9 +31,10 @@ public class User {
     public void setId(@NonNull String id) { this.id = id; }
 
     public String getFullName() { return fullName; }
+    public String getNomCompl() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public String getUsername() { return username; }
+    public String getNomUsuario() { return username; }
     public void setUsername(String username) { this.username = username; }
 
     public String getEmail() { return email; }

@@ -166,7 +166,7 @@ public class FreyrRepository {
             List<User> users = database.userDao().getAllUsers();
             for (User u : users) {
                 if (!u.getId().equals(currentId)) {
-                    if (u.getUsername().equalsIgnoreCase(trimmedUsername)) {
+                    if (u.getNomUsuario().equalsIgnoreCase(trimmedUsername)) {
                         callback.onError("Username already in use.");
                         return;
                     }
@@ -327,14 +327,14 @@ public class FreyrRepository {
             }
 
             if (group.getMemberIds().contains(target.getId())) {
-                callback.onError(target.getFullName() + " is already a member of this group.");
+                callback.onError(target.getNomCompl() + " is already a member of this group.");
                 return;
             }
 
             List<Invitation> allInvites = database.invitationDao().getAllInvitations();
             for (Invitation inv : allInvites) {
                 if (inv.getFamilyGroupId().equals(groupId) && inv.getInvitedUserId().equals(target.getId()) && "pending".equals(inv.getStatus())) {
-                    callback.onError("An invitation is already pending for " + target.getFullName());
+                    callback.onError("An invitation is already pending for " + target.getNomCompl());
                     return;
                 }
             }

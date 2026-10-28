@@ -1,4 +1,4 @@
-package com.freyr.app.ui.auth;
+package com.freyr.app.ui.autenticacion;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import com.freyr.app.ui.MainActivity;
  * Valida nombre completo, usuario único, correo y confirmación de contraseña
  * antes de registrar e iniciar la sesión automáticamente.
  */
-public class RegisterActivity extends AppCompatActivity {
+public class RegistrarUsuario extends AppCompatActivity {
 
     private EditText etFullName;
     private EditText etUsername;
@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onSuccess(User result) {
                 runOnUiThread(() -> {
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intent = new Intent(RegistrarUsuario.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();

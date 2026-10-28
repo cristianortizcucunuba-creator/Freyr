@@ -67,8 +67,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     if (u.getId().equals(curId)) {
                         currentUser = u;
                         if (etFullName.getText().toString().isEmpty()) {
-                            etFullName.setText(u.getFullName());
-                            etUsername.setText(u.getUsername());
+                            etFullName.setText(u.getNomCompl());
+                            etUsername.setText(u.getNomUsuario());
                             etEmail.setText(u.getEmail());
                         }
                         break;

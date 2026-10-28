@@ -30,42 +30,47 @@
 
         <!-- Authentication -->
         <activity
-            android:name=".ui.auth.LoginActivity"
+            android:name=".ui.autenticacion.LoguearUsuario"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.auth.RegisterActivity"
+            android:name=".ui.autenticacion.RegistrarUsuario"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Debt Operations -->
         <activity
-            android:name=".ui.debt.AddDebtActivity"
+            android:name=".ui.deuda.AñadirDeuda"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.debt.DebtDetailActivity"
+            android:name=".ui.deuda.DetallesDeuda"
             android:exported="false" />
 
         <activity
-            android:name=".ui.debt.AddPaymentActivity"
+            android:name=".ui.deuda.RegistrarAbonosDeuda"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Family Groups -->
         <activity
-            android:name=".ui.group.CreateFamilyGroupActivity"
+            android:name=".ui.grupo.CrearGrupoFamiliar"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.group.FamilyGroupDetailActivity"
+            android:name=".ui.grupo.ConfigurarCuentaFamiliar"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- User Profile -->
+        <activity
+            android:name=".ui.profile.VerPerfilActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".ui.profile.EditProfileActivity"
             android:exported="false"

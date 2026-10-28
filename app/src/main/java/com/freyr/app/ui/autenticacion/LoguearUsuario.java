@@ -1,4 +1,4 @@
-package com.freyr.app.ui.auth;
+package com.freyr.app.ui.autenticacion;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import com.freyr.app.ui.MainActivity;
  * Valida credenciales locales de acceso y ofrece botones de acceso rápido
  * demostrativo para pruebas inmediatas con los perfiles sembrados.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoguearUsuario extends AppCompatActivity {
 
     private EditText etIdentifier;
     private EditText etPassword;
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> doLogin());
 
         tvGoToRegister.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(LoguearUsuario.this, RegistrarUsuario.class);
             startActivity(intent);
         });
 
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(User result) {
                 runOnUiThread(() -> {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoguearUsuario.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();

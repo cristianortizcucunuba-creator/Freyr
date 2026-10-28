@@ -1,4 +1,4 @@
-package com.freyr.app.ui.group;
+package com.freyr.app.ui.grupo;
 
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +18,7 @@ import com.freyr.app.data.repository.FreyrRepository;
  * Permite registrar el nombre del grupo y asigna automáticamente al usuario
  * creador como su primer miembro y administrador.
  */
-public class CreateFamilyGroupActivity extends AppCompatActivity {
+public class CrearGrupoFamiliar extends AppCompatActivity {
 
     private ImageButton btnBack;
     private TextView tvError;
@@ -63,7 +63,7 @@ public class CreateFamilyGroupActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(FamilyGroup result) {
                     runOnUiThread(() -> {
-                        Toast.makeText(CreateFamilyGroupActivity.this, "¡Grupo familiar creado exitosamente!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CrearGrupoFamiliar.this, "¡Grupo familiar creado exitosamente!", Toast.LENGTH_SHORT).show();
                         setResult(RESULT_OK);
                         finish();
                     });

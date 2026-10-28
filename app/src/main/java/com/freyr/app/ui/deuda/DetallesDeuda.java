@@ -1,4 +1,4 @@
-package com.freyr.app.ui.debt;
+package com.freyr.app.ui.deuda;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,27 +8,22 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Debt;
-import com.freyr.app.data.model.FamilyGroup;
 import com.freyr.app.data.model.Payment;
 import com.freyr.app.data.model.User;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.adapter.PaymentAdapter;
-import java.util.List;
+import com.freyr.app.ui.adapter.PagosRecycler;
 
-/**
- * Actividad que despliega el detalle completo y desglose financiero de una deuda.
- * Presenta el progreso de amortización, saldo pendiente, usuario asignado y el historial
- * de abonos realizados con opciones para registrar nuevos pagos o eliminarlos.
- */
-public class DebtDetailActivity extends AppCompatActivity {
+public class DetallesDeuda extends AppCompatActivity {
 
     private ImageButton btnBack;
     private ImageButton btnDeleteDebt;
@@ -46,11 +41,15 @@ public class DebtDetailActivity extends AppCompatActivity {
     private TextView tvNoPayments;
     private Button btnAddPayment;
     private RecyclerView rvPayments;
-    private PaymentAdapter paymentAdapter;
+    private PagosRecycler paymentAdapter;
 
     private FreyrRepository repository;
     private String debtId;
     private Debt currentDebt;
+
+    // Conservan en arreglos los datos recibidos.
+    private User[] allUsers = new User[0];
+    private Payment[] allPayments = new Payment[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,43 +94,58 @@ public class DebtDetailActivity extends AppCompatActivity {
 
         btnDeleteDebt.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
-                .setTitle("Eliminar deuda")
-                .setMessage("¿Estás seguro de que deseas eliminar esta deuda y su historial de abonos?")
-                .setPositiveButton("Eliminar", (dialog, which) -> {
-                    repository.deleteDebt(debtId, new FreyrRepository.Callback<Void>() {
-                        @Override
-                        public void onSuccess(Void result) {
-                            runOnUiThread(() -> {
-                                Toast.makeText(DebtDetailActivity.this, "Deuda eliminada", Toast.LENGTH_SHORT).show();
-                                finish();
-                            });
-                        }
+                    .setTitle("Eliminar deuda")
+                    .setMessage("¿Estás seguro de que deseas eliminar esta deuda y su historial de abonos?")
+                    .setPositiveButton("Eliminar", (dialog, which) -> {
+                        repository.deleteDebt(
+                                debtId,
+                                new FreyrRepository.Callback<Void>() {
+                                    @Override
+                                    public void onSuccess(Void result) {
+                                        runOnUiThread(() -> {
+                                            Toast.makeText(
+                                                    DetallesDeuda.this,
+                                                    "Deuda eliminada",
+                                                    Toast.LENGTH_SHORT
+                                            ).show();
+                                            finish();
+                                        });
+                                    }
 
-                        @Override
-                        public void onError(String error) {}
-                    });
-                })
-                .setNegativeButton("Cancelar", null)
-                .show();
+                                    @Override
+                                    public void onError(String error) {
+                                    }
+                                }
+                        );
+                    })
+                    .setNegativeButton("Cancelar", null)
+                    .show();
         });
 
         btnAddPayment.setOnClickListener(v -> {
-            Intent intent = new Intent(DebtDetailActivity.this, AddPaymentActivity.class);
+            Intent intent = new Intent(
+                    DetallesDeuda.this,
+                    RegistrarAbonosDeuda.class
+            );
             intent.putExtra("debt_id", debtId);
             startActivity(intent);
         });
     }
 
     private void setupRecyclerView() {
-        paymentAdapter = new PaymentAdapter(this, payment -> {
+        paymentAdapter = new PagosRecycler(this, payment -> {
             new AlertDialog.Builder(this)
-                .setTitle("Eliminar abono")
-                .setMessage("¿Deseas eliminar este abono de " + FreyrRepository.formatCurrency(payment.getAmount()) + "?")
-                .setPositiveButton("Eliminar", (dialog, which) -> {
-                    repository.deletePayment(payment.getId(), debtId, null);
-                })
-                .setNegativeButton("Cancelar", null)
-                .show();
+                    .setTitle("Eliminar abono")
+                    .setMessage(
+                            "¿Deseas eliminar este abono de "
+                                    + FreyrRepository.formatCurrency(payment.getAmount())
+                                    + "?"
+                    )
+                    .setPositiveButton("Eliminar", (dialog, which) ->
+                            repository.deletePayment(payment.getId(), debtId, null)
+                    )
+                    .setNegativeButton("Cancelar", null)
+                    .show();
         });
 
         rvPayments.setLayoutManager(new LinearLayoutManager(this));
@@ -141,17 +155,21 @@ public class DebtDetailActivity extends AppCompatActivity {
     private void observeData() {
         repository.getAllUsersLive().observe(this, users -> {
             if (users != null) {
-                paymentAdapter.setUsers(users);
-                updateAssignedLabel(users);
+                // El repositorio entrega una lista; la convertimos a arreglo.
+                allUsers = users.toArray(new User[0]);
+
+                paymentAdapter.setUsers(allUsers);
+                updateAssignedLabel();
             }
         });
 
         repository.getAllDebtsLive().observe(this, debts -> {
             if (debts != null) {
-                for (Debt d : debts) {
-                    if (d.getId().equals(debtId)) {
-                        currentDebt = d;
+                for (Debt debt : debts) {
+                    if (debt.getId().equals(debtId)) {
+                        currentDebt = debt;
                         updateDebtInfo();
+                        updateAssignedLabel();
                         break;
                     }
                 }
@@ -160,37 +178,51 @@ public class DebtDetailActivity extends AppCompatActivity {
 
         repository.getPaymentsForDebtLive(debtId).observe(this, payments -> {
             if (payments != null) {
-                paymentAdapter.setPayments(payments);
-                tvInstallmentsCount.setText("HISTORIAL DE ABONOS (" + payments.size() + " " + (payments.size() == 1 ? "ABONO" : "ABONOS") + ")");
-                tvNoPayments.setVisibility(payments.isEmpty() ? View.VISIBLE : View.GONE);
+                // El adapter trabaja con arreglos.
+                allPayments = payments.toArray(new Payment[0]);
+                paymentAdapter.setPayments(allPayments);
+
+                int paymentCount = allPayments.length;
+                String countLabel = paymentCount == 1 ? "ABONO" : "ABONOS";
+                tvInstallmentsCount.setText(
+                        "HISTORIAL DE ABONOS (" + paymentCount + " " + countLabel + ")"
+                );
+
+                tvNoPayments.setVisibility(
+                        paymentCount == 0 ? View.VISIBLE : View.GONE
+                );
+
                 updateDebtInfo();
             }
         });
     }
 
     private void updateDebtInfo() {
-        if (currentDebt == null) return;
+        if (currentDebt == null) {
+            return;
+        }
 
         tvTitle.setText(currentDebt.getName());
         tvDebtName.setText(currentDebt.getName());
 
-        if (currentDebt.getDescription() != null && !currentDebt.getDescription().trim().isEmpty()) {
-            tvDebtDesc.setText(currentDebt.getDescription());
+        String description = currentDebt.getDescription();
+        if (description != null && !description.trim().isEmpty()) {
+            tvDebtDesc.setText(description);
             tvDebtDesc.setVisibility(View.VISIBLE);
         } else {
             tvDebtDesc.setVisibility(View.GONE);
         }
 
         double total = currentDebt.getAmount();
-        List<Payment> payments = repository.getPaymentsForDebtLive(debtId).getValue();
         double paid = 0.0;
-        if (payments != null) {
-            for (Payment p : payments) {
-                paid += p.getAmount();
-            }
+
+        for (Payment payment : allPayments) {
+            paid += payment.getAmount();
         }
+
         double remaining = Math.max(0.0, total - paid);
-        boolean isPaid = remaining == 0.0 || "paid".equalsIgnoreCase(currentDebt.getStatus());
+        boolean isPaid = remaining == 0.0
+                || "paid".equalsIgnoreCase(currentDebt.getStatus());
 
         tvTotalAmt.setText(FreyrRepository.formatCurrency(total));
         tvPaidAmt.setText(FreyrRepository.formatCurrency(paid));
@@ -198,34 +230,49 @@ public class DebtDetailActivity extends AppCompatActivity {
 
         if (isPaid) {
             tvDebtStatus.setText("PAGADA EN SU TOTALIDAD");
-            tvDebtStatus.setTextColor(ContextCompat.getColor(this, R.color.freyr_status_paid));
+            tvDebtStatus.setTextColor(
+                    ContextCompat.getColor(this, R.color.freyr_status_paid)
+            );
             tvDebtStatus.setBackgroundResource(R.drawable.bg_status_paid);
             btnAddPayment.setVisibility(View.GONE);
             pbDetailProgress.setProgress(100);
         } else {
             tvDebtStatus.setText("PENDIENTE");
-            tvDebtStatus.setTextColor(ContextCompat.getColor(this, R.color.freyr_primary));
+            tvDebtStatus.setTextColor(
+                    ContextCompat.getColor(this, R.color.freyr_primary)
+            );
             tvDebtStatus.setBackgroundResource(R.drawable.bg_status_pending);
             btnAddPayment.setVisibility(View.VISIBLE);
-            int percent = total > 0 ? (int) Math.min(100, (paid / total) * 100) : 0;
+
+            int percent = total > 0
+                    ? (int) Math.min(100, (paid / total) * 100)
+                    : 0;
             pbDetailProgress.setProgress(percent);
         }
     }
 
-    private void updateAssignedLabel(List<User> users) {
-        if (currentDebt == null) return;
-        if (currentDebt.getAssignedUserId() == null) {
-            tvAssignedInfo.setText("Responsable: Toda la familia (Compartida)");
-        } else {
-            String name = "Miembro (" + currentDebt.getAssignedUserId() + ")";
-            for (User u : users) {
-                if (u.getId().equals(currentDebt.getAssignedUserId())) {
-                    name = u.getFullName() + " (@" + u.getUsername() + ")";
-                    break;
-                }
-            }
-            tvAssignedInfo.setText("Responsable: " + name);
+    // Actualiza el nombre de la persona responsable, si corresponde.
+    private void updateAssignedLabel() {
+        if (currentDebt == null) {
+            return;
         }
+
+        String assignedUserId = currentDebt.getAssignedUserId();
+        if (assignedUserId == null) {
+            tvAssignedInfo.setText(
+                    "Responsable: Toda la familia (Compartida)"
+            );
+            return;
+        }
+
+        String name = "Miembro (" + assignedUserId + ")";
+        for (User user : allUsers) {
+            if (user.getId().equals(assignedUserId)) {
+                name = user.getNomCompl() + " (@" + user.getNomUsuario() + ")";
+                break;
+            }
+        }
+
+        tvAssignedInfo.setText("Responsable: " + name);
     }
 }
-

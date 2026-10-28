@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.auth.LoginActivity;
+import com.freyr.app.ui.autenticacion.LoguearUsuario;
 
 /**
  * Pantalla de inicio (Splash / Startup Screen) que muestra el logo detallado
@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
             if (currentUserId != null && !currentUserId.trim().isEmpty()) {
                 intent = new Intent(SplashActivity.this, MainActivity.class);
             } else {
-                intent = new Intent(SplashActivity.this, LoginActivity.class);
+                intent = new Intent(SplashActivity.this, LoguearUsuario.class);
             }
 
             startActivity(intent);

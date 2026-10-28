@@ -5,6 +5,7 @@
     <color name="freyr_primary">#69042A</color>
     <color name="freyr_primary_dark">#4A031E</color>
     <color name="freyr_primary_light">#85123A</color>
+    <color name="freyr_card_bg">#1E1E1E</color>
 
     <!-- Backgrounds (Dominant background: #2E110E) -->
     <color name="freyr_background">#2E110E</color>

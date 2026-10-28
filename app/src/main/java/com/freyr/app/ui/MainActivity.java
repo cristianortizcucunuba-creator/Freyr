@@ -2,24 +2,24 @@ package com.freyr.app.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.User;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.auth.LoginActivity;
-import com.freyr.app.ui.dashboard.DashboardFragment;
-import com.freyr.app.ui.debt.PersonalFinancesFragment;
-import com.freyr.app.ui.group.FamilyGroupsFragment;
-import com.freyr.app.ui.group.InvitationsFragment;
-import java.util.ArrayList;
-import java.util.List;
+import com.freyr.app.ui.autenticacion.LoguearUsuario;
+import com.freyr.app.ui.profile.VerPerfilActivity;
+import com.freyr.app.ui.resumen.RecapMesFinancieroFragment;
+import com.freyr.app.ui.deuda.FinanzasPersonales;
+import com.freyr.app.ui.grupo.GruposFamiliares;
+import com.freyr.app.ui.grupo.InvitarGrupoFamiliar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvUserInitials;
 
     private FreyrRepository repository;
-    private List<User> allUsers = new ArrayList<>();
+
+    // Guarda los usuarios en un arreglo.
+    private User[] allUsers = new User[0];
     private User currentUser;
 
     @Override
@@ -37,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
         repository = ((FreyrApplication) getApplication()).getRepository();
 
-        // Check login state
+        // Comprueba que exista una sesión iniciada.
         if (repository.getCurrentUserId() == null) {
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, LoguearUsuario.class));
             finish();
             return;
         }
@@ -50,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         setupNavigation();
         observeUser();
 
-        // Default to Dashboard
+        // Muestra el panel principal al iniciar la actividad.
         if (savedInstanceState == null) {
-            loadFragment(new DashboardFragment());
+            loadFragment(new RecapMesFinancieroFragment());
         }
     }
 
@@ -67,19 +69,21 @@ public class MainActivity extends AppCompatActivity {
     private void setupNavigation() {
         bottomNav.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+
             if (itemId == R.id.nav_dashboard) {
-                loadFragment(new DashboardFragment());
+                loadFragment(new RecapMesFinancieroFragment());
                 return true;
             } else if (itemId == R.id.nav_personal) {
-                loadFragment(new PersonalFinancesFragment());
+                loadFragment(new FinanzasPersonales());
                 return true;
             } else if (itemId == R.id.nav_groups) {
-                loadFragment(new FamilyGroupsFragment());
+                loadFragment(new GruposFamiliares());
                 return true;
             } else if (itemId == R.id.nav_invitations) {
-                loadFragment(new InvitationsFragment());
+                loadFragment(new InvitarGrupoFamiliar());
                 return true;
             }
+
             return false;
         });
     }
@@ -90,22 +94,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadFragment(Fragment fragment) {
         getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit();
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 
     private void observeUser() {
         repository.getAllUsersLive().observe(this, users -> {
             if (users != null) {
-                allUsers = users;
+                // El repositorio entrega una lista; la convertimos a arreglo.
+                allUsers = users.toArray(new User[0]);
+
                 String currentUid = repository.getCurrentUserId();
-                for (User u : users) {
-                    if (u.getId().equals(currentUid)) {
-                        currentUser = u;
-                        String initials = u.getFullName() != null && u.getFullName().length() >= 2
-                            ? u.getFullName().substring(0, 2).toUpperCase()
-                            : "U";
+
+                for (User user : allUsers) {
+                    if (user.getId().equals(currentUid)) {
+                        currentUser = user;
+
+                        String fullName = user.getNomCompl();
+                        String initials = fullName != null && fullName.length() >= 2
+                                ? fullName.substring(0, 2).toUpperCase()
+                                : "U";
+
                         tvUserInitials.setText(initials);
                         break;
                     }
@@ -115,44 +125,63 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Muestra el diálogo de selección de usuario o cierre de sesión rápido.
-     * Permite alternar fácilmente entre perfiles demostrativos o cerrar la sesión actual.
+     * Muestra las cuentas disponibles y permite cambiar de usuario
+     * o cerrar la sesión actual.
      */
     private void showAccountDialog() {
-        if (currentUser == null) return;
-
-        List<String> userOptions = new ArrayList<>();
-        for (User u : allUsers) {
-            String label = u.getFullName() + " (@" + u.getUsername() + ")";
-            if (u.getId().equals(currentUser.getId())) {
-                label += " (Sesión activa)";
-            }
-            userOptions.add(label);
+        if (currentUser == null) {
+            return;
         }
 
-        userOptions.add("Cerrar sesión");
+        // Reserva una opción para cada usuario, una para Ver perfil y otra para cerrar sesión.
+        CharSequence[] userOptions = new CharSequence[allUsers.length + 2];
 
-        CharSequence[] items = userOptions.toArray(new CharSequence[0]);
+        for (int i = 0; i < allUsers.length; i++) {
+            User user = allUsers[i];
+            String label = user.getNomCompl()
+                    + " (@"
+                    + user.getNomUsuario()
+                    + ")";
+
+            if (user.getId().equals(currentUser.getId())) {
+                label += " (Sesión activa)";
+            }
+
+            userOptions[i] = label;
+        }
+
+        userOptions[allUsers.length] = "Ver perfil";
+        userOptions[allUsers.length + 1] = "Cerrar sesión";
 
         new AlertDialog.Builder(this)
-            .setTitle("Cambiar cuenta / Opciones")
-            .setItems(items, (dialog, which) -> {
-                if (which == userOptions.size() - 1) {
-                    // Cerrar sesión
-                    repository.setLoggedInUser(null);
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // Cambiar de usuario
-                    User selected = allUsers.get(which);
-                    repository.setLoggedInUser(selected.getId());
-                    loadFragment(new DashboardFragment());
-                    bottomNav.setSelectedItemId(R.id.nav_dashboard);
-                }
-            })
-            .setNegativeButton("Cancelar", null)
-            .show();
+                .setTitle("Cambiar cuenta / Opciones")
+                .setItems(userOptions, (dialog, which) -> {
+                    if (which == allUsers.length + 1) {
+                        // Cierra la sesión actual.
+                        repository.setLoggedInUser(null);
+
+                        Intent intent = new Intent(
+                                MainActivity.this,
+                                LoguearUsuario.class
+                        );
+                        intent.setFlags(
+                                Intent.FLAG_ACTIVITY_NEW_TASK
+                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        );
+                        startActivity(intent);
+                        finish();
+                    } else if (which == allUsers.length) {
+                        // Ver perfil
+                        startActivity(new Intent(MainActivity.this, VerPerfilActivity.class));
+                    } else if (which >= 0 && which < allUsers.length) {
+                        // Cambia a la cuenta seleccionada.
+                        User selectedUser = allUsers[which];
+                        repository.setLoggedInUser(selectedUser.getId());
+                        loadFragment(new RecapMesFinancieroFragment());
+                        bottomNav.setSelectedItemId(R.id.nav_dashboard);
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 }
