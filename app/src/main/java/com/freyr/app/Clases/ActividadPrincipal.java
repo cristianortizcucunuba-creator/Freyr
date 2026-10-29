@@ -29,7 +29,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     private FreyrRepositorio repository;
 
-    //Guarda los usuarios en un arreglo.
+    // Guarda los usuarios en un arreglo.
     private Usuario[] allUsers = new Usuario[0];
     private Usuario currentUser;
 
@@ -42,6 +42,10 @@ public class ActividadPrincipal extends AppCompatActivity {
         // Comprueba que exista una sesión iniciada.
         if (repository.obtenerIdUsuarioActual() == null) {
             startActivity(new Intent(this, LoguearUsuario.class));
+        if (repository.getCurrentUserId() == null) {
+            Intent intent = new Intent(this, LoguearUsuario.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             finish();
             return;
         }
@@ -126,7 +130,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     /**
      * Muestra las cuentas disponibles y permite cambiar de usuario
-     * o cerrar la sesión actual.
+     * o cerrar la sesión actual limpiando el historial de navegación.
      */
     private void showAccountDialog() {
         if (currentUser == null) {
@@ -157,17 +161,12 @@ public class ActividadPrincipal extends AppCompatActivity {
                 .setTitle("Cambiar cuenta / Opciones")
                 .setItems(userOptions, (dialog, which) -> {
                     if (which == allUsers.length + 1) {
-                        // Cierra la sesión actual.
+                        // 1. Cierra la sesión en SharedPreferences (guarda null)
                         repository.setLoggedInUser(null);
 
-                        Intent intent = new Intent(
-                                ActividadPrincipal.this,
-                                LoguearUsuario.class
-                        );
-                        intent.setFlags(
-                                Intent.FLAG_ACTIVITY_NEW_TASK
-                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        );
+                        // 2. Redirige a Login y borra el historial de pantallas previas
+                        Intent intent = new Intent(ActividadPrincipal.this, LoguearUsuario.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
                     } else if (which == allUsers.length) {

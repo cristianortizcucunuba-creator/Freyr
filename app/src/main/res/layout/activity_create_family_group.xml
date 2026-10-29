@@ -20,7 +20,7 @@
             android:layout_marginBottom="16dp">
 
             <ImageButton
-                android:id="@+id/btn_volver"
+                android:id="@+id/btn_atras"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
-            android:hint="@string/hint_group_name"
+            android:hint="Nombre"
             android:inputType="textCapWords"
             android:maxLines="1"
             android:textColor="@color/freyr_text_primary"

@@ -14,26 +14,26 @@ import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class AñadirDeuda extends AppCompatActivity {
 
-    private EditText etDebtName;
-    private EditText etDebtAmount;
-    private EditText etDebtDescription;
-    private RadioGroup rgDebtType;
+    private EditText etNombreDeuda;
+    private EditText etMonto;
+    private EditText etDescripcion;
+    private RadioGroup rgTipoDeuda;
     private RadioButton rbPersonal;
-    private RadioButton rbFamily;
+    private RadioButton rbFamilia;
     private LinearLayout layoutFamilyOptions;
     private Spinner spinnerFamilyGroup;
     private Spinner spinnerAssignedMember;
-    private Button btnSaveDebt;
-    private ImageButton btnBack;
+    private Button btnGuardarDeuda;
+    private ImageButton btnAtras;
     private TextView tvError;
 
-    private FreyrRepositorio repository;
+    private FreyrRepositorio repositorio;
 
-    // Datos de la pantalla guardados en arreglos.
-    private Grupofamiliar[] userGroups = new Grupofamiliar[0];
-    private Usuario[] allUsers = new Usuario[0];
-    private String[] memberNames = new String[0];
-    private String[] memberIds = new String[0];
+    // Arreglos para guardar los datos.
+    private Grupofamiliar[] GruposUsuario = new Grupofamiliar[0];
+    private Usuario[] Cuentas = new Usuario[0];
+    private String[] nombreMiembros = new String[0];
+    private String[] idMiembros = new String[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,41 +42,41 @@ public class AñadirDeuda extends AppCompatActivity {
 
         repository = ((FreyrApp) getApplication()).getRepositorio();
 
-        initViews();
+        iniciarVistas();
         setupListeners();
         loadData();
 
-        // Muestra las opciones familiares si se recibió un grupo en el Intent.
+
         String initialGroupId = getIntent().getStringExtra("group_id");
         if (initialGroupId != null && !initialGroupId.isEmpty()) {
-            rbFamily.setChecked(true);
+            rbFamilia.setChecked(true);
             layoutFamilyOptions.setVisibility(View.VISIBLE);
         }
     }
 
-    private void initViews() {
-        btnBack = findViewById(R.id.btn_volver);
+    private void iniciarVistas() {
+        btnAtras = findViewById(R.id.btn_atras);
         tvError = findViewById(R.id.tx_error);
-        rgDebtType = findViewById(R.id.rg_debt_type);
-        rbPersonal = findViewById(R.id.rb_personal_debt);
-        rbFamily = findViewById(R.id.rb_family_debt);
+        rgTipoDeuda = findViewById(R.id.rg_tipo_deuda);
+        rbPersonal = findViewById(R.id.rb_deuda_personal);
+        rbFamilia = findViewById(R.id.rb_deuda_familiar);
 
-        etDebtName = findViewById(R.id.et_debt_name);
-        etDebtAmount = findViewById(R.id.et_debt_amount);
-        etDebtDescription = findViewById(R.id.et_debt_description);
+        etNombreDeuda = findViewById(R.id.et_nombre_deuda);
+        etMonto = findViewById(R.id.et_monto);
+        etDescripcion = findViewById(R.id.et_descripcion);
 
         layoutFamilyOptions = findViewById(R.id.layout_family_options);
         spinnerFamilyGroup = findViewById(R.id.spinner_family_group);
         spinnerAssignedMember = findViewById(R.id.spinner_assigned_member);
-        btnSaveDebt = findViewById(R.id.btn_save_debt);
+        btnGuardarDeuda = findViewById(R.id.btn_guardar_deuda);
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(v -> finish());
+        btnAtras.setOnClickListener(v -> finish());
 
-        rgDebtType.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.rb_family_debt) {
-                if (userGroups.length == 0) {
+        rgTipoDeuda.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rb_deuda_familiar) {
+                if (GruposUsuario.length == 0) {
                     showError("Primero debes crear o unirte a un grupo familiar.");
                     rbPersonal.setChecked(true);
                     layoutFamilyOptions.setVisibility(View.GONE);
@@ -99,8 +99,8 @@ public class AñadirDeuda extends AppCompatActivity {
                             int position,
                             long id
                     ) {
-                        if (position >= 0 && position < userGroups.length) {
-                            updateMemberSpinner(userGroups[position]);
+                        if (position >= 0 && position < GruposUsuario.length) {
+                            updateMemberSpinner(GruposUsuario[position]);
                         }
                     }
 
@@ -110,27 +110,28 @@ public class AñadirDeuda extends AppCompatActivity {
                 }
         );
 
-        btnSaveDebt.setOnClickListener(v -> saveDebt());
+        btnGuardarDeuda.setOnClickListener(v -> saveDebt());
     }
 
     private void loadData() {
-        repository.observarTodosLosUsuarios().observe(this, users -> {
+        repositorio.observarTodosLosUsuarios().observe(this, users -> {
+        repositorio.getAllUsersLive().observe(this, users -> {
             if (users != null) {
                 // El repositorio entrega una lista; la convertimos a arreglo.
-                allUsers = users.toArray(new Usuario[0]);
+                Cuentas = users.toArray(new Usuario[0]);
 
                 int selectedPosition = spinnerFamilyGroup.getSelectedItemPosition();
-                if (userGroups.length > 0
+                if (GruposUsuario.length > 0
                         && selectedPosition >= 0
-                        && selectedPosition < userGroups.length) {
-                    updateMemberSpinner(userGroups[selectedPosition]);
+                        && selectedPosition < GruposUsuario.length) {
+                    updateMemberSpinner(GruposUsuario[selectedPosition]);
                 }
             }
         });
 
-        repository.observarTodosLosGrupos().observe(this, groups -> {
+        repositorio.observarTodosLosGrupos().observe(this, groups -> {
             if (groups != null) {
-                String currentUid = repository.obtenerIdUsuarioActual();
+                String currentUid = repositorio.obtenerIdUsuarioActual();
 
                 // Primero guardamos los grupos coincidentes en un arreglo temporal.
                 Grupofamiliar[] matchingGroups = new Grupofamiliar[groups.size()];
@@ -145,12 +146,12 @@ public class AñadirDeuda extends AppCompatActivity {
                 }
 
                 // Copiamos solo los grupos encontrados al arreglo definitivo.
-                userGroups = new Grupofamiliar[count];
-                System.arraycopy(matchingGroups, 0, userGroups, 0, count);
+                GruposUsuario = new Grupofamiliar[count];
+                System.arraycopy(matchingGroups, 0, GruposUsuario, 0, count);
 
                 String[] groupNames = new String[count];
                 for (int i = 0; i < count; i++) {
-                    groupNames[i] = userGroups[i].getNombre();
+                    groupNames[i] = GruposUsuario[i].getNombre();
                 }
 
                 ArrayAdapter<String> groupAdapter = new ArrayAdapter<>(
@@ -160,8 +161,8 @@ public class AñadirDeuda extends AppCompatActivity {
                 );
                 spinnerFamilyGroup.setAdapter(groupAdapter);
 
-                if (userGroups.length > 0) {
-                    updateMemberSpinner(userGroups[0]);
+                if (GruposUsuario.length > 0) {
+                    updateMemberSpinner(GruposUsuario[0]);
                 }
             }
         });
@@ -175,11 +176,11 @@ public class AñadirDeuda extends AppCompatActivity {
         }
 
         // La primera opción representa a toda la familia.
-        memberNames = new String[groupMemberCount + 1];
-        memberIds = new String[groupMemberCount + 1];
+        nombreMiembros = new String[groupMemberCount + 1];
+        idMiembros = new String[groupMemberCount + 1];
 
-        memberNames[0] = "Toda la familia (Compartida)";
-        memberIds[0] = null;
+        nombreMiembros[0] = "Toda la familia (Compartida)";
+        idMiembros[0] = null;
 
         if (group != null && group.getMiembrosIds() != null) {
             int index = 1;
@@ -187,15 +188,15 @@ public class AñadirDeuda extends AppCompatActivity {
             for (String userId : group.getMiembrosIds()) {
                 String name = "Miembro (" + userId + ")";
 
-                for (Usuario user : allUsers) {
+                for (Usuario user : Cuentas) {
                     if (user.getId().equals(userId)) {
                         name = user.getNomCompl() + " (@" + user.getNomUsuario() + ")";
                         break;
                     }
                 }
 
-                memberNames[index] = name;
-                memberIds[index] = userId;
+                nombreMiembros[index] = name;
+                idMiembros[index] = userId;
                 index++;
             }
         }
@@ -203,7 +204,7 @@ public class AñadirDeuda extends AppCompatActivity {
         ArrayAdapter<String> memberAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_dropdown_item,
-                memberNames
+                nombreMiembros
         );
         spinnerAssignedMember.setAdapter(memberAdapter);
     }
@@ -212,18 +213,18 @@ public class AñadirDeuda extends AppCompatActivity {
         clearError();
 
         // Valida el nombre de la deuda.
-        String name = etDebtName.getText().toString().trim();
+        String name = etNombreDeuda.getText().toString().trim();
         if (name.isEmpty()) {
             showError("El nombre de la deuda no puede estar vacío.");
-            etDebtName.requestFocus();
+            etNombreDeuda.requestFocus();
             return;
         }
 
         // Valida que el monto no esté vacío.
-        String amountText = etDebtAmount.getText().toString().trim();
+        String amountText = etMonto.getText().toString().trim();
         if (amountText.isEmpty()) {
             showError("El monto total no puede estar vacío.");
-            etDebtAmount.requestFocus();
+            etMonto.requestFocus();
             return;
         }
 
@@ -233,47 +234,47 @@ public class AñadirDeuda extends AppCompatActivity {
             amount = Double.parseDouble(amountText);
         } catch (NumberFormatException e) {
             showError("Por favor ingresa un monto numérico válido.");
-            etDebtAmount.requestFocus();
+            etMonto.requestFocus();
             return;
         }
 
         if (amount <= 0.0) {
             showError("El monto debe ser un número positivo mayor a 0.");
-            etDebtAmount.requestFocus();
+            etMonto.requestFocus();
             return;
         }
 
-        String description = etDebtDescription.getText().toString().trim();
+        String description = etDescripcion.getText().toString().trim();
 
         // Define el grupo y la persona responsable.
-        boolean isFamily = rbFamily.isChecked();
+        boolean isFamily = rbFamilia.isChecked();
         String familyGroupId = null;
-        String assignedUserId = repository.obtenerIdUsuarioActual();
+        String assignedUserId = repositorio.obtenerIdUsuarioActual();
 
         if (isFamily) {
             int groupPosition = spinnerFamilyGroup.getSelectedItemPosition();
 
-            if (userGroups.length == 0
+            if (GruposUsuario.length == 0
                     || groupPosition < 0
-                    || groupPosition >= userGroups.length) {
+                    || groupPosition >= GruposUsuario.length) {
                 showError("Por favor selecciona un grupo familiar.");
                 return;
             }
 
-            Grupofamiliar selectedGroup = userGroups[groupPosition];
+            Grupofamiliar selectedGroup = GruposUsuario[groupPosition];
             familyGroupId = selectedGroup.getId();
 
             int memberPosition = spinnerAssignedMember.getSelectedItemPosition();
-            if (memberPosition >= 0 && memberPosition < memberIds.length) {
-                assignedUserId = memberIds[memberPosition];
+            if (memberPosition >= 0 && memberPosition < idMiembros.length) {
+                assignedUserId = idMiembros[memberPosition];
             } else {
                 assignedUserId = null;
             }
         }
 
-        btnSaveDebt.setEnabled(false);
+        btnGuardarDeuda.setEnabled(false);
 
-        repository.agregarDeuda(
+        repositorio.agregarDeuda(
                 name,
                 description,
                 amount,
@@ -296,7 +297,7 @@ public class AñadirDeuda extends AppCompatActivity {
                     @Override
                     public void alOcurrirError(String error) {
                         runOnUiThread(() -> {
-                            btnSaveDebt.setEnabled(true);
+                            btnGuardarDeuda.setEnabled(true);
                             showError(error);
                         });
                     }

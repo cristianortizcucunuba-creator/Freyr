@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text"
-                    android:hint="juan o juan@ejemplo.com"
+                    android:hint="Usuario o Correo"
                     android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@color/freyr_text_primary"
@@ -148,64 +148,12 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/freyr_secondary"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="12dp" />
-
                 <!-- Botones de prueba rápida -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cuentas de prueba rápida (Toca para autocompletar):"
-                    android:textColor="@color/freyr_text_secondary"
-                    android:textSize="11sp"
-                    android:layout_marginBottom="8dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_juan"
-                        android:layout_width="0dp"
-                        android:layout_height="36dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_button_secondary"
-                        android:text="Juan"
-                        android:textColor="@color/freyr_primary_light"
-                        android:textSize="11sp"
-                        app:backgroundTint="@null" />
-
-                    <Button
-                        android:id="@+id/btn_maria"
-                        android:layout_width="0dp"
-                        android:layout_height="36dp"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginEnd="2dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_button_secondary"
-                        android:text="María"
-                        android:textColor="@color/freyr_primary_light"
-                        android:textSize="11sp"
-                        app:backgroundTint="@null" />
-
-                    <Button
-                        android:id="@+id/btn_carlos"
-                        android:layout_width="0dp"
-                        android:layout_height="36dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg_button_secondary"
-                        android:text="Carlos"
-                        android:textColor="@color/freyr_primary_light"
-                        android:textSize="11sp"
-                        app:backgroundTint="@null" />
-                </LinearLayout>
+                    android:orientation="horizontal"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

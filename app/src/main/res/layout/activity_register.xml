@@ -52,13 +52,13 @@
             android:id="@+id/et_nombre_completo"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginBottom="14dp"
             android:background="@drawable/bg_edit_text"
-            android:hint="Ej. Sofía Navarro"
+            android:hint="Nombre"
             android:inputType="textPersonName"
             android:maxLines="1"
             android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="14dp" />
+            android:textSize="14sp" />
 
         <!-- Nombre de Usuario -->
         <TextView
@@ -74,13 +74,13 @@
             android:id="@+id/et_usuario"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginBottom="14dp"
             android:background="@drawable/bg_edit_text"
-            android:hint="sofia_n"
+            android:hint="Apodo"
             android:inputType="text"
             android:maxLines="1"
             android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="14dp" />
+            android:textSize="14sp" />
 
         <!-- Correo Electrónico -->
         <TextView
@@ -96,13 +96,13 @@
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_marginBottom="14dp"
             android:background="@drawable/bg_edit_text"
-            android:hint="sofia@ejemplo.com"
+            android:hint="a-z@gmail.com"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="14dp" />
+            android:textSize="14sp" />
 
         <!-- Contraseña -->
         <TextView

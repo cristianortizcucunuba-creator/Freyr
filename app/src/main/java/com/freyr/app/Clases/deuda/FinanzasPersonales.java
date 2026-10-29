@@ -23,7 +23,7 @@ import com.freyr.app.Clases.listas.listaDeDeudas;
 
 public class FinanzasPersonales extends Fragment {
 
-    private Button btnAddPersonalDebt;
+    private Button btnAñadirDeudaPersonal;
     private RadioGroup rgFilter;
     private RecyclerView rvPersonalDebts;
     private listaDeDeudas debtAdapter;
@@ -60,13 +60,13 @@ public class FinanzasPersonales extends Fragment {
     }
 
     private void initViews(View view) {
-        btnAddPersonalDebt = view.findViewById(R.id.btn_add_personal_debt);
+        btnAñadirDeudaPersonal = view.findViewById(R.id.btn_add_personal_debt);
         rgFilter = view.findViewById(R.id.rg_debt_filter);
         rvPersonalDebts = view.findViewById(R.id.rv_personal_debts);
     }
 
     private void setupListeners() {
-        btnAddPersonalDebt.setOnClickListener(v -> {
+        btnAñadirDeudaPersonal.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AñadirDeuda.class);
             startActivity(intent);
         });

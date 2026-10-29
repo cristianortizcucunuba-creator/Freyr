@@ -29,16 +29,15 @@ public class PantallaInicio extends AppCompatActivity {
 
         VideoView videoView = findViewById(R.id.videoViewSplash);
 
-        // Cambia 'nuevo_video_intro' si le pusiste otro nombre a tu MP4 en res/raw
         String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.nuevo_video_intro;
         videoView.setVideoURI(Uri.parse(videoPath));
 
-        // Ajustar la escala del video para que tome toda la pantalla sin bordes (Center Crop)
+        // Ajustar la escala del video y arrancar cuando esté preparado
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 float videoRatio = mp.getVideoWidth() / (float) mp.getVideoHeight();
-                float screenRatio = videoView.getWidth() / (float) videoView.getHeight();
+                float screenRatio = (float) videoView.getWidth() / videoView.getHeight();
                 float scaleX = videoRatio / screenRatio;
 
                 if (scaleX >= 1f) {
@@ -46,10 +45,13 @@ public class PantallaInicio extends AppCompatActivity {
                 } else {
                     videoView.setScaleY(1f / scaleX);
                 }
+
+                // Arrancamos el video directamente
+                mp.start();
             }
         });
 
-        // Transición automática al terminar la animación
+        // Transición automática al terminar el video
         videoView.setOnCompletionListener(mp -> {
             if (isFinishing() || isDestroyed()) return;
 
@@ -64,9 +66,11 @@ public class PantallaInicio extends AppCompatActivity {
             }
 
             startActivity(intent);
+
+            // Animación suave de desvanecimiento al cambiar de pantalla
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
             finish();
         });
-
-        videoView.start();
     }
 }
