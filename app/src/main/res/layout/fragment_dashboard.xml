@@ -77,13 +77,6 @@
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Credenciales y datos"
-                        android:textColor="@color/freyr_text_secondary"
-                        android:textSize="11sp"
-                        android:layout_marginTop="2dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -159,13 +152,6 @@
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Gastos compartidos"
-                        android:textColor="@color/freyr_text_secondary"
-                        android:textSize="11sp"
-                        android:layout_marginTop="2dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -394,12 +380,6 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="8dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Saldo pendiente actual en tus deudas"
-                    android:textColor="@color/freyr_secondary"
-                    android:textSize="11sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

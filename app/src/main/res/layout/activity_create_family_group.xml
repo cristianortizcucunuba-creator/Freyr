@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
-            android:hint="@string/hint_group_name"
+            android:hint="Nombre"
             android:inputType="textCapWords"
             android:maxLines="1"
             android:textColor="@color/freyr_text_primary"

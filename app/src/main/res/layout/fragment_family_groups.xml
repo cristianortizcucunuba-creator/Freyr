@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Family Groups"
+                android:text="Grupos Familiares"
                 android:textColor="@color/freyr_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Manage shared household expenses"
+                android:text="Crea y mira tus grupos"
                 android:textColor="@color/freyr_card_bg"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -39,13 +39,13 @@
             android:id="@+id/btn_crear_grupo"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
-            android:text="+ Create Group"
-            android:textSize="12sp"
-            android:textStyle="bold"
             android:background="@drawable/bg_button_primary"
-            android:textColor="#FFFFFF"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
+            android:text="+ Crear Grupo"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:backgroundTint="@null" />
     </LinearLayout>
 
