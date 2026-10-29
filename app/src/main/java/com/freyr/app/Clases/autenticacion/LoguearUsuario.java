@@ -13,7 +13,7 @@ import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.ActividadPrincipal;
 
- // Inicio de sesión de usuario en Freyr..
+ // Inicio de sesión de usuario en Freyr.
  // Demostracion para pruebas con los perfiles puestos.
 
 public class LoguearUsuario extends AppCompatActivity {
