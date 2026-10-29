@@ -6,13 +6,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepositorio;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class VerPerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_perfil);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepository();
 
         initViews();
         setupListeners();

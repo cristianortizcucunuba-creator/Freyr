@@ -15,12 +15,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepositorio;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDePagos;
 
 public class DetallesDeuda extends AppCompatActivity {
@@ -56,7 +56,7 @@ public class DetallesDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt_detail);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepository();
         debtId = getIntent().getStringExtra("debt_id");
 
         if (debtId == null) {

@@ -2,9 +2,9 @@ package com.freyr.app;
 
 import android.app.Application;
 import com.freyr.app.data.local.FreyrDatabase;
-import com.freyr.app.data.repository.FreyrRepositorio;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 
-public class FreyrApplication extends Application {
+public class FreyrApp extends Application {
     private FreyrRepositorio repository;
 
     @Override

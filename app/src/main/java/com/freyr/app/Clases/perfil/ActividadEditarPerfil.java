@@ -9,10 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepositorio;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 /**
  * Actividad para la modificación y actualización del perfil del usuario en sesión.
@@ -36,7 +36,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepository();
 
         initViews();
         setupListeners();

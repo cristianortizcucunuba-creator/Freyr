@@ -17,7 +17,7 @@ import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepositorio;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class DeudasRecycler extends RecyclerView.Adapter<DeudasRecycler.DebtViewHolder> {
 
