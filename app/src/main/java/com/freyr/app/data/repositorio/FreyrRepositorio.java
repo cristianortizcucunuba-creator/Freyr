@@ -1,4 +1,4 @@
-package com.freyr.app.data.repository;
+package com.freyr.app.data.repositorio;
 
 import android.content.Context;
 import android.content.SharedPreferences;

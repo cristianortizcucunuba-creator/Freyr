@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.repository.FreyrRepositorio;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.autenticacion.LoguearUsuario;
 
 //Pantalla de inicio que muestra el logo detallado Freyr (Image 2) en la paleta oscura antes de pasar a la actividad principal.
@@ -23,7 +23,7 @@ public class PantallaInicio extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (isFinishing() || isDestroyed()) return;
 
-            FreyrRepositorio repositorio = ((FreyrApplication) getApplication()).getRepository();
+            FreyrRepositorio repositorio = ((FreyrApp) getApplication()).getRepository();
             String idUsuarioActual = repositorio.getCurrentUserId();
 
             Intent intent;

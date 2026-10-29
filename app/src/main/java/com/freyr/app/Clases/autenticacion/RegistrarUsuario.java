@@ -9,10 +9,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freyr.app.Clases.ActividadPrincipal;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepositorio;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 // registro de nuevas cuentas de usuario en Freyr.
 // Valida nombre completo, usuario único, correo y confirmación de contraseña
@@ -35,7 +35,7 @@ public class RegistrarUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        repositorio = ((FreyrApplication) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepository();
 
         iniciarVistas();
         setupListeners();

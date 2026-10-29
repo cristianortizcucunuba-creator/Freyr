@@ -13,13 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepositorio;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDeDeudas;
 import com.freyr.app.Clases.deuda.AñadirDeuda;
 import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
@@ -56,7 +56,9 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_group_detail);
 
-        repositorio = ((FreyrApplication) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepository();
+        idGrupo = getIntent().getStringExtra("grupo_id");
+        repositorio = ((FreyrApp) getApplication()).getRepository();
         idGrupo = getIntent().getStringExtra("group_id");
 
         if (idGrupo == null) {
@@ -106,6 +108,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             repositorio.inviteUser(
                     idGrupo,
                     identifier,
+
                     new FreyrRepositorio.Callback<Void>() {
                         @Override
                         public void onSuccess(Void result) {
@@ -173,6 +176,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         rvDeudasGrupo.setLayoutManager(new LinearLayoutManager(this));
         rvDeudasGrupo.setAdapter(adaptadorDeudas);
     }
+
 
     private void observeData() {
         repositorio.getAllUsersLive().observe(this, users -> {
