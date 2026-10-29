@@ -44,7 +44,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_payment);
 
-        repository = ((FreyrApp) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
         debtId = getIntent().getStringExtra("debt_id");
 
         if (debtId == null) {
@@ -120,14 +120,14 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
     }
 
     private void observeData() {
-        repository.getAllDebtsLive().observe(this, debts -> {
+        repository.observarTodasLasDeudas().observe(this, debts -> {
             if (debts != null) {
                 for (Deuda debt : debts) {
                     if (debt.getId().equals(debtId)) {
                         currentDebt = debt;
                         tvForDebtName.setText("Para: " + debt.getNombre());
                         tvStatusTotal.setText(
-                                FreyrRepositorio.formatCurrency(debt.getMonto())
+                                FreyrRepositorio.formatearMoneda(debt.getMonto())
                         );
                         recalculateBalances();
                         break;
@@ -136,7 +136,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
             }
         });
 
-        repository.getPaymentsForDebtLive(debtId).observe(this, payments -> {
+        repository.observarPagosDeDeuda(debtId).observe(this, payments -> {
             if (payments != null) {
                 recalculateBalances();
             }
@@ -150,7 +150,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
 
         // El repositorio entrega una lista; se convierte a arreglo para recorrerla.
         java.util.List<Pago> paymentList =
-                repository.getPaymentsForDebtLive(debtId).getValue();
+                repository.observarPagosDeDeuda(debtId).getValue();
 
         Pago[] payments = paymentList == null
                 ? new Pago[0]
@@ -163,9 +163,9 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
 
         currentRemaining = Math.max(0.0, currentDebt.getMonto() - paid);
 
-        tvStatusPaid.setText(FreyrRepositorio.formatCurrency(paid));
+        tvStatusPaid.setText(FreyrRepositorio.formatearMoneda(paid));
         tvStatusRemaining.setText(
-                FreyrRepositorio.formatCurrency(currentRemaining)
+                FreyrRepositorio.formatearMoneda(currentRemaining)
         );
         updateProjectedRemaining();
     }
@@ -183,7 +183,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
             double projected = Math.max(0.0, currentRemaining - entered);
 
             String message = "Saldo pendiente proyectado: "
-                    + FreyrRepositorio.formatCurrency(projected);
+                    + FreyrRepositorio.formatearMoneda(projected);
 
             if (entered >= currentRemaining && currentRemaining > 0) {
                 message += " (Se marcará como PAGADA)";
@@ -227,14 +227,14 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
 
         btnConfirmPayment.setEnabled(false);
 
-        repository.addPayment(
+        repository.registrarPago(
                 debtId,
                 amount,
                 date,
                 description,
                 new FreyrRepositorio.Callback<Pago>() {
                     @Override
-                    public void onSuccess(Pago result) {
+                    public void alTenerExito(Pago result) {
                         runOnUiThread(() -> {
                             Toast.makeText(
                                     RegistrarAbonosDeuda.this,
@@ -246,7 +246,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(String error) {
+                    public void alOcurrirError(String error) {
                         runOnUiThread(() -> {
                             btnConfirmPayment.setEnabled(true);
                             showError(error);

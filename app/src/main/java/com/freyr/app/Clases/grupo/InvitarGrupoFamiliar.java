@@ -44,7 +44,7 @@ public class InvitarGrupoFamiliar extends Fragment {
         );
 
         repositorio = ((FreyrApp) requireActivity()
-                .getApplication()).getRepository();
+                .getApplication()).getRepositorio();
 
         inicializarVistas(vista);
         configurarLista();
@@ -64,12 +64,12 @@ public class InvitarGrupoFamiliar extends Fragment {
                 new listaDeInvitaciones.AccionesRespuestaInvitacion() {
                     @Override
                     public void Aceptar(Invitacion invitacion) {
-                        repositorio.respondToInvitation(
+                        repositorio.responderInvitacion(
                                 invitacion.getId(),
                                 true,
                                 new FreyrRepositorio.Callback<Void>() {
                                     @Override
-                                    public void onSuccess(Void resultado) {
+                                    public void alTenerExito(Void resultado) {
                                         if (getActivity() != null) {
                                             getActivity().runOnUiThread(() ->
                                                     Toast.makeText(
@@ -82,7 +82,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                                     }
 
                                     @Override
-                                    public void onError(String error) {
+                                    public void alOcurrirError(String error) {
                                         if (getActivity() != null) {
                                             getActivity().runOnUiThread(() ->
                                                     Toast.makeText(
@@ -99,12 +99,12 @@ public class InvitarGrupoFamiliar extends Fragment {
 
                     @Override
                     public void Rechazar(Invitacion invitacion) {
-                        repositorio.respondToInvitation(
+                        repositorio.responderInvitacion(
                                 invitacion.getId(),
                                 false,
                                 new FreyrRepositorio.Callback<Void>() {
                                     @Override
-                                    public void onSuccess(Void result) {
+                                    public void alTenerExito(Void result) {
                                         if (getActivity() != null) {
                                             getActivity().runOnUiThread(() ->
                                                     Toast.makeText(
@@ -117,7 +117,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                                     }
 
                                     @Override
-                                    public void onError(String error) {
+                                    public void alOcurrirError(String error) {
                                         if (getActivity() != null) {
                                             getActivity().runOnUiThread(() ->
                                                     Toast.makeText(
@@ -141,9 +141,9 @@ public class InvitarGrupoFamiliar extends Fragment {
     }
 
     private void observarDatos() {
-        String idUsuario = repositorio.getCurrentUserId();
+        String idUsuario = repositorio.obtenerIdUsuarioActual();
 
-        repositorio.getAllGroupsLive().observe(
+        repositorio.observarTodosLosGrupos().observe(
                 getViewLifecycleOwner(),
                 groups -> {
                     if (groups != null) {
@@ -154,7 +154,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                 }
         );
 
-        repositorio.getAllUsersLive().observe(
+        repositorio.observarTodosLosUsuarios().observe(
                 getViewLifecycleOwner(),
                 users -> {
                     if (users != null) {
@@ -165,7 +165,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                 }
         );
 
-        repositorio.getAllInvitationsLive().observe(
+        repositorio.observarTodasLasInvitaciones().observe(
                 getViewLifecycleOwner(),
                 invitaciones -> {
                     if (invitaciones != null) {

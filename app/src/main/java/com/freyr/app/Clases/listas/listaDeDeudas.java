@@ -156,13 +156,13 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
 
         // Presenta los valores monetarios.
         contenedor.tvTotal.setText(
-                FreyrRepositorio.formatCurrency(debt.getMonto()));
+                FreyrRepositorio.formatearMoneda(debt.getMonto()));
 
         contenedor.tvAbonado.setText(
-                FreyrRepositorio.formatCurrency(abonado));
+                FreyrRepositorio.formatearMoneda(abonado));
 
         contenedor.tvRestante.setText(
-                FreyrRepositorio.formatCurrency(restante));
+                FreyrRepositorio.formatearMoneda(restante));
 
         // Actualiza el estado y la barra de progreso.
         if (estPagada) {
@@ -241,18 +241,18 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
             super(vistaObj);
 
             tvNombre = vistaObj.findViewById(R.id.tx_nombre_deuda);
-            tvTipoDeuda = vistaObj.findViewById(R.id.tv_debt_scope);
-            tvDescrip = vistaObj.findViewById(R.id.tv_debt_desc);
-            tvEstado = vistaObj.findViewById(R.id.tv_debt_status);
+            tvTipoDeuda = vistaObj.findViewById(R.id.tx_deuda_ambito);
+            tvDescrip = vistaObj.findViewById(R.id.tx_descript_deuda);
+            tvEstado = vistaObj.findViewById(R.id.tx_deuda_estado);
 
             tvTotal = vistaObj.findViewById(R.id.tx_deuda_total_grupo);
-            tvAbonado = vistaObj.findViewById(R.id.tv_debt_paid);
-            tvRestante = vistaObj.findViewById(R.id.tv_debt_remaining);
+            tvAbonado = vistaObj.findViewById(R.id.tx_deuda_pagada);
+            tvRestante = vistaObj.findViewById(R.id.tx_monto_pendiente);
 
-            barProgreso = vistaObj.findViewById(R.id.pb_debt_progress);
+            barProgreso = vistaObj.findViewById(R.id.bar_monto_progreso);
 
-            btnHistorial = vistaObj.findViewById(R.id.btn_debt_history);
-            btnPagar = vistaObj.findViewById(R.id.btn_debt_pay);
+            btnHistorial = vistaObj.findViewById(R.id.btn_monto_historial);
+            btnPagar = vistaObj.findViewById(R.id.btn_pagar_deuda);
         }
     }
 }

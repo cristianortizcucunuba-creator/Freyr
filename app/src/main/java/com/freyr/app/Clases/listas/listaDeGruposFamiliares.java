@@ -136,13 +136,13 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
 
         // Muestra los valores económicos con el formato del proyecto.
         contenedor.txTotal.setText(
-                FreyrRepositorio.formatCurrency(totalDeudas));
+                FreyrRepositorio.formatearMoneda(totalDeudas));
 
         contenedor.txAbonado.setText(
-                FreyrRepositorio.formatCurrency(totalAbonado));
+                FreyrRepositorio.formatearMoneda(totalAbonado));
 
         contenedor.txPendiente.setText(
-                FreyrRepositorio.formatCurrency(saldoPendiente));
+                FreyrRepositorio.formatearMoneda(saldoPendiente));
 
         // Abre los detalles cuando se selecciona el grupo.
         contenedor.itemView.setOnClickListener(v -> {

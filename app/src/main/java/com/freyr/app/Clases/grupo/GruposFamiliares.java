@@ -43,7 +43,7 @@ public class GruposFamiliares extends Fragment {
         );
 
         repositorio = ((FreyrApp) requireActivity()
-                .getApplication()).getRepository();
+                .getApplication()).getRepositorio();
 
         inicializarVistas(vista);
         configurarAcciones();
@@ -88,10 +88,10 @@ public class GruposFamiliares extends Fragment {
     }
 
     private void observarDatos() {
-        String uid = repositorio.getCurrentUserId();
+        String uid = repositorio.obtenerIdUsuarioActual();
         adaptadorGrupos.setIdUsuarioActual(uid);
 
-        repositorio.getAllGroupsLive().observe(
+        repositorio.observarTodosLosGrupos().observe(
                 getViewLifecycleOwner(),
                 groups -> {
                     if (groups != null) {
@@ -123,7 +123,7 @@ public class GruposFamiliares extends Fragment {
                 }
         );
 
-        repositorio.getAllDebtsLive().observe(
+        repositorio.observarTodasLasDeudas().observe(
                 getViewLifecycleOwner(),
                 debts -> {
                     if (debts != null) {
@@ -134,7 +134,7 @@ public class GruposFamiliares extends Fragment {
                 }
         );
 
-        repositorio.getAllPaymentsLive().observe(
+        repositorio.observarTodosLosPagos().observe(
                 getViewLifecycleOwner(),
                 payments -> {
                     if (payments != null) {

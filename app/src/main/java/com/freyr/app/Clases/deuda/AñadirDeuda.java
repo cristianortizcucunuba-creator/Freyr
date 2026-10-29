@@ -40,7 +40,7 @@ public class AñadirDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_debt);
 
-        repository = ((FreyrApp) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
 
         initViews();
         setupListeners();
@@ -114,7 +114,7 @@ public class AñadirDeuda extends AppCompatActivity {
     }
 
     private void loadData() {
-        repository.getAllUsersLive().observe(this, users -> {
+        repository.observarTodosLosUsuarios().observe(this, users -> {
             if (users != null) {
                 // El repositorio entrega una lista; la convertimos a arreglo.
                 allUsers = users.toArray(new Usuario[0]);
@@ -128,9 +128,9 @@ public class AñadirDeuda extends AppCompatActivity {
             }
         });
 
-        repository.getAllGroupsLive().observe(this, groups -> {
+        repository.observarTodosLosGrupos().observe(this, groups -> {
             if (groups != null) {
-                String currentUid = repository.getCurrentUserId();
+                String currentUid = repository.obtenerIdUsuarioActual();
 
                 // Primero guardamos los grupos coincidentes en un arreglo temporal.
                 Grupofamiliar[] matchingGroups = new Grupofamiliar[groups.size()];
@@ -248,7 +248,7 @@ public class AñadirDeuda extends AppCompatActivity {
         // Define el grupo y la persona responsable.
         boolean isFamily = rbFamily.isChecked();
         String familyGroupId = null;
-        String assignedUserId = repository.getCurrentUserId();
+        String assignedUserId = repository.obtenerIdUsuarioActual();
 
         if (isFamily) {
             int groupPosition = spinnerFamilyGroup.getSelectedItemPosition();
@@ -273,7 +273,7 @@ public class AñadirDeuda extends AppCompatActivity {
 
         btnSaveDebt.setEnabled(false);
 
-        repository.addDebt(
+        repository.agregarDeuda(
                 name,
                 description,
                 amount,
@@ -281,7 +281,7 @@ public class AñadirDeuda extends AppCompatActivity {
                 familyGroupId,
                 new FreyrRepositorio.Callback<Deuda>() {
                     @Override
-                    public void onSuccess(Deuda result) {
+                    public void alTenerExito(Deuda result) {
                         runOnUiThread(() -> {
                             Toast.makeText(
                                     AñadirDeuda.this,
@@ -294,7 +294,7 @@ public class AñadirDeuda extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(String error) {
+                    public void alOcurrirError(String error) {
                         runOnUiThread(() -> {
                             btnSaveDebt.setEnabled(true);
                             showError(error);

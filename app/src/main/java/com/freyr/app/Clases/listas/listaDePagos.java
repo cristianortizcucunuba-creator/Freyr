@@ -72,7 +72,7 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
 
         // Muestra el valor del pago con formato de moneda.
         contenedor.txMonto.setText(
-                FreyrRepositorio.formatCurrency(payment.getMonto())
+                FreyrRepositorio.formatearMoneda(payment.getMonto())
         );
 
         // Busca el nombre del usuario que realizó el pago.

@@ -88,7 +88,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_debt_status"
+                            android:id="@+id/tx_deuda_estado"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/status_pending"
@@ -103,7 +103,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tv_debt_desc"
+                        android:id="@+id/tx_descript_deuda"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Financiación a cuotas"

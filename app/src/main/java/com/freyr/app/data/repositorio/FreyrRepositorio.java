@@ -12,377 +12,377 @@ import java.util.*;
 
 public class FreyrRepositorio {
 
-    private final FreyrDatabase database;
-    private final SharedPreferences prefs;
-    private final MutableLiveData<String> currentUserIdLive = new MutableLiveData<>();
+    private final FreyrDatabase baseDatos;
+    private final SharedPreferences preferencias;
+    private final MutableLiveData<String> idUsuarioActualObservable = new MutableLiveData<>();
 
     public interface Callback<T> {
-        void onSuccess(T result);
-        void onError(String error);
+        void alTenerExito(T result);
+        void alOcurrirError(String error);
     }
 
-    public FreyrRepositorio(Context context) {
-        this.database = FreyrDatabase.getDatabase(context);
-        this.prefs = context.getSharedPreferences("freyr_prefs", Context.MODE_PRIVATE);
-        this.currentUserIdLive.setValue(prefs.getString("current_user_id", "user-juan"));
+    public FreyrRepositorio(Context contexto) {
+        this.baseDatos = FreyrDatabase.getDatabase(contexto);
+        this.preferencias = contexto.getSharedPreferences("freyr_preferencias", Context.MODE_PRIVATE);
+        this.idUsuarioActualObservable.setValue(preferencias.getString("current_user_id", "usuario-juan"));
     }
 
-    public LiveData<String> getCurrentUserIdLive() {
-        return currentUserIdLive;
+    public LiveData<String> getIdUsuarioActualObservable() {
+        return idUsuarioActualObservable;
     }
 
-    public String getCurrentUserId() {
-        return prefs.getString("current_user_id", "user-juan");
+    public String obtenerIdUsuarioActual() {
+        return preferencias.getString("id_usuario_actual", "usuario-juan");
     }
 
-    public void setLoggedInUser(String userId) {
-        if (userId != null) {
-            prefs.edit().putString("current_user_id", userId).apply();
+    public void setLoggedInUser(String idUsuario) {
+        if (idUsuario != null) {
+            preferencias.edit().putString("id_usuario_actual", idUsuario).apply();
         } else {
-            prefs.edit().remove("current_user_id").apply();
+            preferencias.edit().remove("id_usuario_actual").apply();
         }
-        currentUserIdLive.postValue(userId);
+        idUsuarioActualObservable.postValue(idUsuario);
     }
 
-    public LiveData<List<Usuario>> getAllUsersLive() {
-        return database.userDao().getAllUsersLive();
+    public LiveData<List<Usuario>> observarTodosLosUsuarios() {
+        return baseDatos.userDao().getAllUsersLive();
     }
 
-    public LiveData<List<Grupofamiliar>> getAllGroupsLive() {
-        return database.familyGroupDao().getAllGroupsLive();
+    public LiveData<List<Grupofamiliar>> observarTodosLosGrupos() {
+        return baseDatos.familyGroupDao().getAllGroupsLive();
     }
 
-    public LiveData<List<Deuda>> getAllDebtsLive() {
-        return database.debtDao().getAllDebtsLive();
+    public LiveData<List<Deuda>> observarTodasLasDeudas() {
+        return baseDatos.debtDao().getAllDebtsLive();
     }
 
-    public LiveData<List<Pago>> getAllPaymentsLive() {
-        return database.paymentDao().getAllPaymentsLive();
+    public LiveData<List<Pago>> observarTodosLosPagos() {
+        return baseDatos.paymentDao().getAllPaymentsLive();
     }
 
-    public LiveData<List<Invitacion>> getAllInvitationsLive() {
-        return database.invitationDao().getAllInvitationsLive();
+    public LiveData<List<Invitacion>> observarTodasLasInvitaciones() {
+        return baseDatos.invitationDao().getAllInvitationsLive();
     }
 
-    public LiveData<List<Pago>> getPaymentsForDebtLive(String debtId) {
-        return database.paymentDao().getPaymentsForDebtLive(debtId);
+    public LiveData<List<Pago>> observarPagosDeDeuda(String idDeuda) {
+        return baseDatos.paymentDao().getPaymentsForDebtLive(idDeuda);
     }
 
-    public void login(String identifier, String password, Callback<Usuario> callback) {
+    public void iniciarSesion(String identificador, String contraseña, Callback<Usuario> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            String clean = identifier.trim().toLowerCase(Locale.ROOT);
-            Usuario user = database.userDao().getUserByIdentifier(clean);
+            String clean = identificador.trim().toLowerCase(Locale.ROOT);
+            Usuario user = baseDatos.userDao().getUserByIdentifier(clean);
             if (user == null) {
-                callback.onError("User not found with username or email: " + identifier);
+                respuesta.alOcurrirError("User not found with username or email: " + identificador);
                 return;
             }
-            if (user.getContraseña() != null && !user.getContraseña().isEmpty() && !user.getContraseña().equals(password)) {
-                callback.onError("Incorrect password.");
+            if (user.getContraseña() != null && !user.getContraseña().isEmpty() && !user.getContraseña().equals(contraseña)) {
+                respuesta.alOcurrirError("Incorrect contraseña.");
                 return;
             }
             setLoggedInUser(user.getId());
-            callback.onSuccess(user);
+            respuesta.alTenerExito(user);
         });
     }
 
-    public void register(String fullName, String username, String email, String password, Callback<Usuario> callback) {
+    public void registrarUsuario(String nombreCompleto, String nombreUsuario, String correo, String contraseña, Callback<Usuario> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            String trimmedUsername = username.trim().toLowerCase(Locale.ROOT);
-            String trimmedEmail = email.trim().toLowerCase(Locale.ROOT);
+            String nombreUsuarioLimpio = nombreUsuario.trim().toLowerCase(Locale.ROOT);
+            String correoLimpio = correo.trim().toLowerCase(Locale.ROOT);
 
-            if (fullName.trim().isEmpty()) {
-                callback.onError("Full name is required.");
+            if (nombreCompleto.trim().isEmpty()) {
+                respuesta.alOcurrirError("El nombre completo es obligatorio.");
                 return;
             }
-            if (trimmedUsername.isEmpty()) {
-                callback.onError("Username is required.");
+            if (nombreUsuarioLimpio .isEmpty()) {
+                respuesta.alOcurrirError("El correo electrónico es obligatorio.");
                 return;
             }
-            if (trimmedEmail.isEmpty()) {
-                callback.onError("Email is required.");
+            if (correoLimpio .isEmpty()) {
+                respuesta.alOcurrirError("Email is required.");
                 return;
             }
-            if (password == null || password.length() < 6) {
-                callback.onError("Password must be at least 6 characters.");
-                return;
-            }
-
-            Usuario existing = database.userDao().getUserByIdentifier(trimmedUsername);
-            if (existing != null) {
-                callback.onError("Username is already taken.");
-                return;
-            }
-            existing = database.userDao().getUserByIdentifier(trimmedEmail);
-            if (existing != null) {
-                callback.onError("Email is already registered.");
+            if (contraseña == null || contraseña.length() < 6) {
+                respuesta.alOcurrirError("La contraseña debe tener al menos 6 caracteres.");
                 return;
             }
 
-            String[] colors = {"#69042A", "#00897B", "#1E88E5", "#8E24AA", "#D81B60", "#3949AB"};
-            String randomColor = colors[new Random().nextInt(colors.length)];
+            Usuario existente = baseDatos.userDao().getUserByIdentifier(nombreUsuarioLimpio );
+            if (existente  != null) {
+                respuesta.alOcurrirError("Ese nombre de usuario ya está ocupado.");
+                return;
+            }
+            existente  = baseDatos.userDao().getUserByIdentifier(correoLimpio );
+            if (existente  != null) {
+                respuesta.alOcurrirError("Ese correo electrónico ya está registrado.");
+                return;
+            }
 
-            String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
-            Usuario newUser = new Usuario(
+            String[] colores = {"#69042A", "#00897B", "#1E88E5", "#8E24AA", "#D81B60", "#3949AB"};
+            String randomColores = colores[new Random().nextInt(colores.length)];
+
+            String fechaActual = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
+            Usuario nuevoUsuario = new Usuario(
                 "user-" + System.currentTimeMillis(),
-                fullName.trim(),
-                trimmedUsername,
-                trimmedEmail,
-                password,
-                randomColor,
-                now
+                nombreCompleto.trim(),
+                nombreUsuarioLimpio ,
+                correoLimpio ,
+                contraseña,
+                randomColores,
+                fechaActual
             );
 
-            database.userDao().insertUser(newUser);
-            setLoggedInUser(newUser.getId());
-            callback.onSuccess(newUser);
+            baseDatos.userDao().insertUser(nuevoUsuario);
+            setLoggedInUser(nuevoUsuario.getId());
+            respuesta.alTenerExito(nuevoUsuario);
         });
     }
 
-    public void updateProfile(String fullName, String username, String email, String password, Callback<Void> callback) {
+    public void actualizarPerfil(String nombreCompleto, String nombreUsuario, String email, String contraseña, Callback<Void> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            String currentId = getCurrentUserId();
-            Usuario current = database.userDao().getUserById(currentId);
-            if (current == null) {
-                callback.onError("Not logged in.");
+            String idActual = obtenerIdUsuarioActual();
+            Usuario usuarioActual = baseDatos.userDao().getUserById(idActual);
+            if (usuarioActual == null) {
+                respuesta.alOcurrirError("No hay una sesión iniciada.");
                 return;
             }
 
-            String trimmedUsername = username.trim().toLowerCase(Locale.ROOT);
-            String trimmedEmail = email.trim().toLowerCase(Locale.ROOT);
+            String nombreUsuarioLimpio = nombreUsuario.trim().toLowerCase(Locale.ROOT);
+            String correoLimpio = email.trim().toLowerCase(Locale.ROOT);
 
-            if (fullName.trim().isEmpty()) {
-                callback.onError("Full name cannot be empty.");
+            if (nombreCompleto.trim().isEmpty()) {
+                respuesta.alOcurrirError("El nombre completo no puede estar vacío.");
                 return;
             }
-            if (trimmedUsername.isEmpty()) {
-                callback.onError("Username cannot be empty.");
+            if (nombreUsuarioLimpio.isEmpty()) {
+                respuesta.alOcurrirError("El nombre de usuario no puede estar vacío.");
                 return;
             }
-            if (trimmedEmail.isEmpty()) {
-                callback.onError("Email cannot be empty.");
+            if (correoLimpio.isEmpty()) {
+                respuesta.alOcurrirError("El correo electrónico no puede estar vacío.");
                 return;
             }
 
-            List<Usuario> users = database.userDao().getAllUsers();
+            List<Usuario> users = baseDatos.userDao().getAllUsers();
             for (Usuario u : users) {
-                if (!u.getId().equals(currentId)) {
-                    if (u.getNomUsuario().equalsIgnoreCase(trimmedUsername)) {
-                        callback.onError("Username already in use.");
+                if (!u.getId().equals(idActual )) {
+                    if (u.getNomUsuario().equalsIgnoreCase(nombreUsuarioLimpio)) {
+                        respuesta.alOcurrirError("Ese nombre de usuario ya está en uso.");
                         return;
                     }
-                    if (u.getEmail().equalsIgnoreCase(trimmedEmail)) {
-                        callback.onError("Email already in use.");
+                    if (u.getEmail().equalsIgnoreCase(correoLimpio)) {
+                        respuesta.alOcurrirError("Ese correo electrónico ya está en uso.");
                         return;
                     }
                 }
             }
 
-            current.setNombreCompl(fullName.trim());
-            current.setNomUsuar(trimmedUsername);
-            current.setEmail(trimmedEmail);
-            if (password != null && !password.trim().isEmpty()) {
-                current.setContraseña(password);
+            usuarioActual.setNombreCompl(nombreCompleto.trim());
+            usuarioActual.setNomUsuar(nombreUsuarioLimpio);
+            usuarioActual.setEmail(correoLimpio);
+            if (contraseña != null && !contraseña.trim().isEmpty()) {
+                usuarioActual.setContraseña(contraseña);
             }
 
-            database.userDao().updateUser(current);
-            callback.onSuccess(null);
+            baseDatos.userDao().updateUser(usuarioActual);
+            respuesta.alTenerExito(null);
         });
     }
 
-    public void addDebt(String name, String description, double amount, String assignedUserId, String familyGroupId, Callback<Deuda> callback) {
+    public void agregarDeuda(String nombre, String descripcion, double monto, String idUsuarioAsignado, String idGrupoFamiliar, Callback<Deuda> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            String currentId = getCurrentUserId();
-            if (name == null || name.trim().isEmpty()) {
-                callback.onError("Debt name cannot be empty.");
+            String     idActual = obtenerIdUsuarioActual();
+            if (nombre == null || nombre.trim().isEmpty()) {
+                respuesta.alOcurrirError("El nombre de la deuda es obligatorio.");
                 return;
             }
-            if (amount <= 0.0) {
-                callback.onError("Amount must be a positive number.");
+            if (monto <= 0.0) {
+                respuesta.alOcurrirError("El monto debe ser mayor que cero.");
                 return;
             }
 
-            String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
+            String     fechaActual = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
             Deuda debt = new Deuda(
                 "debt-" + System.currentTimeMillis(),
-                name.trim(),
-                (description != null && !description.trim().isEmpty()) ? description.trim() : null,
-                amount,
-                assignedUserId,
-                familyGroupId,
+                nombre.trim(),
+                (descripcion != null && !descripcion.trim().isEmpty()) ? descripcion.trim() : null,
+                monto,
+                idUsuarioAsignado,
+                idGrupoFamiliar,
                 "pending",
-                now,
-                currentId
+                    fechaActual,
+                    idActual
             );
 
-            database.debtDao().insertDebt(debt);
-            callback.onSuccess(debt);
+            baseDatos.debtDao().insertDebt(debt);
+            respuesta.alTenerExito(debt);
         });
     }
 
-    public void deleteDebt(String debtId, Callback<Void> callback) {
+    public void eliminarDeuda(String idDeuda, Callback<Void> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            database.debtDao().deleteDebtById(debtId);
-            database.paymentDao().deletePaymentsForDebt(debtId);
-            if (callback != null) callback.onSuccess(null);
+            baseDatos.debtDao().deleteDebtById(idDeuda);
+            baseDatos.paymentDao().deletePaymentsForDebt(idDeuda);
+            if (respuesta != null) respuesta.alTenerExito(null);
         });
     }
 
-    public void addPayment(String debtId, double amount, String date, String description, Callback<Pago> callback) {
+    public void registrarPago(String idDeuda, double monto, String fecha, String descripcion, Callback<Pago> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            String currentId = getCurrentUserId();
-            if (amount <= 0.0) {
-                callback.onError("Payment amount must be greater than 0.");
+            String     idActual = obtenerIdUsuarioActual();
+            if (monto <= 0.0) {
+                respuesta.alOcurrirError("El monto del pago debe ser mayor que cero.");
                 return;
             }
 
-            Deuda debt = database.debtDao().getDebtById(debtId);
-            if (debt == null) {
-                callback.onError("Debt not found.");
+            Deuda deudas = baseDatos.debtDao().getDebtById(idDeuda);
+            if (deudas == null) {
+                respuesta.alOcurrirError("No se encontró la deuda.");
                 return;
             }
 
-            List<Pago> payments = database.paymentDao().getPaymentsForDebt(debtId);
-            double currentPaid = 0.0;
+            List<Pago> payments = baseDatos.paymentDao().getPaymentsForDebt(idDeuda);
+            double totalPagadoActual  = 0.0;
             for (Pago p : payments) {
-                currentPaid += p.getMonto();
+                totalPagadoActual  += p.getMonto();
             }
 
-            double newTotalPaid = currentPaid + amount;
-            String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
+            double nuevoTotalPagado = totalPagadoActual + monto;
+            String fechaCreacion  = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
             Pago payment = new Pago(
-                "pay-" + System.currentTimeMillis(),
-                debtId,
-                currentId,
-                amount,
-                date,
-                (description != null && !description.trim().isEmpty()) ? description.trim() : null,
-                now
+                "pago-" + System.currentTimeMillis(),
+                idDeuda,
+                idActual,
+                monto,
+                fecha,
+                (descripcion != null && !descripcion.trim().isEmpty()) ? descripcion.trim() : null,
+                fechaCreacion
             );
-            database.paymentDao().insertPayment(payment);
+            baseDatos.paymentDao().insertPayment(payment);
 
-            // Once remaining amount reaches zero, automatically marked as Paid
-            if (newTotalPaid >= debt.getMonto()) {
-                debt.setEstado("paid");
-                database.debtDao().updateDebt(debt);
+            // Once remaining monto reaches zero, automatically marked as Paid
+            if (nuevoTotalPagado  >= deudas.getMonto()) {
+                deudas.setEstado("pagado");
+                baseDatos.debtDao().updateDebt(deudas);
             }
 
-            callback.onSuccess(payment);
+            respuesta.alTenerExito(payment);
         });
     }
 
-    public void deletePayment(String paymentId, String debtId, Callback<Void> callback) {
+    public void eliminarPago(String idPago, String idDeuda, Callback<Void> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            database.paymentDao().deletePaymentById(paymentId);
-            Deuda debt = database.debtDao().getDebtById(debtId);
-            if (debt != null) {
-                List<Pago> remainingPayments = database.paymentDao().getPaymentsForDebt(debtId);
-                double totalPaid = 0.0;
-                for (Pago p : remainingPayments) {
-                    totalPaid += p.getMonto();
+            baseDatos.paymentDao().deletePaymentById(idPago);
+            Deuda deuda = baseDatos.debtDao().getDebtById(idDeuda);
+            if (deuda != null) {
+                List<Pago> pagosRestantes  = baseDatos.paymentDao().getPaymentsForDebt(idDeuda);
+                double totalPagado = 0.0;
+                for (Pago p : pagosRestantes ) {
+                    totalPagado  += p.getMonto();
                 }
-                if (totalPaid < debt.getMonto()) {
-                    debt.setEstado("pending");
-                    database.debtDao().updateDebt(debt);
+                if (totalPagado  < deuda.getMonto()) {
+                    deuda.setEstado("pendiente");
+                    baseDatos.debtDao().updateDebt(deuda);
                 }
             }
-            if (callback != null) callback.onSuccess(null);
+            if (respuesta != null) respuesta.alTenerExito(null);
         });
     }
 
-    public void createFamilyGroup(String name, Callback<Grupofamiliar> callback) {
+    public void crearGrupoFamiliar(String nombre, Callback<Grupofamiliar> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            String currentId = getCurrentUserId();
-            if (name == null || name.trim().isEmpty()) {
-                callback.onError("Group name cannot be empty.");
+            String idActual = obtenerIdUsuarioActual();
+            if (nombre == null || nombre.trim().isEmpty()) {
+                respuesta.alOcurrirError("El nombre del grupo no puede estar vacío.");
                 return;
             }
 
-            String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
+            String fechaActual = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
             Grupofamiliar group = new Grupofamiliar(
-                "group-" + System.currentTimeMillis(),
-                name.trim(),
-                currentId,
-                Collections.singletonList(currentId),
-                now
+                "grupo-" + System.currentTimeMillis(),
+                nombre.trim(),
+                idActual,
+                Collections.singletonList(idActual),
+                fechaActual
             );
 
-            database.familyGroupDao().insertGroup(group);
-            callback.onSuccess(group);
+            baseDatos.familyGroupDao().insertGroup(group);
+            respuesta.alTenerExito(group);
         });
     }
 
-    public void inviteUser(String groupId, String identifier, Callback<Void> callback) {
+    public void invitarUsuario(String idGrupo, String identificador, Callback<Void> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            String currentId = getCurrentUserId();
-            Grupofamiliar group = database.familyGroupDao().getGroupById(groupId);
+            String idActual = obtenerIdUsuarioActual();
+            Grupofamiliar group = baseDatos.familyGroupDao().getGroupById(idGrupo);
             if (group == null) {
-                callback.onError("Family group not found.");
+                respuesta.alOcurrirError("No se encontró el grupo familiar.");
                 return;
             }
 
-            Usuario target = database.userDao().getUserByIdentifier(identifier.trim().toLowerCase(Locale.ROOT));
-            if (target == null) {
-                callback.onError("No user found with username or email: " + identifier);
+            Usuario usuarioInvitado = baseDatos.userDao().getUserByIdentifier(identificador.trim().toLowerCase(Locale.ROOT));
+            if (usuarioInvitado == null) {
+                respuesta.alOcurrirError("No se encontró un usuario con ese nombre o correo: " + identificador);
                 return;
             }
 
-            if (group.getMiembrosIds().contains(target.getId())) {
-                callback.onError(target.getNomCompl() + " is already a member of this group.");
+            if (group.getMiembrosIds().contains(usuarioInvitado.getId())) {
+                respuesta.alOcurrirError(usuarioInvitado.getNomCompl() + " ya pertenece a este grupo.");
                 return;
             }
 
-            List<Invitacion> allInvites = database.invitationDao().getAllInvitations();
-            for (Invitacion inv : allInvites) {
-                if (inv.getGrupoFamiliarId().equals(groupId) && inv.getIdUsuarioInvitado().equals(target.getId()) && "pending".equals(inv.getEstado())) {
-                    callback.onError("An invitation is already pending for " + target.getNomCompl());
+            List<Invitacion> todasLasInvitacion = baseDatos.invitationDao().getAllInvitations();
+            for (Invitacion inv : todasLasInvitacion) {
+                if (inv.getGrupoFamiliarId().equals(idGrupo) && inv.getIdUsuarioInvitado().equals(usuarioInvitado.getId()) && "pendiente".equals(inv.getEstado())) {
+                    respuesta.alOcurrirError("Ya hay una invitación pendiente para: " + usuarioInvitado.getNomCompl());
                     return;
                 }
             }
 
-            String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
+            String fechaActual = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
             Invitacion invitacion = new Invitacion(
                 "inv-" + System.currentTimeMillis(),
-                groupId,
-                target.getId(),
-                currentId,
-                "pending",
-                now
+                idGrupo,
+                usuarioInvitado.getId(),
+                idActual,
+                "pendiente",
+                fechaActual
             );
-            database.invitationDao().insertInvitation(invitacion);
-            callback.onSuccess(null);
+            baseDatos.invitationDao().insertInvitation(invitacion);
+            respuesta.alTenerExito(null);
         });
     }
 
-    public void respondToInvitation(String invitationId, boolean accept, Callback<Void> callback) {
+    public void responderInvitacion(String idInvitacion, boolean aceptar, Callback<Void> respuesta) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            Invitacion invite = database.invitationDao().getInvitationById(invitationId);
-            if (invite == null) return;
+            Invitacion invitacion = baseDatos.invitationDao().getInvitationById(idInvitacion);
+            if (invitacion == null) return;
 
-            if (accept) {
-                Grupofamiliar group = database.familyGroupDao().getGroupById(invite.getGrupoFamiliarId());
-                if (group != null && !group.getMiembrosIds().contains(invite.getIdUsuarioInvitado())) {
-                    List<String> updated = new ArrayList<>(group.getMiembrosIds());
-                    updated.add(invite.getIdUsuarioInvitado());
-                    group.setIdDeMiembros(updated);
-                    database.familyGroupDao().updateGroup(group);
+            if (aceptar) {
+                Grupofamiliar grupo = baseDatos.familyGroupDao().getGroupById(invitacion.getGrupoFamiliarId());
+                if (grupo != null && !grupo.getMiembrosIds().contains(invitacion.getIdUsuarioInvitado())) {
+                    List<String> updated = new ArrayList<>(grupo.getMiembrosIds());
+                    updated.add(invitacion.getIdUsuarioInvitado());
+                    grupo.setIdDeMiembros(updated);
+                    baseDatos.familyGroupDao().updateGroup(grupo);
                 }
             }
 
-            invite.setEstado(accept ? "accepted" : "declined");
-            database.invitationDao().updateInvitation(invite);
-            if (callback != null) callback.onSuccess(null);
+            invitacion.setEstado(aceptar ? "acepto" : "rechazado");
+            baseDatos.invitationDao().updateInvitation(invitacion);
+            if (respuesta != null) respuesta.alTenerExito(null);
         });
     }
 
-    public static String formatCurrency(double amount) {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-        if (amount % 1.0 == 0.0) {
-            format.setMaximumFractionDigits(0);
-            format.setMinimumFractionDigits(0);
+    public static String formatearMoneda(double monto) {
+        NumberFormat formato = NumberFormat.getCurrencyInstance(Locale.US);
+        if (monto % 1.0 == 0.0) {
+            formato.setMaximumFractionDigits(0);
+            formato.setMinimumFractionDigits(0);
         } else {
-            format.setMaximumFractionDigits(2);
-            format.setMinimumFractionDigits(2);
+            formato.setMaximumFractionDigits(2);
+            formato.setMinimumFractionDigits(2);
         }
-        return format.format(amount);
+        return formato.format(monto);
     }
 }

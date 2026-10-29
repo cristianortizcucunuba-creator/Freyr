@@ -37,10 +37,10 @@ public class ActividadPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        repository = ((FreyrApp) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
 
         // Comprueba que exista una sesión iniciada.
-        if (repository.getCurrentUserId() == null) {
+        if (repository.obtenerIdUsuarioActual() == null) {
             startActivity(new Intent(this, LoguearUsuario.class));
             finish();
             return;
@@ -100,12 +100,12 @@ public class ActividadPrincipal extends AppCompatActivity {
     }
 
     private void observeUser() {
-        repository.getAllUsersLive().observe(this, users -> {
+        repository.observarTodosLosUsuarios().observe(this, users -> {
             if (users != null) {
                 // El repositorio entrega una lista; la convertimos a arreglo.
                 allUsers = users.toArray(new Usuario[0]);
 
-                String currentUid = repository.getCurrentUserId();
+                String currentUid = repository.obtenerIdUsuarioActual();
 
                 for (Usuario user : allUsers) {
                     if (user.getId().equals(currentUid)) {

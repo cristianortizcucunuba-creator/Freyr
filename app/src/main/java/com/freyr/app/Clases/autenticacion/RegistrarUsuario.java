@@ -35,7 +35,7 @@ public class RegistrarUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        repositorio = ((FreyrApp) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepositorio();
 
         iniciarVistas();
         setupListeners();
@@ -88,9 +88,9 @@ public class RegistrarUsuario extends AppCompatActivity {
         txError.setVisibility(View.GONE);
         btnRegistrar.setEnabled(false);
 
-        repositorio.register(nombreCompleto, usuario, email, contraseña, new FreyrRepositorio.Callback<Usuario>() {
+        repositorio.registrarUsuario(nombreCompleto, usuario, email, contraseña, new FreyrRepositorio.Callback<Usuario>() {
             @Override
-            public void onSuccess(Usuario result) {
+            public void alTenerExito(Usuario result) {
                 runOnUiThread(() -> {
                     Intent intent = new Intent(RegistrarUsuario.this, ActividadPrincipal.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -100,7 +100,7 @@ public class RegistrarUsuario extends AppCompatActivity {
             }
 
             @Override
-            public void onError(String error) {
+            public void alOcurrirError(String error) {
                 runOnUiThread(() -> {
                     btnRegistrar.setEnabled(true);
                     showError(error);

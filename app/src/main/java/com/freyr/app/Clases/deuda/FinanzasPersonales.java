@@ -49,7 +49,7 @@ public class FinanzasPersonales extends Fragment {
         );
 
         repository = ((FreyrApp) requireActivity()
-                .getApplication()).getRepository();
+                .getApplication()).getRepositorio();
 
         initViews(view);
         setupListeners();
@@ -117,7 +117,7 @@ public class FinanzasPersonales extends Fragment {
     }
 
     private void observeData() {
-        repository.getAllDebtsLive().observe(getViewLifecycleOwner(), debts -> {
+        repository.observarTodasLasDeudas().observe(getViewLifecycleOwner(), debts -> {
             if (debts != null) {
                 // Convierte los datos del repositorio a arreglos.
                 allDebts = debts.toArray(new Deuda[0]);
@@ -125,7 +125,7 @@ public class FinanzasPersonales extends Fragment {
             }
         });
 
-        repository.getAllPaymentsLive().observe(
+        repository.observarTodosLosPagos().observe(
                 getViewLifecycleOwner(),
                 payments -> {
                     if (payments != null) {
@@ -139,7 +139,7 @@ public class FinanzasPersonales extends Fragment {
 
     // Filtra las deudas personales según el estado seleccionado.
     private void updateFilteredList() {
-        String uid = repository.getCurrentUserId();
+        String uid = repository.obtenerIdUsuarioActual();
 
         // El arreglo temporal puede contener como máximo todas las deudas.
         Deuda[] filteredDebts = new Deuda[allDebts.length];

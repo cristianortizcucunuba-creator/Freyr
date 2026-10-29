@@ -36,7 +36,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        repository = ((FreyrApp) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
 
         initViews();
         setupListeners();
@@ -60,9 +60,9 @@ public class ActividadEditarPerfil extends AppCompatActivity {
     }
 
     private void loadProfile() {
-        repository.getAllUsersLive().observe(this, users -> {
+        repository.observarTodosLosUsuarios().observe(this, users -> {
             if (users != null) {
-                String curId = repository.getCurrentUserId();
+                String curId = repository.obtenerIdUsuarioActual();
                 for (Usuario u : users) {
                     if (u.getId().equals(curId)) {
                         currentUser = u;
@@ -110,9 +110,9 @@ public class ActividadEditarPerfil extends AppCompatActivity {
 
         btnSaveProfile.setEnabled(false);
 
-        repository.updateProfile(fullName, username, email, password, new FreyrRepositorio.Callback<Void>() {
+        repository.actualizarPerfil(fullName, username, email, password, new FreyrRepositorio.Callback<Void>() {
             @Override
-            public void onSuccess(Void result) {
+            public void alTenerExito(Void result) {
                 runOnUiThread(() -> {
                     btnSaveProfile.setEnabled(true);
                     Toast.makeText(ActividadEditarPerfil.this, "¡Perfil actualizado exitosamente!", Toast.LENGTH_SHORT).show();
@@ -121,7 +121,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
             }
 
             @Override
-            public void onError(String error) {
+            public void alOcurrirError(String error) {
                 runOnUiThread(() -> {
                     btnSaveProfile.setEnabled(true);
                     showFeedback(error, false);

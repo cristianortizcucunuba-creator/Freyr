@@ -56,7 +56,7 @@ public class DetallesDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt_detail);
 
-        repository = ((FreyrApp) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
         debtId = getIntent().getStringExtra("debt_id");
 
         if (debtId == null) {
@@ -75,8 +75,8 @@ public class DetallesDeuda extends AppCompatActivity {
         btnDeleteDebt = findViewById(R.id.btn_delete_debt);
         tvTitle = findViewById(R.id.tv_title);
         tvDebtName = findViewById(R.id.tx_nombre_deuda);
-        tvDebtDesc = findViewById(R.id.tv_debt_desc);
-        tvDebtStatus = findViewById(R.id.tv_debt_status);
+        tvDebtDesc = findViewById(R.id.tx_descript_deuda);
+        tvDebtStatus = findViewById(R.id.tx_deuda_estado);
         tvAssignedInfo = findViewById(R.id.tv_assigned_info);
         tvTotalAmt = findViewById(R.id.tx_etiqueta_admin);
         tvPaidAmt = findViewById(R.id.tv_paid_amt);
@@ -97,11 +97,11 @@ public class DetallesDeuda extends AppCompatActivity {
                     .setTitle("Eliminar deuda")
                     .setMessage("¿Estás seguro de que deseas eliminar esta deuda y su historial de abonos?")
                     .setPositiveButton("Eliminar", (dialog, which) -> {
-                        repository.deleteDebt(
+                        repository.eliminarDeuda(
                                 debtId,
                                 new FreyrRepositorio.Callback<Void>() {
                                     @Override
-                                    public void onSuccess(Void result) {
+                                    public void alTenerExito(Void result) {
                                         runOnUiThread(() -> {
                                             Toast.makeText(
                                                     DetallesDeuda.this,
@@ -113,7 +113,7 @@ public class DetallesDeuda extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onError(String error) {
+                                    public void alOcurrirError(String error) {
                                     }
                                 }
                         );
@@ -138,11 +138,11 @@ public class DetallesDeuda extends AppCompatActivity {
                     .setTitle("Eliminar abono")
                     .setMessage(
                             "¿Deseas eliminar este abono de "
-                                    + FreyrRepositorio.formatCurrency(payment.getMonto())
+                                    + FreyrRepositorio.formatearMoneda(payment.getMonto())
                                     + "?"
                     )
                     .setPositiveButton("Eliminar", (dialog, which) ->
-                            repository.deletePayment(payment.getId(), debtId, null)
+                            repository.eliminarPago(payment.getId(), debtId, null)
                     )
                     .setNegativeButton("Cancelar", null)
                     .show();
@@ -153,7 +153,7 @@ public class DetallesDeuda extends AppCompatActivity {
     }
 
     private void observeData() {
-        repository.getAllUsersLive().observe(this, users -> {
+        repository.observarTodosLosUsuarios().observe(this, users -> {
             if (users != null) {
                 // El repositorio entrega una lista; la convertimos a arreglo.
                 allUsers = users.toArray(new Usuario[0]);
@@ -163,7 +163,7 @@ public class DetallesDeuda extends AppCompatActivity {
             }
         });
 
-        repository.getAllDebtsLive().observe(this, debts -> {
+        repository.observarTodasLasDeudas().observe(this, debts -> {
             if (debts != null) {
                 for (Deuda debt : debts) {
                     if (debt.getId().equals(debtId)) {
@@ -176,7 +176,7 @@ public class DetallesDeuda extends AppCompatActivity {
             }
         });
 
-        repository.getPaymentsForDebtLive(debtId).observe(this, payments -> {
+        repository.observarPagosDeDeuda(debtId).observe(this, payments -> {
             if (payments != null) {
                 // El adapter trabaja con arreglos.
                 allPayments = payments.toArray(new Pago[0]);
@@ -224,9 +224,9 @@ public class DetallesDeuda extends AppCompatActivity {
         boolean isPaid = remaining == 0.0
                 || "paid".equalsIgnoreCase(currentDebt.getEstado());
 
-        tvTotalAmt.setText(FreyrRepositorio.formatCurrency(total));
-        tvPaidAmt.setText(FreyrRepositorio.formatCurrency(paid));
-        tvRemainingAmt.setText(FreyrRepositorio.formatCurrency(remaining));
+        tvTotalAmt.setText(FreyrRepositorio.formatearMoneda(total));
+        tvPaidAmt.setText(FreyrRepositorio.formatearMoneda(paid));
+        tvRemainingAmt.setText(FreyrRepositorio.formatearMoneda(remaining));
 
         if (isPaid) {
             tvDebtStatus.setText("PAGADA EN SU TOTALIDAD");

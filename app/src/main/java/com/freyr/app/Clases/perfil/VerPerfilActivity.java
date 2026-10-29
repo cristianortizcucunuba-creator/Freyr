@@ -44,7 +44,7 @@ public class VerPerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_perfil);
 
-        repository = ((FreyrApp) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
 
         initViews();
         setupListeners();
@@ -73,9 +73,9 @@ public class VerPerfilActivity extends AppCompatActivity {
     }
 
     private void observeData() {
-        repository.getAllUsersLive().observe(this, users -> {
+        repository.observarTodosLosUsuarios().observe(this, users -> {
             if (users != null) {
-                String curId = repository.getCurrentUserId();
+                String curId = repository.obtenerIdUsuarioActual();
                 for (Usuario u : users) {
                     if (u.getId().equals(curId)) {
                         currentUser = u;
@@ -94,21 +94,21 @@ public class VerPerfilActivity extends AppCompatActivity {
             }
         });
 
-        repository.getAllDebtsLive().observe(this, debts -> {
+        repository.observarTodasLasDeudas().observe(this, debts -> {
             if (debts != null) {
                 allDebts = debts;
                 updateStats();
             }
         });
 
-        repository.getAllPaymentsLive().observe(this, payments -> {
+        repository.observarTodosLosPagos().observe(this, payments -> {
             if (payments != null) {
                 allPayments = payments;
                 updateStats();
             }
         });
 
-        repository.getAllGroupsLive().observe(this, groups -> {
+        repository.observarTodosLosGrupos().observe(this, groups -> {
             if (groups != null) {
                 allGroups = groups;
                 updateStats();
@@ -142,7 +142,7 @@ public class VerPerfilActivity extends AppCompatActivity {
         }
 
         tvStatDebts.setText(String.valueOf(debtsCount));
-        tvStatPaid.setText(FreyrRepositorio.formatCurrency(paidTotal));
+        tvStatPaid.setText(FreyrRepositorio.formatearMoneda(paidTotal));
         tvStatGroups.setText(String.valueOf(groupsCount));
     }
 }

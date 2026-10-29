@@ -53,8 +53,8 @@ public class PantallaInicio extends AppCompatActivity {
         videoView.setOnCompletionListener(mp -> {
             if (isFinishing() || isDestroyed()) return;
 
-            FreyrRepositorio repositorio = ((FreyrApp) getApplication()).getRepository();
-            String idUsuarioActual = repositorio.getCurrentUserId();
+            FreyrRepositorio repositorio = ((FreyrApp) getApplication()).getRepositorio();
+            String idUsuarioActual = repositorio.obtenerIdUsuarioActual();
 
             Intent intent;
             if (idUsuarioActual != null && !idUsuarioActual.trim().isEmpty()) {

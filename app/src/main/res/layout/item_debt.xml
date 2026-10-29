@@ -37,7 +37,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_debt_scope"
+                    android:id="@+id/tx_deuda_ambito"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Deuda Personal"
@@ -47,7 +47,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_debt_status"
+                android:id="@+id/tx_deuda_estado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pendiente"
@@ -63,7 +63,7 @@
 
         <!-- Descripción (si existe) -->
         <TextView
-            android:id="@+id/tv_debt_desc"
+            android:id="@+id/tx_descript_deuda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cuota del portátil de trabajo"
@@ -113,7 +113,7 @@
                     android:textColor="@color/freyr_text_secondary"
                     android:textSize="10sp" />
                 <TextView
-                    android:id="@+id/tv_debt_paid"
+                    android:id="@+id/tx_deuda_pagada"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$1.000.000"
@@ -135,7 +135,7 @@
                     android:textColor="@color/freyr_text_secondary"
                     android:textSize="10sp" />
                 <TextView
-                    android:id="@+id/tv_debt_remaining"
+                    android:id="@+id/tx_monto_pendiente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$2.000.000"
@@ -148,7 +148,7 @@
 
         <!-- Barra de Progreso -->
         <ProgressBar
-            android:id="@+id/pb_debt_progress"
+            android:id="@+id/bar_monto_progreso"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="6dp"
@@ -166,7 +166,7 @@
             android:layout_marginTop="10dp">
 
             <Button
-                android:id="@+id/btn_debt_history"
+                android:id="@+id/btn_monto_historial"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="Historial"
@@ -183,7 +183,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btn_debt_pay"
+                android:id="@+id/btn_pagar_deuda"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="+ Añadir pago"

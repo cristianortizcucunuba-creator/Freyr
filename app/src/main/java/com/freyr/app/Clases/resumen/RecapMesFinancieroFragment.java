@@ -52,7 +52,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        repositorio = ((FreyrApp) requireActivity().getApplication()).getRepository();
+        repositorio = ((FreyrApp) requireActivity().getApplication()).getRepositorio();
         inicializarVistas(vista);
         configurarListeners();
         configurarRecyclerView();
@@ -111,11 +111,11 @@ public class RecapMesFinancieroFragment extends Fragment {
 
     //Actualiza la pantalla cada vez que cambian los datos
     private void observarDatos() {
-        repositorio.getAllUsersLive().observe(getViewLifecycleOwner(), usuarios -> {
+        repositorio.observarTodosLosUsuarios().observe(getViewLifecycleOwner(), usuarios -> {
             if (usuarios != null) {
                 todosLosUsuarios = usuarios.toArray(new Usuario[0]);
                 adaptadorDeudas.setUsuarios(todosLosUsuarios);
-                String idActual = repositorio.getCurrentUserId();
+                String idActual = repositorio.obtenerIdUsuarioActual();
                 //Busca al usuario actual y muestra su nombre
                 for (Usuario user : todosLosUsuarios) if (user.getId().equals(idActual)) {
                     usuarioActual = user;
@@ -125,21 +125,21 @@ public class RecapMesFinancieroFragment extends Fragment {
                 recalcularResumen();
             }
         });
-        repositorio.getAllDebtsLive().observe(getViewLifecycleOwner(), debts -> {
+        repositorio.observarTodasLasDeudas().observe(getViewLifecycleOwner(), debts -> {
             if (debts != null) {
                 todasLasDeudasallDebts = debts.toArray(new Deuda[0]);
                 adaptadorDeudas.setDeudas(filterActiveDebts());
                 recalcularResumen();
             }
         });
-        repositorio.getAllPaymentsLive().observe(getViewLifecycleOwner(), pagos -> {
+        repositorio.observarTodosLosPagos().observe(getViewLifecycleOwner(), pagos -> {
             if (pagos != null) {
                 todosLosPagos = pagos.toArray(new Pago[0]);
                 adaptadorDeudas.setPagos(todosLosPagos);
                 recalcularResumen();
             }
         });
-        repositorio.getAllGroupsLive().observe(getViewLifecycleOwner(), grupos -> {
+        repositorio.observarTodosLosGrupos().observe(getViewLifecycleOwner(), grupos -> {
             if (grupos != null) {
                 todosLosGrupos = grupos.toArray(new Grupofamiliar[0]);
                 adaptadorDeudas.setGrupos(todosLosGrupos);
@@ -147,10 +147,10 @@ public class RecapMesFinancieroFragment extends Fragment {
                 recalcularResumen();
             }
         });
-        repositorio.getAllInvitationsLive().observe(getViewLifecycleOwner(), invitaciones -> {
+        repositorio.observarTodasLasInvitaciones().observe(getViewLifecycleOwner(), invitaciones -> {
             if (invitaciones != null) {
                 todasLasInvitaciones = invitaciones.toArray(new Invitacion[0]);
-                String usuarioid = repositorio.getCurrentUserId();
+                String usuarioid = repositorio.obtenerIdUsuarioActual();
                 int cantidadPendientes = 0;
                 //Cuenta las invitaciones pendientes del usuario
                 for (Invitacion inv : todasLasInvitaciones)
@@ -164,7 +164,7 @@ public class RecapMesFinancieroFragment extends Fragment {
 
     //Devuelve hasta tres deudas activas que correspondan al usuario
     private Deuda[] filterActiveDebts() {
-        String usuarioid = repositorio.getCurrentUserId();
+        String usuarioid = repositorio.obtenerIdUsuarioActual();
         String[] userGroupIds = obtenerIdsGruposUsuario(usuarioid);
         Deuda[] activas = new Deuda[Math.min(3, todasLasDeudasallDebts.length)];
         int contador = 0;
@@ -188,7 +188,7 @@ public class RecapMesFinancieroFragment extends Fragment {
 
     //Calcula los totales de deudas y pagos y los muestra en pantalla
     private void recalcularResumen() {
-        String usuarioid = repositorio.getCurrentUserId();
+        String usuarioid = repositorio.obtenerIdUsuarioActual();
         if (usuarioid == null) return;
         String[] idsGruposUsuario = obtenerIdsGruposUsuario(usuarioid);
         int cantidadPendientes = 0, cantidadPagadas = 0;
@@ -218,14 +218,14 @@ public class RecapMesFinancieroFragment extends Fragment {
         for (Deuda d : todasLasDeudasallDebts) if (d.getGrupoFamiliarId() != null && contiene(idsGruposUsuario, d.getGrupoFamiliarId()))
             pendienteFamiliar += Math.max(0.0, d.getMonto() - obtenerMontoPagado(d));
         double totalPendiente = Math.max(0.0, totalDebido - totalPagado);
-        if (txHistorialTotalDebido != null) txHistorialTotalDebido.setText(FreyrRepositorio.formatCurrency(totalDebido));
-        if (txHistorialTotalPagado != null) txHistorialTotalPagado.setText(FreyrRepositorio.formatCurrency(totalPagado));
-        if (txHistorialTotalPendiente != null) txHistorialTotalPendiente.setText(FreyrRepositorio.formatCurrency(totalPendiente));
-        txMontoTotalPendiente.setText(FreyrRepositorio.formatCurrency(totalPorPagar));
+        if (txHistorialTotalDebido != null) txHistorialTotalDebido.setText(FreyrRepositorio.formatearMoneda(totalDebido));
+        if (txHistorialTotalPagado != null) txHistorialTotalPagado.setText(FreyrRepositorio.formatearMoneda(totalPagado));
+        if (txHistorialTotalPendiente != null) txHistorialTotalPendiente.setText(FreyrRepositorio.formatearMoneda(totalPendiente));
+        txMontoTotalPendiente.setText(FreyrRepositorio.formatearMoneda(totalPorPagar));
         txCantidadDeudasPendientes.setText(String.valueOf(cantidadPendientes));
         txCantidadDeudasPagadas.setText(String.valueOf(cantidadPagadas));
-        txTotalPagosPersonales.setText(FreyrRepositorio.formatCurrency(pagosPersonales));
-        txTotalDeudasFamiliares.setText(FreyrRepositorio.formatCurrency(pendienteFamiliar));
+        txTotalPagosPersonales.setText(FreyrRepositorio.formatearMoneda(pagosPersonales));
+        txTotalDeudasFamiliares.setText(FreyrRepositorio.formatearMoneda(pendienteFamiliar));
     }
 
     //Obtiene los identificadores de grupos a los que pertenece el usuario.

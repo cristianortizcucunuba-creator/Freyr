@@ -5,16 +5,16 @@ import com.freyr.app.data.local.FreyrDatabase;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class FreyrApp extends Application {
-    private FreyrRepositorio repository;
+    private FreyrRepositorio repositorio;
 
     @Override
     public void onCreate() {
         super.onCreate();
         FreyrDatabase.getDatabase(this);
-        repository = new FreyrRepositorio(this);
+        repositorio = new FreyrRepositorio(this);
     }
 
-    public FreyrRepositorio getRepository() {
-        return repository;
+    public FreyrRepositorio getRepositorio() {
+        return repositorio;
     }
 }

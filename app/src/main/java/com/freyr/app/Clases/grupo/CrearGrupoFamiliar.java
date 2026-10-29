@@ -31,7 +31,7 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
         super.onCreate(estadoGuardado);
         setContentView(R.layout.activity_create_family_group);
 
-        repositorio = ((FreyrApp) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepositorio();
 
         inicializarVistas();
         configurarAcciones();
@@ -59,9 +59,9 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
             txError.setVisibility(View.GONE);
             btnGuardarGrupo.setEnabled(false);
 
-            repositorio.createFamilyGroup(name, new FreyrRepositorio.Callback<Grupofamiliar>() {
+            repositorio.crearGrupoFamiliar(name, new FreyrRepositorio.Callback<Grupofamiliar>() {
                 @Override
-                public void onSuccess(Grupofamiliar grupoCreado) {
+                public void alTenerExito(Grupofamiliar grupoCreado) {
                     runOnUiThread(() -> {
                         Toast.makeText(CrearGrupoFamiliar.this, "¡Grupo familiar creado exitosamente!", Toast.LENGTH_SHORT).show();
                         setResult(RESULT_OK);
@@ -70,7 +70,7 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
                 }
 
                 @Override
-                public void onError(String error) {
+                public void alOcurrirError(String error) {
                     runOnUiThread(() -> {
                         btnGuardarGrupo.setEnabled(true);
                         txError.setText(error);

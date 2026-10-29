@@ -56,9 +56,9 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_group_detail);
 
-        repositorio = ((FreyrApp) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepositorio();
         idGrupo = getIntent().getStringExtra("grupo_id");
-        repositorio = ((FreyrApp) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepositorio();
         idGrupo = getIntent().getStringExtra("group_id");
 
         if (idGrupo == null) {
@@ -105,13 +105,13 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             }
 
             btnEnviarInvitacion.setEnabled(false);
-            repositorio.inviteUser(
+            repositorio.invitarUsuario(
                     idGrupo,
                     identifier,
 
                     new FreyrRepositorio.Callback<Void>() {
                         @Override
-                        public void onSuccess(Void resultado) {
+                        public void alTenerExito(Void resultado) {
                             runOnUiThread(() -> {
                                 btnEnviarInvitacion.setEnabled(true);
                                 etIdentificadorInvitacion.setText("");
@@ -123,7 +123,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onError(String error) {
+                        public void alOcurrirError(String error) {
                             runOnUiThread(() -> {
                                 btnEnviarInvitacion.setEnabled(true);
                                 showResultadoInvitacion(error, false);
@@ -179,14 +179,14 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
 
     private void observarDatos() {
-        repositorio.getAllUsersLive().observe(this, users -> {
+        repositorio.observarTodosLosUsuarios().observe(this, users -> {
             if (users != null) {
                 todosLosUsuarios = users.toArray(new Usuario[0]);
                 actualizarListaMiembros();
             }
         });
 
-        repositorio.getAllGroupsLive().observe(this, groups -> {
+        repositorio.observarTodosLosGrupos().observe(this, groups -> {
             if (groups != null) {
                 for (Grupofamiliar grupo : groups) {
                     if (grupo.getId().equals(idGrupo)) {
@@ -202,7 +202,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             }
         });
 
-        repositorio.getAllDebtsLive().observe(this, debts -> {
+        repositorio.observarTodasLasDeudas().observe(this, debts -> {
             if (debts != null) {
                 Deuda[] deudasCoincidentes = new Deuda[debts.size()];
                 int cantidad = 0;
@@ -226,7 +226,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             }
         });
 
-        repositorio.getAllPaymentsLive().observe(this, payments -> {
+        repositorio.observarTodosLosPagos().observe(this, payments -> {
             if (payments != null) {
                 todosLosPagos = payments.toArray(new Pago[0]);
                 adaptadorDeudas.setPagos(todosLosPagos);
@@ -281,10 +281,10 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         double saldoPendiente = Math.max(0.0, total - totalPagado);
 
-        txMontoTotalGrupo.setText(FreyrRepositorio.formatCurrency(total));
-        txMontoAbonadoGrupo.setText(FreyrRepositorio.formatCurrency(totalPagado));
+        txMontoTotalGrupo.setText(FreyrRepositorio.formatearMoneda(total));
+        txMontoAbonadoGrupo.setText(FreyrRepositorio.formatearMoneda(totalPagado));
         txMontoPendienteGrupo.setText(
-                FreyrRepositorio.formatCurrency(saldoPendiente)
+                FreyrRepositorio.formatearMoneda(saldoPendiente)
         );
     }
 }

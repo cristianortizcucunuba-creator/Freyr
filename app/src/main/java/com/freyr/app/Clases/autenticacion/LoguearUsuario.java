@@ -35,7 +35,7 @@ public class LoguearUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        repositorio = ((FreyrApp) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepositorio();
 
         iniciarVistas();
         setupListeners();
@@ -93,9 +93,9 @@ public class LoguearUsuario extends AppCompatActivity {
         txError.setVisibility(View.GONE);
         btnLogin.setEnabled(false);
 
-        repositorio.login(nombre, password, new FreyrRepositorio.Callback<Usuario>() {
+        repositorio.iniciarSesion(nombre, password, new FreyrRepositorio.Callback<Usuario>() {
             @Override
-            public void onSuccess(Usuario result) {
+            public void alTenerExito(Usuario result) {
                 runOnUiThread(() -> {
                     Intent intent = new Intent(LoguearUsuario.this, ActividadPrincipal.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -105,7 +105,7 @@ public class LoguearUsuario extends AppCompatActivity {
             }
 
             @Override
-            public void onError(String error) {
+            public void alOcurrirError(String error) {
                 runOnUiThread(() -> {
                     btnLogin.setEnabled(true);
                     txError.setText(error);
