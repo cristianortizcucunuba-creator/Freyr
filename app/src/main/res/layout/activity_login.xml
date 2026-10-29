@@ -40,10 +40,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="@string/app_tagline"
-            android:textColor="@color/freyr_text_secondary"
-            android:textSize="13sp"
-            android:layout_marginTop="4dp" />
+            android:textColor="@color/freyr_card_bg"
+            android:textSize="13sp" />
 
         <!-- Tarjeta del formulario de ingreso -->
         <androidx.cardview.widget.CardView
@@ -63,11 +63,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/title_login"
-                    android:textColor="@color/freyr_primary"
+                    android:textColor="@color/freyr_primary_light"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tx_error"
@@ -139,14 +139,14 @@
                     android:id="@+id/tx_go_to_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="¿No tienes una cuenta? Regístrate aquí"
-                    android:textColor="@color/freyr_primary"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
                     android:layout_gravity="center"
-                    android:padding="12dp"
                     android:clickable="true"
-                    android:focusable="true" />
+                    android:focusable="true"
+                    android:padding="12dp"
+                    android:text="¿No tienes una cuenta? Regístrate aquí"
+                    android:textColor="@color/freyr_primary_light"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
@@ -173,37 +173,37 @@
                         android:id="@+id/btn_juan"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
-                        android:layout_weight="1"
-                        android:text="Juan"
-                        android:textSize="11sp"
-                        android:background="@drawable/bg_button_secondary"
-                        android:textColor="@color/freyr_primary"
                         android:layout_marginEnd="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_button_secondary"
+                        android:text="Juan"
+                        android:textColor="@color/freyr_primary_light"
+                        android:textSize="11sp"
                         app:backgroundTint="@null" />
 
                     <Button
                         android:id="@+id/btn_maria"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
-                        android:layout_weight="1"
-                        android:text="María"
-                        android:textSize="11sp"
-                        android:background="@drawable/bg_button_secondary"
-                        android:textColor="@color/freyr_primary"
                         android:layout_marginStart="2dp"
                         android:layout_marginEnd="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_button_secondary"
+                        android:text="María"
+                        android:textColor="@color/freyr_primary_light"
+                        android:textSize="11sp"
                         app:backgroundTint="@null" />
 
                     <Button
                         android:id="@+id/btn_carlos"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
-                        android:layout_weight="1"
-                        android:text="Carlos"
-                        android:textSize="11sp"
-                        android:background="@drawable/bg_button_secondary"
-                        android:textColor="@color/freyr_primary"
                         android:layout_marginStart="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_button_secondary"
+                        android:text="Carlos"
+                        android:textColor="@color/freyr_primary_light"
+                        android:textSize="11sp"
                         app:backgroundTint="@null" />
                 </LinearLayout>
 

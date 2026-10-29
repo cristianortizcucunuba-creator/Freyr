@@ -53,11 +53,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
             android:text="Tipo de deuda"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="6dp" />
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/rg_debt_type"
@@ -92,11 +92,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/label_debt_name"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_debt_name"
@@ -119,11 +119,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/label_debt_amount"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_debt_amount"
@@ -189,11 +189,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/label_debt_description"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_debt_description"

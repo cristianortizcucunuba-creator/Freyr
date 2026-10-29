@@ -23,23 +23,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:text="@string/subtitle_invitations"
-            android:textColor="@color/freyr_text_secondary"
-            android:textSize="12sp"
-            android:layout_marginTop="2dp" />
+            android:textColor="@color/freyr_card_bg"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="INVITACIONES PENDIENTES"
-        android:textColor="@color/freyr_text_secondary"
-        android:textSize="11sp"
-        android:textStyle="bold"
-        android:letterSpacing="0.05"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:letterSpacing="0.05"
+        android:text="INVITACIONES PENDIENTES"
+        android:textColor="@color/freyr_primary_dark"
+        android:textSize="11sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_no_invitations"

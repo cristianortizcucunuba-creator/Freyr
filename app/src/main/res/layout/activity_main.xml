@@ -79,8 +79,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/freyr_surface"
-        app:itemIconTint="@color/freyr_primary"
-        app:itemTextColor="@color/freyr_primary"
+        app:itemIconTint="@color/freyr_secondary"
+        app:itemTextColor="@color/freyr_secondary"
         app:menu="@menu/bottom_nav_menu" />
 
 </LinearLayout>

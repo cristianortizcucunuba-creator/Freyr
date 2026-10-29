@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/label_payment_amount"
-                android:textColor="@color/freyr_text_secondary"
+                android:textColor="@color/freyr_card_bg"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -205,11 +205,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/label_payment_date"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_payment_date"
@@ -227,11 +227,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/label_payment_note"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_payment_desc"

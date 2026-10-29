@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resumen Financiero"
-            android:textColor="@color/freyr_secondary"
+            android:textColor="@color/freyr_primary_dark"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -26,22 +26,22 @@
             android:id="@+id/tx_subtitulo_bienvenida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bienvenido a Freyr. Este es el estado general de tus finanzas."
-            android:textColor="@color/freyr_text_secondary"
-            android:textSize="13sp"
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="18dp" />
+            android:layout_marginBottom="18dp"
+            android:text="Bienvenido a Freyr. Este es el estado general de tus finanzas."
+            android:textColor="@color/freyr_card_bg"
+            android:textSize="13sp" />
 
         <!-- 4 ACCIONES PRINCIPALES -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ACCIONES PRINCIPALES"
-            android:textColor="@color/freyr_text_secondary"
-            android:textSize="11sp"
-            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
             android:letterSpacing="0.05"
-            android:layout_marginBottom="8dp" />
+            android:text="ACCIONES PRINCIPALES"
+            android:textColor="@color/freyr_primary_dark"
+            android:textSize="11sp"
+            android:textStyle="bold" />
 
         <!-- Fila 1: 1. Editar perfil & 2. Añadir deuda -->
         <LinearLayout
@@ -213,12 +213,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HISTORIAL FINANCIERO"
-            android:textColor="@color/freyr_secondary"
-            android:textSize="12sp"
-            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
             android:letterSpacing="0.05"
-            android:layout_marginBottom="8dp" />
+            android:text="HISTORIAL FINANCIERO"
+            android:textColor="@color/freyr_primary_dark"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <!-- Tarjeta Principal de Historial Financiero -->
         <androidx.cardview.widget.CardView
@@ -567,12 +567,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DEUDAS ACTIVAS PENDIENTES"
-            android:textColor="@color/freyr_secondary"
-            android:textSize="11sp"
-            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
             android:letterSpacing="0.05"
-            android:layout_marginBottom="8dp" />
+            android:text="DEUDAS ACTIVAS PENDIENTES"
+            android:textColor="@color/freyr_card_bg"
+            android:textSize="11sp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_deudas_activas"

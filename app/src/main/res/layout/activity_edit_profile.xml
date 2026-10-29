@@ -50,11 +50,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Nombre completo *"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_nombre_completo"
@@ -71,11 +71,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Nombre de usuario *"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_usuario"
@@ -92,11 +92,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Correo electrónico *"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_email"
@@ -113,11 +113,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Nueva contraseña (dejar en blanco para mantener la actual)"
-            android:textColor="@color/freyr_text_secondary"
+            android:textColor="@color/freyr_card_bg"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_contraseña"
