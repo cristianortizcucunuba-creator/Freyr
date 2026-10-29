@@ -18,12 +18,12 @@
     <color name="freyr_secondary_light">#26E1CCD4</color>
     <color name="freyr_secondary_subtle">#1AE1CCD4</color>
     <color name="freyr_text_primary">#E1CCD4</color>
-    <color name="freyr_text_secondary">#B3E1CCD4</color>
+    <color name="freyr_text_secondary">#F6F5CFD4</color>
     <color name="freyr_border">#33E1CCD4</color>
 
     <!-- Status Indicators in Dark Palette -->
     <color name="freyr_status_paid">#A5D6A7</color>
     <color name="freyr_status_paid_bg">#1D3D24</color>
     <color name="freyr_status_pending">#E1CCD4</color>
-    <color name="freyr_status_pending_bg">#69042A</color>
+    <color name="freyr_status_pending_bg">#33E1CCD4</color>
 </resources>
