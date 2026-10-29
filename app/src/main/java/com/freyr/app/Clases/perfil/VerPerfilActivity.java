@@ -6,13 +6,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class VerPerfilActivity extends AppCompatActivity {
     private TextView tvStatGroups;
     private Button btnGoToEdit;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
     private Usuario currentUser;
     private List<Deuda> allDebts = new LinkedList<>();
     private List<Pago> allPayments = new LinkedList<>();
@@ -44,7 +44,7 @@ public class VerPerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_perfil);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
 
         initViews();
         setupListeners();
@@ -142,7 +142,7 @@ public class VerPerfilActivity extends AppCompatActivity {
         }
 
         tvStatDebts.setText(String.valueOf(debtsCount));
-        tvStatPaid.setText(FreyrRepository.formatCurrency(paidTotal));
+        tvStatPaid.setText(FreyrRepositorio.formatCurrency(paidTotal));
         tvStatGroups.setText(String.valueOf(groupsCount));
     }
 }

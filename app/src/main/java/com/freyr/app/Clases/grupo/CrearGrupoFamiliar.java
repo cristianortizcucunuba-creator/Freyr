@@ -8,10 +8,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 
 /**
  * Actividad para la fundación de un nuevo grupo familiar.
@@ -24,14 +24,14 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
     private TextView tvError;
     private EditText etGroupName;
     private Button btnSaveGroup;
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_family_group);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
 
         initViews();
         setupListeners();
@@ -59,7 +59,7 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
             tvError.setVisibility(View.GONE);
             btnSaveGroup.setEnabled(false);
 
-            repository.createFamilyGroup(name, new FreyrRepository.Callback<Grupofamiliar>() {
+            repository.createFamilyGroup(name, new FreyrRepositorio.Callback<Grupofamiliar>() {
                 @Override
                 public void onSuccess(Grupofamiliar result) {
                     runOnUiThread(() -> {

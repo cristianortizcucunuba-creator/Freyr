@@ -15,12 +15,12 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDePagos;
 
 public class DetallesDeuda extends AppCompatActivity {
@@ -43,7 +43,7 @@ public class DetallesDeuda extends AppCompatActivity {
     private RecyclerView rvPayments;
     private listaDePagos paymentAdapter;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
     private String debtId;
     private Deuda currentDebt;
 
@@ -56,7 +56,7 @@ public class DetallesDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt_detail);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
         debtId = getIntent().getStringExtra("debt_id");
 
         if (debtId == null) {
@@ -99,7 +99,7 @@ public class DetallesDeuda extends AppCompatActivity {
                     .setPositiveButton("Eliminar", (dialog, which) -> {
                         repository.deleteDebt(
                                 debtId,
-                                new FreyrRepository.Callback<Void>() {
+                                new FreyrRepositorio.Callback<Void>() {
                                     @Override
                                     public void onSuccess(Void result) {
                                         runOnUiThread(() -> {
@@ -138,7 +138,7 @@ public class DetallesDeuda extends AppCompatActivity {
                     .setTitle("Eliminar abono")
                     .setMessage(
                             "¿Deseas eliminar este abono de "
-                                    + FreyrRepository.formatCurrency(payment.getMonto())
+                                    + FreyrRepositorio.formatCurrency(payment.getMonto())
                                     + "?"
                     )
                     .setPositiveButton("Eliminar", (dialog, which) ->
@@ -224,9 +224,9 @@ public class DetallesDeuda extends AppCompatActivity {
         boolean isPaid = remaining == 0.0
                 || "paid".equalsIgnoreCase(currentDebt.getStatus());
 
-        tvTotalAmt.setText(FreyrRepository.formatCurrency(total));
-        tvPaidAmt.setText(FreyrRepository.formatCurrency(paid));
-        tvRemainingAmt.setText(FreyrRepository.formatCurrency(remaining));
+        tvTotalAmt.setText(FreyrRepositorio.formatCurrency(total));
+        tvPaidAmt.setText(FreyrRepositorio.formatCurrency(paid));
+        tvRemainingAmt.setText(FreyrRepositorio.formatCurrency(remaining));
 
         if (isPaid) {
             tvDebtStatus.setText("PAGADA EN SU TOTALIDAD");

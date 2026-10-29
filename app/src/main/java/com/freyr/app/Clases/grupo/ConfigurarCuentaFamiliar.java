@@ -13,13 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDeDeudas;
 import com.freyr.app.Clases.deuda.AñadirDeuda;
 import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
@@ -41,7 +41,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     private RecyclerView rvGroupDebts;
 
     private listaDeDeudas debtAdapter;
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
     private String groupId;
     private Grupofamiliar currentGroup;
 
@@ -55,7 +55,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_group_detail);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
         groupId = getIntent().getStringExtra("group_id");
 
         if (groupId == null) {
@@ -105,7 +105,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             repository.inviteUser(
                     groupId,
                     identifier,
-                    new FreyrRepository.Callback<Void>() {
+                    new FreyrRepositorio.Callback<Void>() {
                         @Override
                         public void onSuccess(Void result) {
                             runOnUiThread(() -> {
@@ -276,10 +276,10 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         double remaining = Math.max(0.0, total - paid);
 
-        txMontoTotalGrupo.setText(FreyrRepository.formatCurrency(total));
-        txMontoAbonadoGrupo.setText(FreyrRepository.formatCurrency(paid));
+        txMontoTotalGrupo.setText(FreyrRepositorio.formatCurrency(total));
+        txMontoAbonadoGrupo.setText(FreyrRepositorio.formatCurrency(paid));
         tvGroupRemainingAmt.setText(
-                FreyrRepository.formatCurrency(remaining)
+                FreyrRepositorio.formatCurrency(remaining)
         );
     }
 }

@@ -8,11 +8,11 @@ import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Pago;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,7 +34,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
     private EditText etPaymentDesc;
     private Button btnConfirmPayment;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
     private String debtId;
     private Deuda currentDebt;
     private double currentRemaining = 0.0;
@@ -44,7 +44,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_payment);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
         debtId = getIntent().getStringExtra("debt_id");
 
         if (debtId == null) {
@@ -127,7 +127,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
                         currentDebt = debt;
                         tvForDebtName.setText("Para: " + debt.getName());
                         tvStatusTotal.setText(
-                                FreyrRepository.formatCurrency(debt.getAmount())
+                                FreyrRepositorio.formatCurrency(debt.getAmount())
                         );
                         recalculateBalances();
                         break;
@@ -163,9 +163,9 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
 
         currentRemaining = Math.max(0.0, currentDebt.getAmount() - paid);
 
-        tvStatusPaid.setText(FreyrRepository.formatCurrency(paid));
+        tvStatusPaid.setText(FreyrRepositorio.formatCurrency(paid));
         tvStatusRemaining.setText(
-                FreyrRepository.formatCurrency(currentRemaining)
+                FreyrRepositorio.formatCurrency(currentRemaining)
         );
         updateProjectedRemaining();
     }
@@ -183,7 +183,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
             double projected = Math.max(0.0, currentRemaining - entered);
 
             String message = "Saldo pendiente proyectado: "
-                    + FreyrRepository.formatCurrency(projected);
+                    + FreyrRepositorio.formatCurrency(projected);
 
             if (entered >= currentRemaining && currentRemaining > 0) {
                 message += " (Se marcará como PAGADA)";
@@ -232,7 +232,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
                 amount,
                 date,
                 description,
-                new FreyrRepository.Callback<Pago>() {
+                new FreyrRepositorio.Callback<Pago>() {
                     @Override
                     public void onSuccess(Pago result) {
                         runOnUiThread(() -> {

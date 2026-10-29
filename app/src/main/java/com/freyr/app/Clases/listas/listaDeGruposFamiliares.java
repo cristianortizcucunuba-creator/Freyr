@@ -14,7 +14,7 @@ import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 
 public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposFamiliares.ContenedorGrupo> {
 
@@ -136,13 +136,13 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
 
         // Muestra los valores económicos con el formato del proyecto.
         contenedor.txTotal.setText(
-                FreyrRepository.formatCurrency(totalDeudas));
+                FreyrRepositorio.formatCurrency(totalDeudas));
 
         contenedor.txAbonado.setText(
-                FreyrRepository.formatCurrency(totalAbonado));
+                FreyrRepositorio.formatCurrency(totalAbonado));
 
         contenedor.txPendiente.setText(
-                FreyrRepository.formatCurrency(saldoPendiente));
+                FreyrRepositorio.formatCurrency(saldoPendiente));
 
         // Abre los detalles cuando se selecciona el grupo.
         contenedor.itemView.setOnClickListener(v -> {
