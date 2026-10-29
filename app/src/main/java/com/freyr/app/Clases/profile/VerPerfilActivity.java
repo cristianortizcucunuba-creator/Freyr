@@ -67,7 +67,7 @@ public class VerPerfilActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
         btnGoToEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(VerPerfilActivity.this, EditProfileActivity.class);
+            Intent intent = new Intent(VerPerfilActivity.this, ActividadEditarPerfil.class);
             startActivity(intent);
         });
     }

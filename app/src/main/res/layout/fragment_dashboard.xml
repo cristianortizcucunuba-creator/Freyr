@@ -14,7 +14,7 @@
 
         <!-- Banner de bienvenida -->
         <TextView
-            android:id="@+id/tv_welcome_name"
+            android:id="@+id/tx_nombre_bienvenida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resumen Financiero"
@@ -23,7 +23,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_welcome_subtitle"
+            android:id="@+id/tx_subtitulo_bienvenida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bienvenido a Freyr. Este es el estado general de tus finanzas."
@@ -52,7 +52,7 @@
 
             <!-- 1. Editar Perfil -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_action_edit_profile"
+                android:id="@+id/card_accion_editar_perfil"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -89,7 +89,7 @@
 
             <!-- 2. Añadir Deuda (Destacado en Primario) -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_action_add_debt"
+                android:id="@+id/card_accion_agregar_deuda"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -134,7 +134,7 @@
 
             <!-- 3. Crear Grupo -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_action_create_group"
+                android:id="@+id/card_accion_crear_grupo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -171,7 +171,7 @@
 
             <!-- 4. Invitaciones -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_action_accept_invite"
+                android:id="@+id/card_accion_aceptar_invitacion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -189,7 +189,7 @@
                     android:padding="14dp">
 
                     <TextView
-                        android:id="@+id/tv_invite_action_title"
+                        android:id="@+id/tx_titulo_accion_invitacion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4. Invitaciones"
@@ -198,7 +198,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_invite_action_sub"
+                        android:id="@+id/tx_sub_accion_invitacion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ver invitaciones pendientes"
@@ -266,7 +266,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_historial_total_debido"
+                            android:id="@+id/tx_historial_total_debido"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$0"
@@ -302,7 +302,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_historial_total_pagado"
+                            android:id="@+id/tx_historial_total_pagado"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$0"
@@ -338,7 +338,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_historial_total_pendiente"
+                            android:id="@+id/tx_historial_total_pendiente"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="$0"
@@ -377,7 +377,7 @@
                     android:letterSpacing="0.05" />
 
                 <TextView
-                    android:id="@+id/tv_total_pending_amount"
+                    android:id="@+id/tx_monto_total_pendiente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0"
@@ -434,7 +434,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_pending_debts_count"
+                        android:id="@+id/tx_cantidad_deudas_pendientes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -470,7 +470,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_paid_debts_count"
+                        android:id="@+id/tx_cantidad_deudas_pagadas"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -514,7 +514,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_personal_payments_total"
+                        android:id="@+id/tx_total_pagos_personales"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$0"
@@ -550,7 +550,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_family_debts_total"
+                        android:id="@+id/tx_total_deudas_familiares"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$0"
@@ -575,7 +575,7 @@
             android:layout_marginBottom="8dp" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_active_debts"
+            android:id="@+id/rv_deudas_activas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false" />

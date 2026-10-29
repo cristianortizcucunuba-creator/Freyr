@@ -11,7 +11,7 @@ import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.Clases.MainActivity;
+import com.freyr.app.Clases.ActividadPrincipal;
 
 /**
  * Actividad de inicio de sesión de usuario en Freyr.
@@ -99,7 +99,7 @@ public class LoguearUsuario extends AppCompatActivity {
             @Override
             public void onSuccess(Usuario result) {
                 runOnUiThread(() -> {
-                    Intent intent = new Intent(LoguearUsuario.this, MainActivity.class);
+                    Intent intent = new Intent(LoguearUsuario.this, ActividadPrincipal.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();

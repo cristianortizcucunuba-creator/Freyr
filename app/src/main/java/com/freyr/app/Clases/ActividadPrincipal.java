@@ -21,7 +21,7 @@ import com.freyr.app.Clases.deuda.FinanzasPersonales;
 import com.freyr.app.Clases.grupo.GruposFamiliares;
 import com.freyr.app.Clases.grupo.InvitarGrupoFamiliar;
 
-public class MainActivity extends AppCompatActivity {
+public class ActividadPrincipal extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
     private FrameLayout btnProfileAvatar;
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                         repository.setLoggedInUser(null);
 
                         Intent intent = new Intent(
-                                MainActivity.this,
+                                ActividadPrincipal.this,
                                 LoguearUsuario.class
                         );
                         intent.setFlags(
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     } else if (which == allUsers.length) {
                         // Ver perfil
-                        startActivity(new Intent(MainActivity.this, VerPerfilActivity.class));
+                        startActivity(new Intent(ActividadPrincipal.this, VerPerfilActivity.class));
                     } else if (which >= 0 && which < allUsers.length) {
                         // Cambia a la cuenta seleccionada.
                         Usuario selectedUser = allUsers[which];

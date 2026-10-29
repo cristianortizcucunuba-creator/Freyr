@@ -60,7 +60,7 @@ public class FreyrRepository {
         return database.paymentDao().getAllPaymentsLive();
     }
 
-    public LiveData<List<Invitation>> getAllInvitationsLive() {
+    public LiveData<List<Invitacion>> getAllInvitationsLive() {
         return database.invitationDao().getAllInvitationsLive();
     }
 
@@ -331,8 +331,8 @@ public class FreyrRepository {
                 return;
             }
 
-            List<Invitation> allInvites = database.invitationDao().getAllInvitations();
-            for (Invitation inv : allInvites) {
+            List<Invitacion> allInvites = database.invitationDao().getAllInvitations();
+            for (Invitacion inv : allInvites) {
                 if (inv.getFamilyGroupId().equals(groupId) && inv.getInvitedUserId().equals(target.getId()) && "pending".equals(inv.getStatus())) {
                     callback.onError("An invitation is already pending for " + target.getNomCompl());
                     return;
@@ -340,7 +340,7 @@ public class FreyrRepository {
             }
 
             String now = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).format(new Date());
-            Invitation invitation = new Invitation(
+            Invitacion invitacion = new Invitacion(
                 "inv-" + System.currentTimeMillis(),
                 groupId,
                 target.getId(),
@@ -348,14 +348,14 @@ public class FreyrRepository {
                 "pending",
                 now
             );
-            database.invitationDao().insertInvitation(invitation);
+            database.invitationDao().insertInvitation(invitacion);
             callback.onSuccess(null);
         });
     }
 
     public void respondToInvitation(String invitationId, boolean accept, Callback<Void> callback) {
         FreyrDatabase.databaseWriteExecutor.execute(() -> {
-            Invitation invite = database.invitationDao().getInvitationById(invitationId);
+            Invitacion invite = database.invitationDao().getInvitationById(invitationId);
             if (invite == null) return;
 
             if (accept) {

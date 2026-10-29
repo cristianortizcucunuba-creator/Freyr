@@ -18,7 +18,7 @@ import com.freyr.app.data.repository.FreyrRepository;
  * Actividad para la modificación y actualización del perfil del usuario en sesión.
  * Permite cambiar nombre completo, nombre de usuario, correo electrónico y contraseña.
  */
-public class EditProfileActivity extends AppCompatActivity {
+public class ActividadEditarPerfil extends AppCompatActivity {
 
     private ImageButton btnBack;
     private TextView tvFeedback;
@@ -115,7 +115,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onSuccess(Void result) {
                 runOnUiThread(() -> {
                     btnSaveProfile.setEnabled(true);
-                    Toast.makeText(EditProfileActivity.this, "¡Perfil actualizado exitosamente!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActividadEditarPerfil.this, "¡Perfil actualizado exitosamente!", Toast.LENGTH_SHORT).show();
                     finish();
                 });
             }

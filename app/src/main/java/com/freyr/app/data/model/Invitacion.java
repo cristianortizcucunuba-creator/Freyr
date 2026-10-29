@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "invitations")
-public class Invitation {
+public class Invitacion {
     @PrimaryKey
     @NonNull
     private String id;
@@ -15,7 +15,7 @@ public class Invitation {
     private String status; // "pending", "accepted", "declined"
     private String createdAt;
 
-    public Invitation(@NonNull String id, String familyGroupId, String invitedUserId, String invitedByUserId, String status, String createdAt) {
+    public Invitacion(@NonNull String id, String familyGroupId, String invitedUserId, String invitedByUserId, String status, String createdAt) {
         this.id = id;
         this.familyGroupId = familyGroupId;
         this.invitedUserId = invitedUserId;

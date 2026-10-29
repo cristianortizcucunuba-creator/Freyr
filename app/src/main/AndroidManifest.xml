@@ -24,7 +24,7 @@
 
         <!-- Main Dashboard Activity with Bottom Navigation -->
         <activity
-            android:name=".Clases.MainActivity"
+            android:name=".Clases.ActividadPrincipal"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
@@ -72,7 +72,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".Clases.profile.EditProfileActivity"
+            android:name=".Clases.profile.ActividadEditarPerfil"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
