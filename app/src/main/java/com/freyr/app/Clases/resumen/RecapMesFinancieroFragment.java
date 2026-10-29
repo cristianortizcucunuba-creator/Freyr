@@ -87,13 +87,13 @@ public class RecapMesFinancieroFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        debtAdapter = new listaDeudas(requireContext(), new listaDeudas.OnDebtClickListener() {
-            @Override public void onDebtClick(Deuda debt) {
+        debtAdapter = new listaDeudas(requireContext(), new listaDeudas.MonitorDeudas() {
+            @Override public void tocDeuda(Deuda debt) {
                 Intent intent = new Intent(getActivity(), DetallesDeuda.class);
                 intent.putExtra("debt_id", debt.getId());
                 startActivity(intent);
             }
-            @Override public void onPayClick(Deuda debt) {
+            @Override public void tocPagar(Deuda debt) {
                 Intent intent = new Intent(getActivity(), RegistrarAbonosDeuda.class);
                 intent.putExtra("debt_id", debt.getId());
                 startActivity(intent);

@@ -87,9 +87,9 @@ public class FinanzasPersonales extends Fragment {
     private void setupRecyclerView() {
         debtAdapter = new listaDeudas(
                 requireContext(),
-                new listaDeudas.OnDebtClickListener() {
+                new listaDeudas.MonitorDeudas() {
                     @Override
-                    public void onDebtClick(Deuda debt) {
+                    public void tocDeuda(Deuda debt) {
                         Intent intent = new Intent(
                                 getActivity(),
                                 DetallesDeuda.class
@@ -99,7 +99,7 @@ public class FinanzasPersonales extends Fragment {
                     }
 
                     @Override
-                    public void onPayClick(Deuda debt) {
+                    public void tocPagar(Deuda debt) {
                         Intent intent = new Intent(
                                 getActivity(),
                                 RegistrarAbonosDeuda.class

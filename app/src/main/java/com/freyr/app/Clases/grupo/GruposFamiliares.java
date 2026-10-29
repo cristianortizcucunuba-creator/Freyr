@@ -89,7 +89,7 @@ public class GruposFamiliares extends Fragment {
 
     private void observeData() {
         String uid = repository.getCurrentUserId();
-        groupAdapter.setCurrentUserId(uid);
+        groupAdapter.setIdUsuarioActual(uid);
 
         repository.getAllGroupsLive().observe(
                 getViewLifecycleOwner(),

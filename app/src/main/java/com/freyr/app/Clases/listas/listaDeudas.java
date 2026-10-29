@@ -20,25 +20,25 @@ import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 
-public class listaDeudas extends RecyclerView.Adapter<listaDeudas.DebtViewHolder> {
+public class listaDeudas extends RecyclerView.Adapter<listaDeudas.ContenedorDeudas> {
 
     // Interfaz que define las acciones disponibles al seleccionar una deuda.
-    public interface OnDebtClickListener {
-        void onDebtClick(Deuda debt);
-        void onPayClick(Deuda debt);
+    public interface MonitorDeudas {
+        void tocDeuda(Deuda debt);
+        void tocPagar(Deuda debt);
     }
 
     private final Context contexto;
-    private final OnDebtClickListener receptor;
+    private final MonitorDeudas receptor;
 
     // Arreglos que almacenan las deudas, pagos, grupos y usuarios.
-    // Inicialmente están vacíos y pueden reemplazarse cuando llegan datos.
+    // Inicialmente, están vacíos y pueden reemplazarse cuando llegan datos.
     private Deuda[] deudas = new Deuda[0];
     private Pago[] todosLosPagos = new Pago[0];
     private Grupofamiliar[] todosLosGrupos = new Grupofamiliar[0];
     private Usuario[] todosLosUsuarios = new Usuario[0];
 
-    public listaDeudas(Context context, OnDebtClickListener listener) {
+    public listaDeudas(Context context, MonitorDeudas listener) {
         this.contexto = context;
         this.receptor = listener;
     }
@@ -56,8 +56,8 @@ public class listaDeudas extends RecyclerView.Adapter<listaDeudas.DebtViewHolder
     }
 
     // Actualiza los grupos familiares disponibles.
-    public void setGrupos(Grupofamiliar[] grupo) {
-        this.todosLosGrupos = grupo != null ? grupo : new Grupofamiliar[0];
+    public void setGrupos(Grupofamiliar[] group) {
+        this.todosLosGrupos = group != null ? group : new Grupofamiliar[0];
         notifyDataSetChanged();
     }
 
@@ -69,34 +69,34 @@ public class listaDeudas extends RecyclerView.Adapter<listaDeudas.DebtViewHolder
 
     @NonNull
     @Override
-    public DebtViewHolder onCreateViewHolder(
+    public ContenedorDeudas onCreateViewHolder(
             @NonNull ViewGroup contPadre, int tipoVista) {
 
         // Carga el diseño XML de una tarjeta de deuda.
         View vista = LayoutInflater.from(contexto)
                 .inflate(R.layout.item_debt, contPadre, false);
 
-        return new DebtViewHolder(vista);
+        return new ContenedorDeudas(vista);
     }
 
     @Override
     public void onBindViewHolder(
-            @NonNull DebtViewHolder contenedor, int posicion) {
+            @NonNull ContenedorDeudas contenedor, int posicion) {
 
         // Obtiene la deuda correspondiente a esta posición.
         Deuda debt = deudas[posicion];
 
-        contenedor.tvName.setText(debt.getName());
+        contenedor.tvNombre.setText(debt.getName());
 
         // Muestra la descripción solamente si contiene texto.
         if (debt.getDescription() != null
                 && !debt.getDescription().trim().isEmpty()) {
 
-            contenedor.tvDesc.setText(debt.getDescription());
-            contenedor.tvDesc.setVisibility(View.VISIBLE);
+            contenedor.tvDescrip.setText(debt.getDescription());
+            contenedor.tvDescrip.setVisibility(View.VISIBLE);
 
         } else {
-            contenedor.tvDesc.setVisibility(View.GONE);
+            contenedor.tvDescrip.setVisibility(View.GONE);
         }
 
         // Construye el texto que identifica el grupo de la deuda.
@@ -137,7 +137,7 @@ public class listaDeudas extends RecyclerView.Adapter<listaDeudas.DebtViewHolder
             }
         }
 
-        contenedor.tvScope.setText(contexto.toString());
+        contenedor.tvTipoDeuda.setText(contexto.toString());
 
         // Suma todos los pagos relacionados con esta deuda.
         double abonado = 0.0;
@@ -158,39 +158,39 @@ public class listaDeudas extends RecyclerView.Adapter<listaDeudas.DebtViewHolder
         contenedor.tvTotal.setText(
                 FreyrRepository.formatCurrency(debt.getAmount()));
 
-        contenedor.tvPaid.setText(
+        contenedor.tvAbonado.setText(
                 FreyrRepository.formatCurrency(abonado));
 
-        contenedor.tvRemaining.setText(
+        contenedor.tvRestante.setText(
                 FreyrRepository.formatCurrency(restante));
 
         // Actualiza el estado y la barra de progreso.
         if (estPagada) {
 
-            contenedor.tvStatus.setText("Pagado");
+            contenedor.tvEstado.setText("Pagado");
 
-            contenedor.tvStatus.setTextColor(
+            contenedor.tvEstado.setTextColor(
                     ContextCompat.getColor(
                             this.contexto, R.color.freyr_status_paid));
 
-            contenedor.tvStatus.setBackgroundResource(
+            contenedor.tvEstado.setBackgroundResource(
                     R.drawable.bg_status_paid);
 
-            contenedor.btnPay.setVisibility(View.GONE);
-            contenedor.pbProgress.setProgress(100);
+            contenedor.btnPagar.setVisibility(View.GONE);
+            contenedor.barProgreso.setProgress(100);
 
         } else {
 
-            contenedor.tvStatus.setText("Pendiente");
+            contenedor.tvEstado.setText("Pendiente");
 
-            contenedor.tvStatus.setTextColor(
+            contenedor.tvEstado.setTextColor(
                     ContextCompat.getColor(
                             this.contexto, R.color.freyr_secondary));
 
-            contenedor.tvStatus.setBackgroundResource(
+            contenedor.tvEstado.setBackgroundResource(
                     R.drawable.bg_status_pending);
 
-            contenedor.btnPay.setVisibility(View.VISIBLE);
+            contenedor.btnPagar.setVisibility(View.VISIBLE);
 
             // Calcula el porcentaje pagado y evita dividir entre cero.
             int porcentaje = debt.getAmount() > 0
@@ -198,27 +198,27 @@ public class listaDeudas extends RecyclerView.Adapter<listaDeudas.DebtViewHolder
                     100, (abonado / debt.getAmount()) * 100)
                     : 0;
 
-            contenedor.pbProgress.setProgress(porcentaje);
+            contenedor.barProgreso.setProgress(porcentaje);
         }
 
         // Abre los detalles cuando se pulsa la tarjeta.
         contenedor.itemView.setOnClickListener(v -> {
             if (receptor != null) {
-                receptor.onDebtClick(debt);
+                receptor.tocDeuda(debt);
             }
         });
 
         // El botón de historial abre los detalles de la deuda.
-        contenedor.btnHistory.setOnClickListener(v -> {
+        contenedor.btnHistorial.setOnClickListener(v -> {
             if (receptor != null) {
-                receptor.onDebtClick(debt);
+                receptor.tocDeuda(debt);
             }
         });
 
         // Solicita registrar un pago.
-        contenedor.btnPay.setOnClickListener(v -> {
+        contenedor.btnPagar.setOnClickListener(v -> {
             if (receptor != null) {
-                receptor.onPayClick(debt);
+                receptor.tocPagar(debt);
             }
         });
     }
@@ -230,29 +230,29 @@ public class listaDeudas extends RecyclerView.Adapter<listaDeudas.DebtViewHolder
     }
 
     // Conserva las referencias a las vistas de cada tarjeta.
-    static class DebtViewHolder extends RecyclerView.ViewHolder {
+    static class ContenedorDeudas extends RecyclerView.ViewHolder {
 
-        TextView tvName, tvScope, tvDesc, tvStatus;
-        TextView tvTotal, tvPaid, tvRemaining;
-        ProgressBar pbProgress;
-        Button btnHistory, btnPay;
+        TextView tvNombre, tvTipoDeuda, tvDescrip, tvEstado;
+        TextView tvTotal, tvAbonado, tvRestante;
+        ProgressBar barProgreso;
+        Button btnHistorial, btnPagar;
 
-        public DebtViewHolder(@NonNull View vistaObj) {
+        public ContenedorDeudas(@NonNull View vistaObj) {
             super(vistaObj);
 
-            tvName = vistaObj.findViewById(R.id.tv_debt_name);
-            tvScope = vistaObj.findViewById(R.id.tv_debt_scope);
-            tvDesc = vistaObj.findViewById(R.id.tv_debt_desc);
-            tvStatus = vistaObj.findViewById(R.id.tv_debt_status);
+            tvNombre = vistaObj.findViewById(R.id.tv_debt_name);
+            tvTipoDeuda = vistaObj.findViewById(R.id.tv_debt_scope);
+            tvDescrip = vistaObj.findViewById(R.id.tv_debt_desc);
+            tvEstado = vistaObj.findViewById(R.id.tv_debt_status);
 
             tvTotal = vistaObj.findViewById(R.id.tv_debt_total);
-            tvPaid = vistaObj.findViewById(R.id.tv_debt_paid);
-            tvRemaining = vistaObj.findViewById(R.id.tv_debt_remaining);
+            tvAbonado = vistaObj.findViewById(R.id.tv_debt_paid);
+            tvRestante = vistaObj.findViewById(R.id.tv_debt_remaining);
 
-            pbProgress = vistaObj.findViewById(R.id.pb_debt_progress);
+            barProgreso = vistaObj.findViewById(R.id.pb_debt_progress);
 
-            btnHistory = vistaObj.findViewById(R.id.btn_debt_history);
-            btnPay = vistaObj.findViewById(R.id.btn_debt_pay);
+            btnHistorial = vistaObj.findViewById(R.id.btn_debt_history);
+            btnPagar = vistaObj.findViewById(R.id.btn_debt_pay);
         }
     }
 }

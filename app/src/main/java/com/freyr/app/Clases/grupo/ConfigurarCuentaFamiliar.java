@@ -146,9 +146,9 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     private void setupRecyclerView() {
         debtAdapter = new listaDeudas(
                 this,
-                new listaDeudas.OnDebtClickListener() {
+                new listaDeudas.MonitorDeudas() {
                     @Override
-                    public void onDebtClick(Deuda debt) {
+                    public void tocDeuda(Deuda debt) {
                         Intent intent = new Intent(
                                 ConfigurarCuentaFamiliar.this,
                                 DetallesDeuda.class
@@ -158,7 +158,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onPayClick(Deuda debt) {
+                    public void tocPagar(Deuda debt) {
                         Intent intent = new Intent(
                                 ConfigurarCuentaFamiliar.this,
                                 RegistrarAbonosDeuda.class
