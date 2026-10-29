@@ -38,7 +38,7 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
     }
 
     private void inicializarVistas() {
-        btnVolv = findViewById(R.id.btn_volver);
+        btnVolv = findViewById(R.id.btn_atras);
         txError = findViewById(R.id.tx_error);
         etNombreGrupo = findViewById(R.id.et_name_grupo);
         btnGuardarGrupo = findViewById(R.id.btn_guardar_grupo);

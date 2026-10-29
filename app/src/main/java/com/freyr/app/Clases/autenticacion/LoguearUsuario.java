@@ -48,9 +48,9 @@ public class LoguearUsuario extends AppCompatActivity {
         txGoToRegister = findViewById(R.id.tx_go_to_register);
         txError = findViewById(R.id.tx_error);
 
-        btnJuan = findViewById(R.id.btn_juan);
-        btnMaria = findViewById(R.id.btn_maria);
-        btnCarlos = findViewById(R.id.btn_carlos);
+        //btnJuan = findViewById(R.id.btn_juan);
+        //btnMaria = findViewById(R.id.btn_maria);
+       // btnCarlos = findViewById(R.id.btn_carlos);
     }
 
     private void setupListeners() {
