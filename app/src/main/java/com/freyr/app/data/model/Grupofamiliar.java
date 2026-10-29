@@ -1,5 +1,4 @@
 package com.freyr.app.data.model;
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -28,6 +27,7 @@ public class Grupofamiliar {
     public void setId(@NonNull String id) { this.id = id; }
 
     public String getName() { return name; }
+
     public String getNombre() { return name; }
     public void setName(String name) { this.name = name; }
 
