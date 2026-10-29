@@ -14,7 +14,7 @@
 
         <!-- Splash / Startup Screen with Detailed Freyr Logo -->
         <activity
-            android:name=".Clases.SplashActivity"
+            android:name=".Clases.PantallaInicio"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
