@@ -1,4 +1,4 @@
-package com.freyr.app.Clases.autenticacion;
+package com.freyr.app.ui.autenticacion;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.model.User;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.Clases.MainActivity;
+import com.freyr.app.ui.MainActivity;
 
 /**
  * Actividad para el registro de nuevas cuentas de usuario en Freyr.
@@ -89,9 +89,9 @@ public class RegistrarUsuario extends AppCompatActivity {
         tvError.setVisibility(View.GONE);
         btnRegister.setEnabled(false);
 
-        repository.register(fullName, username, email, password, new FreyrRepository.Callback<Usuario>() {
+        repository.register(fullName, username, email, password, new FreyrRepository.Callback<User>() {
             @Override
-            public void onSuccess(Usuario result) {
+            public void onSuccess(User result) {
                 runOnUiThread(() -> {
                     Intent intent = new Intent(RegistrarUsuario.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

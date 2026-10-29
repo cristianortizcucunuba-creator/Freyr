@@ -25,7 +25,9 @@ public class Usuario {
         this.avatarColor = avatarColor;
         this.createdAt = createdAt;
     }
-
+    public String getUsername() {
+        return username;
+    }
     @NonNull
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
@@ -34,6 +36,7 @@ public class Usuario {
     public String getNomCompl() { return fullName; }
     public void setFullName(String fullName) { this.fullName = fullName; }
 
+    public String getUsername() { return username; }
     public String getNomUsuario() { return username; }
     public void setUsername(String username) { this.username = username; }
 
