@@ -18,7 +18,7 @@ import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.ContenedorDeudas> {
 
@@ -156,13 +156,13 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
 
         // Presenta los valores monetarios.
         contenedor.tvTotal.setText(
-                FreyrRepository.formatCurrency(debt.getAmount()));
+                FreyrRepositorio.formatCurrency(debt.getAmount()));
 
         contenedor.tvAbonado.setText(
-                FreyrRepository.formatCurrency(abonado));
+                FreyrRepositorio.formatCurrency(abonado));
 
         contenedor.tvRestante.setText(
-                FreyrRepository.formatCurrency(restante));
+                FreyrRepositorio.formatCurrency(restante));
 
         // Actualiza el estado y la barra de progreso.
         if (estPagada) {

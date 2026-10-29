@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Invitacion;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDeInvitaciones;
 
 public class InvitarGrupoFamiliar extends Fragment {
@@ -27,7 +27,7 @@ public class InvitarGrupoFamiliar extends Fragment {
     private TextView tvNoInvitations;
     private listaDeInvitaciones invitationAdapter;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
     private Invitacion[] allInvitations = new Invitacion[0];
 
     @Nullable
@@ -43,7 +43,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                 false
         );
 
-        repository = ((FreyrApplication) requireActivity()
+        repository = ((FreyrApp) requireActivity()
                 .getApplication()).getRepository();
 
         initViews(view);
@@ -67,7 +67,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                         repository.respondToInvitation(
                                 invitacion.getId(),
                                 true,
-                                new FreyrRepository.Callback<Void>() {
+                                new FreyrRepositorio.Callback<Void>() {
                                     @Override
                                     public void onSuccess(Void result) {
                                         if (getActivity() != null) {
@@ -102,7 +102,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                         repository.respondToInvitation(
                                 invitacion.getId(),
                                 false,
-                                new FreyrRepository.Callback<Void>() {
+                                new FreyrRepositorio.Callback<Void>() {
                                     @Override
                                     public void onSuccess(Void result) {
                                         if (getActivity() != null) {

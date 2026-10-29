@@ -9,67 +9,66 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freyr.app.Clases.ActividadPrincipal;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.Clases.ActividadPrincipal;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 // registro de nuevas cuentas de usuario en Freyr.
 // Valida nombre completo, usuario único, correo y confirmación de contraseña
 
 public class RegistrarUsuario extends AppCompatActivity {
 
-    private EditText etNombre;
-    private EditText etNombreUsuario;
-    private EditText etEmail;
-    private EditText etContraseña;
-    private EditText etConfirmarContraseña;
+    private EditText edtexNombre;
+    private EditText edtexUsuario;
+    private EditText edtextEmail;
+    private EditText edtexContraseña;
+    private EditText edtxtConfirmarContraseña;
     private Button btnRegistrar;
     private TextView txGoToLogin;
     private TextView txError;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repositorio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepository();
 
-        initViews();
+        iniciarVistas();
         setupListeners();
     }
 
-    private void initViews() {
-        etNombre = findViewById(R.id.et_full_name);
-        etNombreUsuario = findViewById(R.id.et_username);
-        etEmail = findViewById(R.id.et_email);
-        etContraseña = findViewById(R.id.et_password);
-        etConfirmarContraseña = findViewById(R.id.et_confirm_password);
-        btnRegistrar = findViewById(R.id.btn_register);
+    private void iniciarVistas() {
+        edtexNombre = findViewById(R.id.et_nombre_completo);
+        edtexUsuario = findViewById(R.id.et_usuario);
+        edtextEmail = findViewById(R.id.et_email);
+        edtexContraseña = findViewById(R.id.et_contraseña);
+        edtxtConfirmarContraseña = findViewById(R.id.et_confirmar_contraseña);
+        btnRegistrar = findViewById(R.id.btn_registrar);
         txGoToLogin = findViewById(R.id.tx_go_to_login);
         txError = findViewById(R.id.tx_error);
     }
 
     private void setupListeners() {
-        btnRegistrar.setOnClickListener(v -> doRegister());
+        btnRegistrar.setOnClickListener(v -> registrar());
         txGoToLogin.setOnClickListener(v -> finish());
     }
 
-    private void doRegister() {
-        String fullName = etNombre.getText().toString().trim();
-        String username = etNombreUsuario.getText().toString().trim();
-        String email = etEmail.getText().toString().trim();
-        String password = etContraseña.getText().toString();
-        String confirmPassword = etConfirmarContraseña.getText().toString();
+    private void registrar() {
+        String nombreCompleto = edtexNombre.getText().toString().trim();
+        String usuario = edtexUsuario.getText().toString().trim();
+        String email = edtextEmail.getText().toString().trim();
+        String contraseña = edtexContraseña.getText().toString();
+        String confirmarContraseña = edtxtConfirmarContraseña.getText().toString();
 
-        if (fullName.isEmpty()) {
+        if (nombreCompleto.isEmpty()) {
             showError("El nombre completo es requerido.");
             return;
         }
-        if (username.isEmpty()) {
+        if (usuario.isEmpty()) {
             showError("El nombre de usuario es requerido.");
             return;
         }
@@ -77,11 +76,11 @@ public class RegistrarUsuario extends AppCompatActivity {
             showError("El correo electrónico es requerido.");
             return;
         }
-        if (password.length() < 6) {
+        if (contraseña.length() < 6) {
             showError("La contraseña debe tener al menos 6 caracteres.");
             return;
         }
-        if (!password.equals(confirmPassword)) {
+        if (!contraseña.equals(confirmarContraseña)) {
             showError("Las contraseñas no coinciden.");
             return;
         }
@@ -89,7 +88,7 @@ public class RegistrarUsuario extends AppCompatActivity {
         txError.setVisibility(View.GONE);
         btnRegistrar.setEnabled(false);
 
-        repository.register(fullName, username, email, password, new FreyrRepository.Callback<Usuario>() {
+        repositorio.register(nombreCompleto, usuario, email, contraseña, new FreyrRepositorio.Callback<Usuario>() {
             @Override
             public void onSuccess(Usuario result) {
                 runOnUiThread(() -> {

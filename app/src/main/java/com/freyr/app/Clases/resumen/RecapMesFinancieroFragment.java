@@ -12,10 +12,10 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.*;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.ActividadPrincipal;
 import com.freyr.app.Clases.listas.listaDeDeudas;
 import com.freyr.app.Clases.deuda.AñadirDeuda;
@@ -37,7 +37,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     private TextView txTotalPagosPersonales, txTotalDeudasFamiliares;
     private RecyclerView rvDeudasActivas;
     private listaDeDeudas adaptadorDeudas;
-    private FreyrRepository repositorio;
+    private FreyrRepositorio repositorio;
 
     //Guardan los datos usando arreglos.
     private Deuda[] todasLasDeudasallDebts = new Deuda[0];
@@ -52,7 +52,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        repositorio = ((FreyrApplication) requireActivity().getApplication()).getRepository();
+        repositorio = ((FreyrApp) requireActivity().getApplication()).getRepository();
         inicializarVistas(vista);
         configurarListeners();
         configurarRecyclerView();
@@ -218,14 +218,14 @@ public class RecapMesFinancieroFragment extends Fragment {
         for (Deuda d : todasLasDeudasallDebts) if (d.getGrupoFamiliarId() != null && contiene(idsGruposUsuario, d.getGrupoFamiliarId()))
             pendienteFamiliar += Math.max(0.0, d.getAmount() - obtenerMontoPagado(d));
         double totalPendiente = Math.max(0.0, totalDebido - totalPagado);
-        if (txHistorialTotalDebido != null) txHistorialTotalDebido.setText(FreyrRepository.formatCurrency(totalDebido));
-        if (txHistorialTotalPagado != null) txHistorialTotalPagado.setText(FreyrRepository.formatCurrency(totalPagado));
-        if (txHistorialTotalPendiente != null) txHistorialTotalPendiente.setText(FreyrRepository.formatCurrency(totalPendiente));
-        txMontoTotalPendiente.setText(FreyrRepository.formatCurrency(totalPorPagar));
+        if (txHistorialTotalDebido != null) txHistorialTotalDebido.setText(FreyrRepositorio.formatCurrency(totalDebido));
+        if (txHistorialTotalPagado != null) txHistorialTotalPagado.setText(FreyrRepositorio.formatCurrency(totalPagado));
+        if (txHistorialTotalPendiente != null) txHistorialTotalPendiente.setText(FreyrRepositorio.formatCurrency(totalPendiente));
+        txMontoTotalPendiente.setText(FreyrRepositorio.formatCurrency(totalPorPagar));
         txCantidadDeudasPendientes.setText(String.valueOf(cantidadPendientes));
         txCantidadDeudasPagadas.setText(String.valueOf(cantidadPagadas));
-        txTotalPagosPersonales.setText(FreyrRepository.formatCurrency(pagosPersonales));
-        txTotalDeudasFamiliares.setText(FreyrRepository.formatCurrency(pendienteFamiliar));
+        txTotalPagosPersonales.setText(FreyrRepositorio.formatCurrency(pagosPersonales));
+        txTotalDeudasFamiliares.setText(FreyrRepositorio.formatCurrency(pendienteFamiliar));
     }
 
     //Obtiene los identificadores de grupos a los que pertenece el usuario.

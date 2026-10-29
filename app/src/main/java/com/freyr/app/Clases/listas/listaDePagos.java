@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPago> {
 
@@ -72,7 +72,7 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
 
         // Muestra el valor del pago con formato de moneda.
         contenedor.txMonto.setText(
-                FreyrRepository.formatCurrency(payment.getMonto())
+                FreyrRepositorio.formatCurrency(payment.getMonto())
         );
 
         // Busca el nombre del usuario que realizó el pago.

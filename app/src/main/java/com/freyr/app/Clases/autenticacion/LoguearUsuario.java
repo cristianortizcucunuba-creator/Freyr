@@ -7,19 +7,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.ActividadPrincipal;
 
  // Inicio de sesión de usuario en Freyr.
- // Demostracion para pruebas con los perfiles sembrados.
+ // Demostracion para pruebas con los perfiles puestos.
 
 public class LoguearUsuario extends AppCompatActivity {
 
-    private EditText etIdentifier;
-    private EditText etPassword;
+    private EditText edtextNombre;
+    private EditText edtextContraseña;
     private Button btnLogin;
     private TextView txGoToRegister;
     private TextView txError;
@@ -28,22 +28,22 @@ public class LoguearUsuario extends AppCompatActivity {
     private Button btnMaria;
     private Button btnCarlos;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repositorio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepository();
 
-        initViews();
+        iniciarVistas();
         setupListeners();
     }
 
-    private void initViews() {
-        etIdentifier = findViewById(R.id.et_identifier);
-        etPassword = findViewById(R.id.et_password);
+    private void iniciarVistas() {
+        edtextNombre = findViewById(R.id.et_nombre);
+        edtextContraseña = findViewById(R.id.et_contraseña);
         btnLogin = findViewById(R.id.btn_login);
         txGoToRegister = findViewById(R.id.tx_go_to_register);
         txError = findViewById(R.id.tx_error);
@@ -54,7 +54,7 @@ public class LoguearUsuario extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnLogin.setOnClickListener(v -> doLogin());
+        btnLogin.setOnClickListener(v -> iniciarSesion());
 
         txGoToRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoguearUsuario.this, RegistrarUsuario.class);
@@ -62,29 +62,29 @@ public class LoguearUsuario extends AppCompatActivity {
         });
 
         btnJuan.setOnClickListener(v -> {
-            etIdentifier.setText("juan");
-            etPassword.setText("password123");
-            doLogin();
+            edtextNombre.setText("juan");
+            edtextContraseña.setText("contraseña123");
+            iniciarSesion();
         });
 
         btnMaria.setOnClickListener(v -> {
-            etIdentifier.setText("maria");
-            etPassword.setText("password123");
-            doLogin();
+            edtextNombre.setText("maria");
+            edtextContraseña.setText("contraseña123");
+            iniciarSesion();
         });
 
         btnCarlos.setOnClickListener(v -> {
-            etIdentifier.setText("carlos");
-            etPassword.setText("password123");
-            doLogin();
+            edtextNombre.setText("carlos");
+            edtextContraseña.setText("password123");
+            iniciarSesion();
         });
     }
 
-    private void doLogin() {
-        String identifier = etIdentifier.getText().toString().trim();
-        String password = etPassword.getText().toString();
+    private void iniciarSesion() {
+        String nombre = edtextNombre.getText().toString().trim();
+        String password = edtextContraseña.getText().toString();
 
-        if (identifier.isEmpty()) {
+        if (nombre.isEmpty()) {
             txError.setText("Por favor ingresa tu nombre de usuario o correo.");
             txError.setVisibility(View.VISIBLE);
             return;
@@ -93,7 +93,7 @@ public class LoguearUsuario extends AppCompatActivity {
         txError.setVisibility(View.GONE);
         btnLogin.setEnabled(false);
 
-        repository.login(identifier, password, new FreyrRepository.Callback<Usuario>() {
+        repositorio.login(nombre, password, new FreyrRepositorio.Callback<Usuario>() {
             @Override
             public void onSuccess(Usuario result) {
                 runOnUiThread(() -> {

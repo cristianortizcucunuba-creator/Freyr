@@ -5,12 +5,12 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class AñadirDeuda extends AppCompatActivity {
 
@@ -27,7 +27,7 @@ public class AñadirDeuda extends AppCompatActivity {
     private ImageButton btnBack;
     private TextView tvError;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
 
     // Datos de la pantalla guardados en arreglos.
     private Grupofamiliar[] userGroups = new Grupofamiliar[0];
@@ -40,7 +40,7 @@ public class AñadirDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_debt);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepository();
 
         initViews();
         setupListeners();
@@ -55,7 +55,7 @@ public class AñadirDeuda extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnBack = findViewById(R.id.btn_back);
+        btnBack = findViewById(R.id.btn_volver);
         tvError = findViewById(R.id.tx_error);
         rgDebtType = findViewById(R.id.rg_debt_type);
         rbPersonal = findViewById(R.id.rb_personal_debt);
@@ -279,7 +279,7 @@ public class AñadirDeuda extends AppCompatActivity {
                 amount,
                 assignedUserId,
                 familyGroupId,
-                new FreyrRepository.Callback<Deuda>() {
+                new FreyrRepositorio.Callback<Deuda>() {
                     @Override
                     public void onSuccess(Deuda result) {
                         runOnUiThread(() -> {

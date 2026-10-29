@@ -49,7 +49,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
-            android:id="@+id/et_full_name"
+            android:id="@+id/et_nombre_completo"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
@@ -71,7 +71,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
-            android:id="@+id/et_username"
+            android:id="@+id/et_usuario"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
@@ -115,7 +115,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/et_contraseña"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
@@ -137,7 +137,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
-            android:id="@+id/et_confirm_password"
+            android:id="@+id/et_confirmar_contraseña"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
@@ -150,7 +150,7 @@
 
         <!-- Botón de Registro -->
         <Button
-            android:id="@+id/btn_register"
+            android:id="@+id/btn_registrar"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:background="@drawable/bg_button_primary"

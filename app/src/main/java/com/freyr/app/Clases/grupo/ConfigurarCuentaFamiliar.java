@@ -13,13 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDeDeudas;
 import com.freyr.app.Clases.deuda.AñadirDeuda;
 import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
@@ -42,7 +42,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
 
     private listaDeDeudas adaptadorDeudas;
-    private FreyrRepository repositorio;
+    private FreyrRepositorio repositorio;
     private String idGrupo;
     private Grupofamiliar grupoActual;
 
@@ -56,7 +56,9 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_group_detail);
 
-        repositorio = ((FreyrApplication) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepository();
+        idGrupo = getIntent().getStringExtra("grupo_id");
+        repositorio = ((FreyrApp) getApplication()).getRepository();
         idGrupo = getIntent().getStringExtra("group_id");
 
         if (idGrupo == null) {
@@ -71,18 +73,18 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnVolver = findViewById(R.id.btn_back);
-        txTituloGrupo = findViewById(R.id.tv_group_title);
-        btnAgregarDeudaGrupo = findViewById(R.id.btn_add_group_debt);
-        txMontoTotalGrupo = findViewById(R.id.tv_group_total_amt);
-        txMontoAbonadoGrupo = findViewById(R.id.tv_group_paid_amt);
-        txMontoPendienteGrupo = findViewById(R.id.tv_group_remaining_amt);
-        txListaIntegrantes = findViewById(R.id.tv_members_list);
-        etIdentificadorInvitacion = findViewById(R.id.et_invite_identifier);
-        btnEnviarInvitacion = findViewById(R.id.btn_send_invite);
-        txRespuestaInvitacion = findViewById(R.id.tv_invite_feedback);
-        txSinDeudasGrupo = findViewById(R.id.tv_no_group_debts);
-        rvDeudasGrupo = findViewById(R.id.rv_group_debts);
+        btnVolver = findViewById(R.id.btn_volver);
+        txTituloGrupo = findViewById(R.id.texto_titulo_grupo);
+        btnAgregarDeudaGrupo = findViewById(R.id.btn_agregar_deuda_grupo);
+        txMontoTotalGrupo = findViewById(R.id.texto_total_deuda_grupo);
+        txMontoAbonadoGrupo = findViewById(R.id.texto_total_pagado_grupo);
+        txMontoPendienteGrupo = findViewById(R.id.texto_saldo_pendiente_grupo);
+        txListaIntegrantes = findViewById(R.id.texto_lista_miembros);
+        etIdentificadorInvitacion = findViewById(R.id.identificador_invitacion);
+        btnEnviarInvitacion = findViewById(R.id.enviar_invitacion);
+        txRespuestaInvitacion = findViewById(R.id.texto_resultado_invitacion);
+        txSinDeudasGrupo = findViewById(R.id.texto_sin_deudas_grupo);
+        rvDeudasGrupo = findViewById(R.id.lista_visual_deudas_grupo);
     }
 
     private void setupListeners() {
@@ -106,7 +108,8 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             repositorio.inviteUser(
                     idGrupo,
                     identifier,
-                    new FreyrRepository.Callback<Void>() {
+
+                    new FreyrRepositorio.Callback<Void>() {
                         @Override
                         public void onSuccess(Void result) {
                             runOnUiThread(() -> {
@@ -173,6 +176,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         rvDeudasGrupo.setLayoutManager(new LinearLayoutManager(this));
         rvDeudasGrupo.setAdapter(adaptadorDeudas);
     }
+
 
     private void observeData() {
         repositorio.getAllUsersLive().observe(this, users -> {
@@ -277,10 +281,10 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         double remaining = Math.max(0.0, total - paid);
 
-        txMontoTotalGrupo.setText(FreyrRepository.formatCurrency(total));
-        txMontoAbonadoGrupo.setText(FreyrRepository.formatCurrency(paid));
+        txMontoTotalGrupo.setText(FreyrRepositorio.formatCurrency(total));
+        txMontoAbonadoGrupo.setText(FreyrRepositorio.formatCurrency(paid));
         txMontoPendienteGrupo.setText(
-                FreyrRepository.formatCurrency(remaining)
+                FreyrRepositorio.formatCurrency(remaining)
         );
     }
 }
