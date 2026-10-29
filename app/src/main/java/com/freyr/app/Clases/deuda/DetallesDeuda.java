@@ -71,7 +71,7 @@ public class DetallesDeuda extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnBack = findViewById(R.id.btn_back);
+        btnBack = findViewById(R.id.btn_volver);
         btnDeleteDebt = findViewById(R.id.btn_delete_debt);
         tvTitle = findViewById(R.id.tv_title);
         tvDebtName = findViewById(R.id.tx_nombre_deuda);
