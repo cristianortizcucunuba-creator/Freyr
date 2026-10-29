@@ -24,121 +24,121 @@ import com.freyr.app.Clases.listas.listaDeGruposFamiliares;
 public class GruposFamiliares extends Fragment {
 
     private Button btnCreargrupo;
-    private RecyclerView rvFamilyGroups;
-    private listaDeGruposFamiliares groupAdapter;
+    private RecyclerView rvGruposFamiliares;
+    private listaDeGruposFamiliares adaptadorGrupos;
 
-    private FreyrRepositorio repository;
+    private FreyrRepositorio repositorio;
 
     @Nullable
     @Override
     public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState
+            @NonNull LayoutInflater inflador,
+            @Nullable ViewGroup contenedor,
+            @Nullable Bundle estadoGuardado
     ) {
-        View view = inflater.inflate(
+        View vista = inflador.inflate(
                 R.layout.fragment_family_groups,
-                container,
+                contenedor,
                 false
         );
 
-        repository = ((FreyrApp) requireActivity()
+        repositorio = ((FreyrApp) requireActivity()
                 .getApplication()).getRepository();
 
-        initViews(view);
-        setupListeners();
-        setupRecyclerView();
-        observeData();
+        inicializarVistas(vista);
+        configurarAcciones();
+        configurarLista();
+        observarDatos();
 
-        return view;
+        return vista;
     }
 
-    private void initViews(View view) {
-        btnCreargrupo = view.findViewById(R.id.btn_create_group);
-        rvFamilyGroups = view.findViewById(R.id.rv_family_groups);
+    private void inicializarVistas(View vista) {
+        btnCreargrupo = vista.findViewById(R.id.btn_crear_grupo);
+        rvGruposFamiliares = vista.findViewById(R.id.rv_fam_grupo);
     }
 
-    private void setupListeners() {
+    private void configurarAcciones() {
         btnCreargrupo.setOnClickListener(v -> {
-            Intent intent = new Intent(
+            Intent intencion = new Intent(
                     getActivity(),
                     CrearGrupoFamiliar.class
             );
-            startActivity(intent);
+            startActivity(intencion);
         });
     }
 
-    private void setupRecyclerView() {
-        groupAdapter = new listaDeGruposFamiliares(
+    private void configurarLista() {
+        adaptadorGrupos = new listaDeGruposFamiliares(
                 requireContext(),
-                group -> {
-                    Intent intent = new Intent(
+                grupo -> {
+                    Intent intencion = new Intent(
                             getActivity(),
                             ConfigurarCuentaFamiliar.class
                     );
-                    intent.putExtra("group_id", group.getId());
-                    startActivity(intent);
+                    intencion.putExtra("group_id", grupo.getId());
+                    startActivity(intencion);
                 }
         );
 
-        rvFamilyGroups.setLayoutManager(
+        rvGruposFamiliares.setLayoutManager(
                 new LinearLayoutManager(requireContext())
         );
-        rvFamilyGroups.setAdapter(groupAdapter);
+        rvGruposFamiliares.setAdapter(adaptadorGrupos);
     }
 
-    private void observeData() {
-        String uid = repository.getCurrentUserId();
-        groupAdapter.setIdUsuarioActual(uid);
+    private void observarDatos() {
+        String uid = repositorio.getCurrentUserId();
+        adaptadorGrupos.setIdUsuarioActual(uid);
 
-        repository.getAllGroupsLive().observe(
+        repositorio.getAllGroupsLive().observe(
                 getViewLifecycleOwner(),
                 groups -> {
                     if (groups != null) {
                         // Filtra los grupos del usuario en un arreglo.
-                        Grupofamiliar[] matchingGroups =
+                        Grupofamiliar[] gruposCoincidentes =
                                 new Grupofamiliar[groups.size()];
-                        int count = 0;
+                        int cantidad = 0;
 
-                        for (Grupofamiliar group : groups) {
-                            if (group.getMiembrosIds() != null
-                                    && group.getMiembrosIds().contains(uid)) {
-                                matchingGroups[count] = group;
-                                count++;
+                        for (Grupofamiliar grupo : groups) {
+                            if (grupo.getMiembrosIds() != null
+                                    && grupo.getMiembrosIds().contains(uid)) {
+                                gruposCoincidentes[cantidad] = grupo;
+                                cantidad++;
                             }
                         }
 
                         // Ajusta el tamaño al número de grupos encontrados.
-                        Grupofamiliar[] userGroups = new Grupofamiliar[count];
+                        Grupofamiliar[] gruposDelUsuario = new Grupofamiliar[cantidad];
                         System.arraycopy(
-                                matchingGroups,
+                                gruposCoincidentes,
                                 0,
-                                userGroups,
+                                gruposDelUsuario,
                                 0,
-                                count
+                                cantidad
                         );
 
-                        groupAdapter.setGrupos(userGroups);
+                        adaptadorGrupos.setGrupos(gruposDelUsuario);
                     }
                 }
         );
 
-        repository.getAllDebtsLive().observe(
+        repositorio.getAllDebtsLive().observe(
                 getViewLifecycleOwner(),
                 debts -> {
                     if (debts != null) {
-                        groupAdapter.setDeudas(
+                        adaptadorGrupos.setDeudas(
                                 debts.toArray(new Deuda[0])
                         );
                     }
                 }
         );
 
-        repository.getAllPaymentsLive().observe(
+        repositorio.getAllPaymentsLive().observe(
                 getViewLifecycleOwner(),
                 payments -> {
                     if (payments != null) {
-                        groupAdapter.setPagos(
+                        adaptadorGrupos.setPagos(
                                 payments.toArray(new Pago[0])
                         );
                     }
