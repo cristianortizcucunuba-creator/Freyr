@@ -7,15 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.ActividadPrincipal;
 
- // Inicio de sesión de usuario en Freyr.
- // Demostracion para pruebas con los perfiles puestos.
-
+// Inicio de sesión de usuario en Freyr.
 public class LoguearUsuario extends AppCompatActivity {
 
     private EditText edtextNombre;
@@ -23,10 +22,6 @@ public class LoguearUsuario extends AppCompatActivity {
     private Button btnLogin;
     private TextView txGoToRegister;
     private TextView txError;
-
-    private Button btnJuan;
-    private Button btnMaria;
-    private Button btnCarlos;
 
     private FreyrRepositorio repositorio;
 
@@ -47,10 +42,6 @@ public class LoguearUsuario extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
         txGoToRegister = findViewById(R.id.tx_go_to_register);
         txError = findViewById(R.id.tx_error);
-
-        //btnJuan = findViewById(R.id.btn_juan);
-        //btnMaria = findViewById(R.id.btn_maria);
-       // btnCarlos = findViewById(R.id.btn_carlos);
     }
 
     private void setupListeners() {
@@ -59,24 +50,6 @@ public class LoguearUsuario extends AppCompatActivity {
         txGoToRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoguearUsuario.this, RegistrarUsuario.class);
             startActivity(intent);
-        });
-
-        btnJuan.setOnClickListener(v -> {
-            edtextNombre.setText("juan");
-            edtextContraseña.setText("contraseña123");
-            iniciarSesion();
-        });
-
-        btnMaria.setOnClickListener(v -> {
-            edtextNombre.setText("maria");
-            edtextContraseña.setText("contraseña123");
-            iniciarSesion();
-        });
-
-        btnCarlos.setOnClickListener(v -> {
-            edtextNombre.setText("carlos");
-            edtextContraseña.setText("password123");
-            iniciarSesion();
         });
     }
 
@@ -115,4 +88,3 @@ public class LoguearUsuario extends AppCompatActivity {
         });
     }
 }
-
