@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.*;
+import com.freyr.app.data.datos.*;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.ActividadPrincipal;
 import com.freyr.app.Clases.listas.listaDeDeudas;
@@ -154,7 +154,7 @@ public class RecapMesFinancieroFragment extends Fragment {
                 int cantidadPendientes = 0;
                 //Cuenta las invitaciones pendientes del usuario
                 for (Invitacion inv : todasLasInvitaciones)
-                    if (inv.getInvitedUserId().equals(usuarioid) && "pendiente".equalsIgnoreCase(inv.getStatus())) cantidadPendientes++;
+                    if (inv.getIdUsuarioInvitado().equals(usuarioid) && "pendiente".equalsIgnoreCase(inv.getEstado())) cantidadPendientes++;
                 txSubAccionInvitacion.setText(cantidadPendientes > 0
                         ? cantidadPendientes + " invitación" + (cantidadPendientes > 1 ? "es" : "") + " pendiente" + (cantidadPendientes > 1 ? "s" : "")
                         : "Ver invitaciones pendientes");
@@ -170,12 +170,12 @@ public class RecapMesFinancieroFragment extends Fragment {
         int contador = 0;
         for (Deuda d : todasLasDeudasallDebts) {
             //Es relevante si es personal del usuario o de uno de sus grupos
-            boolean relevante = (d.getGrupoFamiliarId() == null && (usuarioid.equals(d.getAssignedUserId()) || usuarioid.equals(d.getCreatedBy())))
+            boolean relevante = (d.getGrupoFamiliarId() == null && (usuarioid.equals(d.getIdUsuarioAsignado()) || usuarioid.equals(d.getCreadoPor())))
                     || (d.getGrupoFamiliarId() != null && contiene(userGroupIds, d.getGrupoFamiliarId()));
             if (relevante) {
                 double pagado = obtenerMontoPagado(d);
-                double relevant = Math.max(0.0, d.getAmount() - pagado);
-                if (relevant > 0 && !"pagada".equalsIgnoreCase(d.getStatus())) {
+                double relevant = Math.max(0.0, d.getMonto() - pagado);
+                if (relevant > 0 && !"pagada".equalsIgnoreCase(d.getEstado())) {
                     activas[contador++] = d;
                     if (contador == activas.length) break;
                 }
@@ -196,14 +196,14 @@ public class RecapMesFinancieroFragment extends Fragment {
 
         //Suma lo debido, lo pagado y lo pendiente de cada deuda relevante
         for (Deuda d : todasLasDeudasallDebts) {
-            boolean relevant = (d.getGrupoFamiliarId() == null && (usuarioid.equals(d.getAssignedUserId()) || usuarioid.equals(d.getCreatedBy())))
+            boolean relevant = (d.getGrupoFamiliarId() == null && (usuarioid.equals(d.getIdUsuarioAsignado()) || usuarioid.equals(d.getCreadoPor())))
                     || (d.getGrupoFamiliarId() != null && contiene(idsGruposUsuario, d.getGrupoFamiliarId()));
             if (relevant) {
-                totalDebido += d.getAmount();
+                totalDebido += d.getMonto();
                 double pagado = obtenerMontoPagado(d);
                 totalPagado += pagado;
-                double remaining = Math.max(0.0, d.getAmount() - pagado);
-                if (remaining == 0.0 || "pagado".equalsIgnoreCase(d.getStatus())) cantidadPagadas++;
+                double remaining = Math.max(0.0, d.getMonto() - pagado);
+                if (remaining == 0.0 || "pagado".equalsIgnoreCase(d.getEstado())) cantidadPagadas++;
                 else { cantidadPendientes++; totalPorPagar += remaining; }
             }
         }
@@ -216,7 +216,7 @@ public class RecapMesFinancieroFragment extends Fragment {
         //Lo que falta por pagar en las deudas de sus grupos
         double pendienteFamiliar = 0.0;
         for (Deuda d : todasLasDeudasallDebts) if (d.getGrupoFamiliarId() != null && contiene(idsGruposUsuario, d.getGrupoFamiliarId()))
-            pendienteFamiliar += Math.max(0.0, d.getAmount() - obtenerMontoPagado(d));
+            pendienteFamiliar += Math.max(0.0, d.getMonto() - obtenerMontoPagado(d));
         double totalPendiente = Math.max(0.0, totalDebido - totalPagado);
         if (txHistorialTotalDebido != null) txHistorialTotalDebido.setText(FreyrRepositorio.formatCurrency(totalDebido));
         if (txHistorialTotalPagado != null) txHistorialTotalPagado.setText(FreyrRepositorio.formatCurrency(totalPagado));

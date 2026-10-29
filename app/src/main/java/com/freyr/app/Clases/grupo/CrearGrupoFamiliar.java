@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Grupofamiliar;
+import com.freyr.app.data.datos.Grupofamiliar;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 /**
@@ -20,48 +20,48 @@ import com.freyr.app.data.repositorio.FreyrRepositorio;
  */
 public class CrearGrupoFamiliar extends AppCompatActivity {
 
-    private ImageButton btnBack;
-    private TextView tvError;
-    private EditText etGroupName;
-    private Button btnSaveGroup;
-    private FreyrRepositorio repository;
+    private ImageButton btnVolv;
+    private TextView txError;
+    private EditText etNombreGrupo;
+    private Button btnGuardarGrupo;
+    private FreyrRepositorio repositorio;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle estadoGuardado) {
+        super.onCreate(estadoGuardado);
         setContentView(R.layout.activity_create_family_group);
 
-        repository = ((FreyrApp) getApplication()).getRepository();
+        repositorio = ((FreyrApp) getApplication()).getRepository();
 
-        initViews();
-        setupListeners();
+        inicializarVistas();
+        configurarAcciones();
     }
 
-    private void initViews() {
-        btnBack = findViewById(R.id.btn_atras);
-        tvError = findViewById(R.id.tx_error);
-        etGroupName = findViewById(R.id.et_group_name);
-        btnSaveGroup = findViewById(R.id.btn_save_group);
+    private void inicializarVistas() {
+        btnVolv = findViewById(R.id.btn_volver);
+        txError = findViewById(R.id.tx_error);
+        etNombreGrupo = findViewById(R.id.et_name_grupo);
+        btnGuardarGrupo = findViewById(R.id.btn_guardar_grupo);
     }
 
-    private void setupListeners() {
-        btnBack.setOnClickListener(v -> finish());
+    private void configurarAcciones() {
+        btnVolv.setOnClickListener(v -> finish());
 
-        btnSaveGroup.setOnClickListener(v -> {
-            String name = etGroupName.getText().toString().trim();
+        btnGuardarGrupo.setOnClickListener(v -> {
+            String name = etNombreGrupo.getText().toString().trim();
             if (name.isEmpty()) {
-                tvError.setText("Por favor ingresa un nombre para el grupo familiar.");
-                tvError.setVisibility(View.VISIBLE);
-                etGroupName.requestFocus();
+                txError.setText("Por favor ingresa un nombre para el grupo familiar.");
+                txError.setVisibility(View.VISIBLE);
+                etNombreGrupo.requestFocus();
                 return;
             }
 
-            tvError.setVisibility(View.GONE);
-            btnSaveGroup.setEnabled(false);
+            txError.setVisibility(View.GONE);
+            btnGuardarGrupo.setEnabled(false);
 
-            repository.createFamilyGroup(name, new FreyrRepositorio.Callback<Grupofamiliar>() {
+            repositorio.createFamilyGroup(name, new FreyrRepositorio.Callback<Grupofamiliar>() {
                 @Override
-                public void onSuccess(Grupofamiliar result) {
+                public void onSuccess(Grupofamiliar grupoCreado) {
                     runOnUiThread(() -> {
                         Toast.makeText(CrearGrupoFamiliar.this, "¡Grupo familiar creado exitosamente!", Toast.LENGTH_SHORT).show();
                         setResult(RESULT_OK);
@@ -72,9 +72,9 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
                 @Override
                 public void onError(String error) {
                     runOnUiThread(() -> {
-                        btnSaveGroup.setEnabled(true);
-                        tvError.setText(error);
-                        tvError.setVisibility(View.VISIBLE);
+                        btnGuardarGrupo.setEnabled(true);
+                        txError.setText(error);
+                        txError.setVisibility(View.VISIBLE);
                     });
                 }
             });

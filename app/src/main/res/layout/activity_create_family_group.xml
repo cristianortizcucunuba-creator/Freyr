@@ -57,7 +57,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_group_name"
+            android:id="@+id/et_name_grupo"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
@@ -117,7 +117,7 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/btn_save_group"
+            android:id="@+id/btn_guardar_grupo"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:background="@drawable/bg_button_primary"

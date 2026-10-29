@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.R;
-import com.freyr.app.data.model.Deuda;
-import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Pago;
+import com.freyr.app.data.datos.Deuda;
+import com.freyr.app.data.datos.Grupofamiliar;
+import com.freyr.app.data.datos.Pago;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposFamiliares.ContenedorGrupo> {
@@ -103,7 +103,7 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
             if (grupo.getId().equals(debt.getGrupoFamiliarId())) {
 
                 cantidadDeudas++;
-                totalDeudas += debt.getAmount();
+                totalDeudas += debt.getMonto();
 
                 // Suma los pagos relacionados con la deuda actual.
                 for (Pago payment : todosLosPagos) {

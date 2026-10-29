@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.freyr.app.data.local.FreyrDatabase;
-import com.freyr.app.data.model.*;
+import com.freyr.app.data.datos.*;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -76,7 +76,7 @@ public class FreyrRepositorio {
                 callback.onError("User not found with username or email: " + identifier);
                 return;
             }
-            if (user.getPassword() != null && !user.getPassword().isEmpty() && !user.getPassword().equals(password)) {
+            if (user.getContraseña() != null && !user.getContraseña().isEmpty() && !user.getContraseña().equals(password)) {
                 callback.onError("Incorrect password.");
                 return;
             }
@@ -177,11 +177,11 @@ public class FreyrRepositorio {
                 }
             }
 
-            current.setFullName(fullName.trim());
-            current.setUsername(trimmedUsername);
+            current.setNombreCompl(fullName.trim());
+            current.setNomUsuar(trimmedUsername);
             current.setEmail(trimmedEmail);
             if (password != null && !password.trim().isEmpty()) {
-                current.setPassword(password);
+                current.setContraseña(password);
             }
 
             database.userDao().updateUser(current);
@@ -261,8 +261,8 @@ public class FreyrRepositorio {
             database.paymentDao().insertPayment(payment);
 
             // Once remaining amount reaches zero, automatically marked as Paid
-            if (newTotalPaid >= debt.getAmount()) {
-                debt.setStatus("paid");
+            if (newTotalPaid >= debt.getMonto()) {
+                debt.setEstado("paid");
                 database.debtDao().updateDebt(debt);
             }
 
@@ -280,8 +280,8 @@ public class FreyrRepositorio {
                 for (Pago p : remainingPayments) {
                     totalPaid += p.getMonto();
                 }
-                if (totalPaid < debt.getAmount()) {
-                    debt.setStatus("pending");
+                if (totalPaid < debt.getMonto()) {
+                    debt.setEstado("pending");
                     database.debtDao().updateDebt(debt);
                 }
             }
@@ -333,7 +333,7 @@ public class FreyrRepositorio {
 
             List<Invitacion> allInvites = database.invitationDao().getAllInvitations();
             for (Invitacion inv : allInvites) {
-                if (inv.getGrupoFamiliarId().equals(groupId) && inv.getInvitedUserId().equals(target.getId()) && "pending".equals(inv.getStatus())) {
+                if (inv.getGrupoFamiliarId().equals(groupId) && inv.getIdUsuarioInvitado().equals(target.getId()) && "pending".equals(inv.getEstado())) {
                     callback.onError("An invitation is already pending for " + target.getNomCompl());
                     return;
                 }
@@ -360,15 +360,15 @@ public class FreyrRepositorio {
 
             if (accept) {
                 Grupofamiliar group = database.familyGroupDao().getGroupById(invite.getGrupoFamiliarId());
-                if (group != null && !group.getMiembrosIds().contains(invite.getInvitedUserId())) {
+                if (group != null && !group.getMiembrosIds().contains(invite.getIdUsuarioInvitado())) {
                     List<String> updated = new ArrayList<>(group.getMiembrosIds());
-                    updated.add(invite.getInvitedUserId());
-                    group.setMemberIds(updated);
+                    updated.add(invite.getIdUsuarioInvitado());
+                    group.setIdDeMiembros(updated);
                     database.familyGroupDao().updateGroup(group);
                 }
             }
 
-            invite.setStatus(accept ? "accepted" : "declined");
+            invite.setEstado(accept ? "accepted" : "declined");
             database.invitationDao().updateInvitation(invite);
             if (callback != null) callback.onSuccess(null);
         });

@@ -15,10 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Deuda;
-import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Pago;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Deuda;
+import com.freyr.app.data.datos.Grupofamiliar;
+import com.freyr.app.data.datos.Pago;
+import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDeDeudas;
 import com.freyr.app.Clases.deuda.AñadirDeuda;
@@ -28,7 +28,7 @@ import com.freyr.app.Clases.deuda.DetallesDeuda;
 public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
     private ImageButton btnVolver;
-    private TextView txTituloGrupo;
+    private TextView textoTituloGrupo;
     private Button btnAgregarDeudaGrupo;
     private TextView txMontoTotalGrupo;
     private TextView txMontoAbonadoGrupo;
@@ -47,9 +47,9 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     private Grupofamiliar grupoActual;
 
     // Mantiene los datos de la pantalla en arreglos.
-    private Usuario[] allUsers = new Usuario[0];
-    private Deuda[] groupDebts = new Deuda[0];
-    private Pago[] allPayments = new Pago[0];
+    private Usuario[] todosLosUsuarios = new Usuario[0];
+    private Deuda[] deudasDelGrupo = new Deuda[0];
+    private Pago[] todosLosPagos = new Pago[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +68,13 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         initViews();
         setupListeners();
-        setupRecyclerView();
-        observeData();
+        configurarListaDeudas();
+        observarDatos();
     }
 
     private void initViews() {
-        btnVolver = findViewById(R.id.btn_atras);
-        txTituloGrupo = findViewById(R.id.texto_titulo_grupo);
+        btnVolver = findViewById(R.id.btn_volver);
+        textoTituloGrupo = findViewById(R.id.texto_titulo_grupo);
         btnAgregarDeudaGrupo = findViewById(R.id.btn_agregar_deuda_grupo);
         txMontoTotalGrupo = findViewById(R.id.texto_total_deuda_grupo);
         txMontoAbonadoGrupo = findViewById(R.id.texto_total_pagado_grupo);
@@ -100,7 +100,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             String identifier = etIdentificadorInvitacion.getText().toString().trim();
 
             if (identifier.isEmpty()) {
-                showInviteFeedback("Por favor ingresa un usuario o correo.", false);
+                showResultadoInvitacion("Por favor ingresa un usuario o correo.", false);
                 return;
             }
 
@@ -111,11 +111,11 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
                     new FreyrRepositorio.Callback<Void>() {
                         @Override
-                        public void onSuccess(Void result) {
+                        public void onSuccess(Void resultado) {
                             runOnUiThread(() -> {
                                 btnEnviarInvitacion.setEnabled(true);
                                 etIdentificadorInvitacion.setText("");
-                                showInviteFeedback(
+                                showResultadoInvitacion(
                                         "¡Invitación enviada exitosamente!",
                                         true
                                 );
@@ -126,7 +126,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
                         public void onError(String error) {
                             runOnUiThread(() -> {
                                 btnEnviarInvitacion.setEnabled(true);
-                                showInviteFeedback(error, false);
+                                showResultadoInvitacion(error, false);
                             });
                         }
                     }
@@ -134,8 +134,8 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         });
     }
 
-    private void showInviteFeedback(String message, boolean isSuccess) {
-        txRespuestaInvitacion.setText(message);
+    private void showResultadoInvitacion(String mensaje, boolean isSuccess) {
+        txRespuestaInvitacion.setText(mensaje);
         txRespuestaInvitacion.setTextColor(
                 ContextCompat.getColor(
                         this,
@@ -147,28 +147,28 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         txRespuestaInvitacion.setVisibility(View.VISIBLE);
     }
 
-    private void setupRecyclerView() {
+    private void configurarListaDeudas() {
         adaptadorDeudas = new listaDeDeudas(
                 this,
                 new listaDeDeudas.MonitorDeudas() {
                     @Override
                     public void tocDeuda(Deuda debt) {
-                        Intent intent = new Intent(
+                        Intent intencion = new Intent(
                                 ConfigurarCuentaFamiliar.this,
                                 DetallesDeuda.class
                         );
-                        intent.putExtra("debt_id", debt.getId());
-                        startActivity(intent);
+                        intencion.putExtra("debt_id", debt.getId());
+                        startActivity(intencion);
                     }
 
                     @Override
                     public void tocPagar(Deuda debt) {
-                        Intent intent = new Intent(
+                        Intent intencion = new Intent(
                                 ConfigurarCuentaFamiliar.this,
                                 RegistrarAbonosDeuda.class
                         );
-                        intent.putExtra("debt_id", debt.getId());
-                        startActivity(intent);
+                        intencion.putExtra("deuda_id", debt.getId());
+                        startActivity(intencion);
                     }
                 }
         );
@@ -178,24 +178,24 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     }
 
 
-    private void observeData() {
+    private void observarDatos() {
         repositorio.getAllUsersLive().observe(this, users -> {
             if (users != null) {
-                allUsers = users.toArray(new Usuario[0]);
-                updateMembersDisplay();
+                todosLosUsuarios = users.toArray(new Usuario[0]);
+                actualizarListaMiembros();
             }
         });
 
         repositorio.getAllGroupsLive().observe(this, groups -> {
             if (groups != null) {
-                for (Grupofamiliar group : groups) {
-                    if (group.getId().equals(idGrupo)) {
-                        grupoActual = group;
-                        txTituloGrupo.setText(group.getNombre());
+                for (Grupofamiliar grupo : groups) {
+                    if (grupo.getId().equals(idGrupo)) {
+                        grupoActual = grupo;
+                        textoTituloGrupo.setText(grupo.getNombre());
 
                         // El adapter recibe un arreglo de grupos.
-                        adaptadorDeudas.setGrupos(new Grupofamiliar[]{group});
-                        updateMembersDisplay();
+                        adaptadorDeudas.setGrupos(new Grupofamiliar[]{grupo});
+                        actualizarListaMiembros();
                         break;
                     }
                 }
@@ -204,87 +204,87 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         repositorio.getAllDebtsLive().observe(this, debts -> {
             if (debts != null) {
-                Deuda[] matchingDebts = new Deuda[debts.size()];
-                int count = 0;
+                Deuda[] deudasCoincidentes = new Deuda[debts.size()];
+                int cantidad = 0;
 
                 for (Deuda debt : debts) {
                     if (idGrupo.equals(debt.getGrupoFamiliarId())) {
-                        matchingDebts[count] = debt;
-                        count++;
+                        deudasCoincidentes[cantidad] = debt;
+                        cantidad++;
                     }
                 }
 
                 // Recorta el arreglo temporal al número de deudas del grupo.
-                groupDebts = new Deuda[count];
-                System.arraycopy(matchingDebts, 0, groupDebts, 0, count);
+                deudasDelGrupo = new Deuda[cantidad];
+                System.arraycopy(deudasCoincidentes, 0, deudasDelGrupo, 0, cantidad);
 
-                adaptadorDeudas.setDeudas(groupDebts);
+                adaptadorDeudas.setDeudas(deudasDelGrupo);
                 txSinDeudasGrupo.setVisibility(
-                        groupDebts.length == 0 ? View.VISIBLE : View.GONE
+                        deudasDelGrupo.length == 0 ? View.VISIBLE : View.GONE
                 );
-                recalculateTotals();
+                recalcularTotales();
             }
         });
 
         repositorio.getAllPaymentsLive().observe(this, payments -> {
             if (payments != null) {
-                allPayments = payments.toArray(new Pago[0]);
-                adaptadorDeudas.setPagos(allPayments);
-                recalculateTotals();
+                todosLosPagos = payments.toArray(new Pago[0]);
+                adaptadorDeudas.setPagos(todosLosPagos);
+                recalcularTotales();
             }
         });
     }
 
     // Actualiza el texto con los miembros del grupo.
-    private void updateMembersDisplay() {
+    private void actualizarListaMiembros() {
         if (grupoActual == null || grupoActual.getMiembrosIds() == null) {
             return;
         }
 
-        String[] displayNames =
+        String[] nombresParaMostrar =
                 new String[grupoActual.getMiembrosIds().size()];
 
-        int index = 0;
-        for (String userId : grupoActual.getMiembrosIds()) {
-            boolean isCreator = userId.equals(grupoActual.getCreadorId());
-            String name = "Usuario (" + userId + ")";
+        int indice = 0;
+        for (String idUsuario : grupoActual.getMiembrosIds()) {
+            boolean Creador = idUsuario.equals(grupoActual.getCreadorId());
+            String nombre = "Usuario (" + idUsuario + ")";
 
-            for (Usuario user : allUsers) {
-                if (user.getId().equals(userId)) {
-                    name = user.getNomCompl()
-                            + (isCreator ? " (Creador)" : "");
+            for (Usuario user : todosLosUsuarios) {
+                if (user.getId().equals(idUsuario)) {
+                    nombre = user.getNomCompl()
+                            + (Creador ? " (Creador)" : "");
                     break;
                 }
             }
 
-            displayNames[index] = name;
-            index++;
+            nombresParaMostrar[indice] = nombre;
+            indice++;
         }
 
-        txListaIntegrantes.setText(String.join(", ", displayNames));
+        txListaIntegrantes.setText(String.join(", ", nombresParaMostrar));
     }
 
     // Calcula los totales de las deudas y los pagos del grupo.
-    private void recalculateTotals() {
+    private void recalcularTotales() {
         double total = 0.0;
-        double paid = 0.0;
+        double totalPagado = 0.0;
 
-        for (Deuda debt : groupDebts) {
-            total += debt.getAmount();
+        for (Deuda debt : deudasDelGrupo) {
+            total += debt.getMonto();
 
-            for (Pago payment : allPayments) {
+            for (Pago payment : todosLosPagos) {
                 if (payment.getDeudaId().equals(debt.getId())) {
-                    paid += payment.getMonto();
+                    totalPagado += payment.getMonto();
                 }
             }
         }
 
-        double remaining = Math.max(0.0, total - paid);
+        double saldoPendiente = Math.max(0.0, total - totalPagado);
 
         txMontoTotalGrupo.setText(FreyrRepositorio.formatCurrency(total));
-        txMontoAbonadoGrupo.setText(FreyrRepositorio.formatCurrency(paid));
+        txMontoAbonadoGrupo.setText(FreyrRepositorio.formatCurrency(totalPagado));
         txMontoPendienteGrupo.setText(
-                FreyrRepositorio.formatCurrency(remaining)
+                FreyrRepositorio.formatCurrency(saldoPendiente)
         );
     }
 }

@@ -15,61 +15,61 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Invitacion;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Grupofamiliar;
+import com.freyr.app.data.datos.Invitacion;
+import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDeInvitaciones;
 
 public class InvitarGrupoFamiliar extends Fragment {
 
-    private RecyclerView rvInvitations;
-    private TextView tvNoInvitations;
-    private listaDeInvitaciones invitationAdapter;
+    private RecyclerView rvInvitaciones;
+    private TextView tvSinInvitaciones;
+    private listaDeInvitaciones adaptadorInvitaciones;
 
-    private FreyrRepositorio repository;
-    private Invitacion[] allInvitations = new Invitacion[0];
+    private FreyrRepositorio repositorio;
+    private Invitacion[] todasLasInvitaciones = new Invitacion[0];
 
     @Nullable
     @Override
     public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState
+            @NonNull LayoutInflater inflador,
+            @Nullable ViewGroup contenedor,
+            @Nullable Bundle estadoGuardado
     ) {
-        View view = inflater.inflate(
+        View vista = inflador.inflate(
                 R.layout.fragment_invitations,
-                container,
+                contenedor,
                 false
         );
 
-        repository = ((FreyrApp) requireActivity()
+        repositorio = ((FreyrApp) requireActivity()
                 .getApplication()).getRepository();
 
-        initViews(view);
-        setupRecyclerView();
-        observeData();
+        inicializarVistas(vista);
+        configurarLista();
+        observarDatos();
 
-        return view;
+        return vista;
     }
 
-    private void initViews(View view) {
-        rvInvitations = view.findViewById(R.id.rv_invitations);
-        tvNoInvitations = view.findViewById(R.id.tv_no_invitations);
+    private void inicializarVistas(View vista) {
+        rvInvitaciones = vista.findViewById(R.id.rv_invitaciones);
+        tvSinInvitaciones = vista.findViewById(R.id.tv_sin_invitaciones);
     }
 
-    private void setupRecyclerView() {
-        invitationAdapter = new listaDeInvitaciones(
+    private void configurarLista() {
+        adaptadorInvitaciones = new listaDeInvitaciones(
                 requireContext(),
                 new listaDeInvitaciones.AccionesRespuestaInvitacion() {
                     @Override
                     public void Aceptar(Invitacion invitacion) {
-                        repository.respondToInvitation(
+                        repositorio.respondToInvitation(
                                 invitacion.getId(),
                                 true,
                                 new FreyrRepositorio.Callback<Void>() {
                                     @Override
-                                    public void onSuccess(Void result) {
+                                    public void onSuccess(Void resultado) {
                                         if (getActivity() != null) {
                                             getActivity().runOnUiThread(() ->
                                                     Toast.makeText(
@@ -99,7 +99,7 @@ public class InvitarGrupoFamiliar extends Fragment {
 
                     @Override
                     public void Rechazar(Invitacion invitacion) {
-                        repository.respondToInvitation(
+                        repositorio.respondToInvitation(
                                 invitacion.getId(),
                                 false,
                                 new FreyrRepositorio.Callback<Void>() {
@@ -134,69 +134,69 @@ public class InvitarGrupoFamiliar extends Fragment {
                 }
         );
 
-        rvInvitations.setLayoutManager(
+        rvInvitaciones.setLayoutManager(
                 new LinearLayoutManager(requireContext())
         );
-        rvInvitations.setAdapter(invitationAdapter);
+        rvInvitaciones.setAdapter(adaptadorInvitaciones);
     }
 
-    private void observeData() {
-        String userId = repository.getCurrentUserId();
+    private void observarDatos() {
+        String idUsuario = repositorio.getCurrentUserId();
 
-        repository.getAllGroupsLive().observe(
+        repositorio.getAllGroupsLive().observe(
                 getViewLifecycleOwner(),
                 groups -> {
                     if (groups != null) {
-                        invitationAdapter.setGrupos(
+                        adaptadorInvitaciones.setGrupos(
                                 groups.toArray(new Grupofamiliar[0])
                         );
                     }
                 }
         );
 
-        repository.getAllUsersLive().observe(
+        repositorio.getAllUsersLive().observe(
                 getViewLifecycleOwner(),
                 users -> {
                     if (users != null) {
-                        invitationAdapter.setUsuarios(
+                        adaptadorInvitaciones.setUsuarios(
                                 users.toArray(new Usuario[0])
                         );
                     }
                 }
         );
 
-        repository.getAllInvitationsLive().observe(
+        repositorio.getAllInvitationsLive().observe(
                 getViewLifecycleOwner(),
-                invitations -> {
-                    if (invitations != null) {
-                        allInvitations = invitations.toArray(new Invitacion[0]);
+                invitaciones -> {
+                    if (invitaciones != null) {
+                        todasLasInvitaciones = invitaciones.toArray(new Invitacion[0]);
 
-                        Invitacion[] pendingInvitations =
-                                new Invitacion[allInvitations.length];
-                        int count = 0;
+                        Invitacion[] invitacionesPendientes =
+                                new Invitacion[todasLasInvitaciones.length];
+                        int cantidad = 0;
 
-                        for (Invitacion invitacion : allInvitations) {
-                            if (invitacion.getInvitedUserId().equals(userId)
+                        for (Invitacion invitacion : todasLasInvitaciones) {
+                            if (invitacion.getIdUsuarioInvitado().equals(idUsuario)
                                     && "pending".equalsIgnoreCase(
-                                    invitacion.getStatus()
+                                    invitacion.getEstado()
                             )) {
-                                pendingInvitations[count] = invitacion;
-                                count++;
+                                invitacionesPendientes [cantidad] = invitacion;
+                                cantidad++;
                             }
                         }
 
-                        Invitacion[] result = new Invitacion[count];
+                        Invitacion[] resultado = new Invitacion[cantidad];
                         System.arraycopy(
-                                pendingInvitations,
+                                invitacionesPendientes ,
                                 0,
-                                result,
+                                resultado,
                                 0,
-                                count
+                                cantidad
                         );
 
-                        invitationAdapter.setInvitaciones(result);
-                        tvNoInvitations.setVisibility(
-                                count == 0 ? View.VISIBLE : View.GONE
+                        adaptadorInvitaciones.setInvitaciones(resultado);
+                        tvSinInvitaciones.setVisibility(
+                                cantidad == 0 ? View.VISIBLE : View.GONE
                         );
                     }
                 }

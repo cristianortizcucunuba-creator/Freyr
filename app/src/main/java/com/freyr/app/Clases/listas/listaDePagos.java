@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.R;
-import com.freyr.app.data.model.Pago;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Pago;
+import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPago> {
@@ -87,7 +87,7 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
 
         // Muestra quién pagó y la fecha del pago.
         contenedor.txInfo.setText(
-                "Pagado por " + nombreUsuario + " · " + payment.getDate()
+                "Pagado por " + nombreUsuario + " · " + payment.getFecha()
         );
 
         // Muestra la descripción solo si existe y no está vacía.

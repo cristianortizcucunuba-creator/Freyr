@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Deuda;
-import com.freyr.app.data.model.Pago;
+import com.freyr.app.data.datos.Deuda;
+import com.freyr.app.data.datos.Pago;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 import java.text.SimpleDateFormat;
@@ -125,9 +125,9 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
                 for (Deuda debt : debts) {
                     if (debt.getId().equals(debtId)) {
                         currentDebt = debt;
-                        tvForDebtName.setText("Para: " + debt.getName());
+                        tvForDebtName.setText("Para: " + debt.getNombre());
                         tvStatusTotal.setText(
-                                FreyrRepositorio.formatCurrency(debt.getAmount())
+                                FreyrRepositorio.formatCurrency(debt.getMonto())
                         );
                         recalculateBalances();
                         break;
@@ -161,7 +161,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
             paid += payment.getMonto();
         }
 
-        currentRemaining = Math.max(0.0, currentDebt.getAmount() - paid);
+        currentRemaining = Math.max(0.0, currentDebt.getMonto() - paid);
 
         tvStatusPaid.setText(FreyrRepositorio.formatCurrency(paid));
         tvStatusRemaining.setText(

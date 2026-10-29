@@ -8,10 +8,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Deuda;
-import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Pago;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Deuda;
+import com.freyr.app.data.datos.Grupofamiliar;
+import com.freyr.app.data.datos.Pago;
+import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 import java.util.LinkedList;
 import java.util.List;
@@ -122,7 +122,7 @@ public class VerPerfilActivity extends AppCompatActivity {
 
         int debtsCount = 0;
         for (Deuda d : allDebts) {
-            if (uid.equals(d.getAssignedUserId()) || uid.equals(d.getCreatedBy())) {
+            if (uid.equals(d.getIdUsuarioAsignado()) || uid.equals(d.getCreadoPor())) {
                 debtsCount++;
             }
         }
