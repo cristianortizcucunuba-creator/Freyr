@@ -41,7 +41,7 @@
 
         <!-- Banner de mensaje de error -->
         <TextView
-            android:id="@+id/tv_error"
+            android:id="@+id/tx_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#D32F2F"

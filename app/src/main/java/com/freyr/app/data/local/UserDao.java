@@ -8,19 +8,19 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM Usuario")
+    @Query("SELECT * FROM users")
     LiveData<List<Usuario>> getAllUsersLive();
 
-    @Query("SELECT * FROM Usuario")
+    @Query("SELECT * FROM users")
     List<Usuario> getAllUsers();
 
-    @Query("SELECT * FROM Usuario WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
     Usuario getUserById(String id);
 
-    @Query("SELECT * FROM Usuario WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
     LiveData<Usuario> getUserByIdLive(String id);
 
-    @Query("SELECT * FROM Usuario WHERE LOWER(email) = LOWER(:identifier) OR LOWER(username) = LOWER(:identifier) LIMIT 1")
+    @Query("SELECT * FROM users WHERE LOWER(email) = LOWER(:identifier) OR LOWER(username) = LOWER(:identifier) LIMIT 1")
     Usuario getUserByIdentifier(String identifier);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -1,4 +1,4 @@
-package com.freyr.app.ui.autenticacion;
+package com.freyr.app.Clases.autenticacion;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.data.model.User;
+import com.freyr.app.Clases.MainActivity;
+import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.ui.MainActivity;
-//chiques como se logea un usuarioooo help
 
 /**
  * Actividad para el registro de nuevas cuentas de usuario en Freyr.
@@ -51,7 +50,7 @@ public class RegistrarUsuario extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.et_confirm_password);
         btnRegister = findViewById(R.id.btn_register);
         tvGoToLogin = findViewById(R.id.tv_go_to_login);
-        tvError = findViewById(R.id.tv_error);
+        tvError = findViewById(R.id.tx_error);
     }
 
     private void setupListeners() {
@@ -90,9 +89,9 @@ public class RegistrarUsuario extends AppCompatActivity {
         tvError.setVisibility(View.GONE);
         btnRegister.setEnabled(false);
 
-        repository.register(fullName, username, email, password, new FreyrRepository.Callback<User>() {
+        repository.register(fullName, username, email, password, new FreyrRepository.Callback<Usuario>() {
             @Override
-            public void onSuccess(User result) {
+            public void onSuccess(Usuario result) {
                 runOnUiThread(() -> {
                     Intent intent = new Intent(RegistrarUsuario.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -116,4 +115,3 @@ public class RegistrarUsuario extends AppCompatActivity {
         tvError.setVisibility(View.VISIBLE);
     }
 }
-

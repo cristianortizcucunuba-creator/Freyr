@@ -63,7 +63,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
         tvStatusTotal = findViewById(R.id.tv_status_total);
         tvStatusPaid = findViewById(R.id.tv_status_paid);
         tvStatusRemaining = findViewById(R.id.tv_status_remaining);
-        tvError = findViewById(R.id.tv_error);
+        tvError = findViewById(R.id.tx_error);
         btnPayFull = findViewById(R.id.btn_pay_full);
         tvProjectedRemaining = findViewById(R.id.tv_projected_remaining);
 

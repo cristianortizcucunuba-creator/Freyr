@@ -8,16 +8,16 @@ import java.util.List;
 
 @Dao
 public interface FamilyGroupDao {
-    @Query("SELECT * FROM Grupofamiliar")
+    @Query("SELECT * FROM family_groups")
     LiveData<List<Grupofamiliar>> getAllGroupsLive();
 
-    @Query("SELECT * FROM Grupofamiliar")
+    @Query("SELECT * FROM family_groups")
     List<Grupofamiliar> getAllGroups();
 
-    @Query("SELECT * FROM Grupofamiliar WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM family_groups WHERE id = :id LIMIT 1")
     Grupofamiliar getGroupById(String id);
 
-    @Query("SELECT * FROM Grupofamiliar WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM family_groups WHERE id = :id LIMIT 1")
     LiveData<Grupofamiliar> getGroupByIdLive(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
