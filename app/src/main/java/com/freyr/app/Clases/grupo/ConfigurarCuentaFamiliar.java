@@ -20,7 +20,7 @@ import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.Clases.listas.listaDeudas;
+import com.freyr.app.Clases.listas.listaDeDeudas;
 import com.freyr.app.Clases.deuda.AñadirDeuda;
 import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
 import com.freyr.app.Clases.deuda.DetallesDeuda;
@@ -40,7 +40,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     private TextView tvNoGroupDebts;
     private RecyclerView rvGroupDebts;
 
-    private listaDeudas debtAdapter;
+    private listaDeDeudas debtAdapter;
     private FreyrRepository repository;
     private String groupId;
     private Grupofamiliar currentGroup;
@@ -144,9 +144,9 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        debtAdapter = new listaDeudas(
+        debtAdapter = new listaDeDeudas(
                 this,
-                new listaDeudas.MonitorDeudas() {
+                new listaDeDeudas.MonitorDeudas() {
                     @Override
                     public void tocDeuda(Deuda debt) {
                         Intent intent = new Intent(

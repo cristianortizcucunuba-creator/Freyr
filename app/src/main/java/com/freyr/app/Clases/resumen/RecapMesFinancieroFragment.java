@@ -17,7 +17,7 @@ import com.freyr.app.R;
 import com.freyr.app.data.model.*;
 import com.freyr.app.data.repository.FreyrRepository;
 import com.freyr.app.Clases.MainActivity;
-import com.freyr.app.Clases.listas.listaDeudas;
+import com.freyr.app.Clases.listas.listaDeDeudas;
 import com.freyr.app.Clases.deuda.AñadirDeuda;
 import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
 import com.freyr.app.Clases.deuda.DetallesDeuda;
@@ -34,7 +34,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     private TextView tvTotalPendingAmount, tvPendingDebtsCount, tvPaidDebtsCount;
     private TextView tvPersonalPaymentsTotal, tvFamilyDebtsTotal;
     private RecyclerView rvActiveDebts;
-    private listaDeudas debtAdapter;
+    private listaDeDeudas debtAdapter;
     private FreyrRepository repository;
 
     // Guardan los datos usando arreglos.
@@ -87,7 +87,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        debtAdapter = new listaDeudas(requireContext(), new listaDeudas.MonitorDeudas() {
+        debtAdapter = new listaDeDeudas(requireContext(), new listaDeDeudas.MonitorDeudas() {
             @Override public void tocDeuda(Deuda debt) {
                 Intent intent = new Intent(getActivity(), DetallesDeuda.class);
                 intent.putExtra("debt_id", debt.getId());

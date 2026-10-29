@@ -19,13 +19,13 @@ import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.Clases.listas.listaGruposFamiliares;
+import com.freyr.app.Clases.listas.listaDeGruposFamiliares;
 
 public class GruposFamiliares extends Fragment {
 
     private Button btnCreateGroup;
     private RecyclerView rvFamilyGroups;
-    private listaGruposFamiliares groupAdapter;
+    private listaDeGruposFamiliares groupAdapter;
 
     private FreyrRepository repository;
 
@@ -69,7 +69,7 @@ public class GruposFamiliares extends Fragment {
     }
 
     private void setupRecyclerView() {
-        groupAdapter = new listaGruposFamiliares(
+        groupAdapter = new listaDeGruposFamiliares(
                 requireContext(),
                 group -> {
                     Intent intent = new Intent(
@@ -118,7 +118,7 @@ public class GruposFamiliares extends Fragment {
                                 count
                         );
 
-                        groupAdapter.setGroups(userGroups);
+                        groupAdapter.setGrupos(userGroups);
                     }
                 }
         );
@@ -127,7 +127,7 @@ public class GruposFamiliares extends Fragment {
                 getViewLifecycleOwner(),
                 debts -> {
                     if (debts != null) {
-                        groupAdapter.setDebts(
+                        groupAdapter.setDeudas(
                                 debts.toArray(new Deuda[0])
                         );
                     }
@@ -138,7 +138,7 @@ public class GruposFamiliares extends Fragment {
                 getViewLifecycleOwner(),
                 payments -> {
                     if (payments != null) {
-                        groupAdapter.setPayments(
+                        groupAdapter.setPagos(
                                 payments.toArray(new Pago[0])
                         );
                     }

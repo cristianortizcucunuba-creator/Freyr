@@ -20,7 +20,7 @@ import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 
-public class listaDeudas extends RecyclerView.Adapter<listaDeudas.ContenedorDeudas> {
+public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.ContenedorDeudas> {
 
     // Interfaz que define las acciones disponibles al seleccionar una deuda.
     public interface MonitorDeudas {
@@ -38,7 +38,7 @@ public class listaDeudas extends RecyclerView.Adapter<listaDeudas.ContenedorDeud
     private Grupofamiliar[] todosLosGrupos = new Grupofamiliar[0];
     private Usuario[] todosLosUsuarios = new Usuario[0];
 
-    public listaDeudas(Context context, MonitorDeudas listener) {
+    public listaDeDeudas(Context context, MonitorDeudas listener) {
         this.contexto = context;
         this.receptor = listener;
     }

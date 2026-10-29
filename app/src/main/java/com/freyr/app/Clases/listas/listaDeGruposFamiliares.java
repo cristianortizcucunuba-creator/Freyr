@@ -16,7 +16,7 @@ import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.repository.FreyrRepository;
 
-public class listaGruposFamiliares extends RecyclerView.Adapter<listaGruposFamiliares.ContenedorGrupo> {
+public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposFamiliares.ContenedorGrupo> {
 
     // Interfaz para responder cuando el usuario selecciona un grupo.
     public interface accionAlTocarGrupo {
@@ -34,26 +34,26 @@ public class listaGruposFamiliares extends RecyclerView.Adapter<listaGruposFamil
     // Identificador del usuario que inició sesión.
     private String idUsuarioActual = "";
 
-    public listaGruposFamiliares(Context context, accionAlTocarGrupo manejador) {
+    public listaDeGruposFamiliares(Context context, accionAlTocarGrupo manejador) {
         this.context = context;
         this.manejador = manejador;
     }
 
     // Actualiza los grupos familiares que se mostrarán.
-    public void setGroups(Grupofamiliar[] groups) {
+    public void setGrupos(Grupofamiliar[] groups) {
         this.groups = groups != null ? groups : new Grupofamiliar[0];
         notifyDataSetChanged();
     }
 
     // Actualiza las deudas disponibles.
-    public void setDebts(Deuda[] debts) {
-        this.todasLasDeudas = debts != null ? debts : new Deuda[0];
+    public void setDeudas(Deuda[] deudas) {
+        this.todasLasDeudas = deudas != null ? deudas : new Deuda[0];
         notifyDataSetChanged();
     }
 
     // Actualiza los pagos disponibles.
-    public void setPayments(Pago[] payments) {
-        this.todosLosPagos = payments != null ? payments : new Pago[0];
+    public void setPagos(Pago[] pagos) {
+        this.todosLosPagos = pagos != null ? pagos : new Pago[0];
         notifyDataSetChanged();
     }
 
@@ -66,11 +66,11 @@ public class listaGruposFamiliares extends RecyclerView.Adapter<listaGruposFamil
     @NonNull
     @Override
     public ContenedorGrupo onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
+            @NonNull ViewGroup contenedorPadre, int tipoVista) {
 
         // Carga el diseño XML de cada tarjeta de grupo familiar.
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_family_group, parent, false);
+                .inflate(R.layout.item_family_group, contenedorPadre, false);
 
         return new ContenedorGrupo(view);
     }

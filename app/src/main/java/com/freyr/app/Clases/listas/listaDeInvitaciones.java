@@ -16,7 +16,7 @@ import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Invitation;
 import com.freyr.app.data.model.Usuario;
 
-public class listaInvitaciones extends RecyclerView.Adapter<listaInvitaciones.InvitationViewHolder> {
+public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitaciones.InvitationViewHolder> {
 
     // Define las acciones que se ejecutan al aceptar o rechazar una invitación.
     public interface OnInvitationResponseListener {
@@ -32,7 +32,7 @@ public class listaInvitaciones extends RecyclerView.Adapter<listaInvitaciones.In
     private Grupofamiliar[] allGroups = new Grupofamiliar[0];
     private Usuario[] allUsers = new Usuario[0];
 
-    public listaInvitaciones(Context context, OnInvitationResponseListener listener) {
+    public listaDeInvitaciones(Context context, OnInvitationResponseListener listener) {
         this.context = context;
         this.listener = listener;
     }

@@ -19,13 +19,13 @@ import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Invitation;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.Clases.listas.listaInvitaciones;
+import com.freyr.app.Clases.listas.listaDeInvitaciones;
 
 public class InvitarGrupoFamiliar extends Fragment {
 
     private RecyclerView rvInvitations;
     private TextView tvNoInvitations;
-    private listaInvitaciones invitationAdapter;
+    private listaDeInvitaciones invitationAdapter;
 
     private FreyrRepository repository;
     private Invitation[] allInvitations = new Invitation[0];
@@ -59,9 +59,9 @@ public class InvitarGrupoFamiliar extends Fragment {
     }
 
     private void setupRecyclerView() {
-        invitationAdapter = new listaInvitaciones(
+        invitationAdapter = new listaDeInvitaciones(
                 requireContext(),
-                new listaInvitaciones.OnInvitationResponseListener() {
+                new listaDeInvitaciones.OnInvitationResponseListener() {
                     @Override
                     public void onAccept(Invitation invitation) {
                         repository.respondToInvitation(

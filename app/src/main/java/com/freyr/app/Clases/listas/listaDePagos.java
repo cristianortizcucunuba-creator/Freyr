@@ -16,7 +16,7 @@ import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 
-public class listaPagos extends RecyclerView.Adapter<listaPagos.PaymentViewHolder> {
+public class listaDePagos extends RecyclerView.Adapter<listaDePagos.PaymentViewHolder> {
 
     // Define la acción que se ejecuta al eliminar un pago.
     public interface OnDeletePaymentListener {
@@ -30,7 +30,7 @@ public class listaPagos extends RecyclerView.Adapter<listaPagos.PaymentViewHolde
     private Pago[] payments = new Pago[0];
     private Usuario[] allUsers = new Usuario[0];
 
-    public listaPagos(Context context, OnDeletePaymentListener deleteListener) {
+    public listaDePagos(Context context, OnDeletePaymentListener deleteListener) {
         this.context = context;
         this.deleteListener = deleteListener;
     }

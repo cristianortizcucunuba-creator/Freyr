@@ -19,14 +19,14 @@ import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.Clases.listas.listaDeudas;
+import com.freyr.app.Clases.listas.listaDeDeudas;
 
 public class FinanzasPersonales extends Fragment {
 
     private Button btnAddPersonalDebt;
     private RadioGroup rgFilter;
     private RecyclerView rvPersonalDebts;
-    private listaDeudas debtAdapter;
+    private listaDeDeudas debtAdapter;
 
     private FreyrRepository repository;
 
@@ -85,9 +85,9 @@ public class FinanzasPersonales extends Fragment {
     }
 
     private void setupRecyclerView() {
-        debtAdapter = new listaDeudas(
+        debtAdapter = new listaDeDeudas(
                 requireContext(),
-                new listaDeudas.MonitorDeudas() {
+                new listaDeDeudas.MonitorDeudas() {
                     @Override
                     public void tocDeuda(Deuda debt) {
                         Intent intent = new Intent(

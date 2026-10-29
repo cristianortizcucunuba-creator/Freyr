@@ -21,7 +21,7 @@ import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
-import com.freyr.app.Clases.listas.listaPagos;
+import com.freyr.app.Clases.listas.listaDePagos;
 
 public class DetallesDeuda extends AppCompatActivity {
 
@@ -41,7 +41,7 @@ public class DetallesDeuda extends AppCompatActivity {
     private TextView tvNoPayments;
     private Button btnAddPayment;
     private RecyclerView rvPayments;
-    private listaPagos paymentAdapter;
+    private listaDePagos paymentAdapter;
 
     private FreyrRepository repository;
     private String debtId;
@@ -133,7 +133,7 @@ public class DetallesDeuda extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        paymentAdapter = new listaPagos(this, payment -> {
+        paymentAdapter = new listaDePagos(this, payment -> {
             new AlertDialog.Builder(this)
                     .setTitle("Eliminar abono")
                     .setMessage(
