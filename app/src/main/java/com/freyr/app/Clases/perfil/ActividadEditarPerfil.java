@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import com.freyr.app.FreyrApp;
+import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepositorio;
@@ -36,7 +36,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        repository = ((FreyrApp) getApplication()).getRepositorio();
+        repository = ((FreyrApplication) getApplication()).getRepository();
 
         initViews();
         setupListeners();
@@ -46,8 +46,8 @@ public class ActividadEditarPerfil extends AppCompatActivity {
     private void initViews() {
         btnBack = findViewById(R.id.btn_back);
         tvFeedback = findViewById(R.id.tv_feedback);
-        etFullName = findViewById(R.id.et_full_name);
-        etUsername = findViewById(R.id.et_username);
+        etFullName = findViewById(R.id.et_nombre_completo);
+        etUsername = findViewById(R.id.et_usuario);
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_contraseña);
         btnSaveProfile = findViewById(R.id.btn_save_profile);

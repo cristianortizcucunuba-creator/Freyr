@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freyr.app.FreyrApp;
+import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.repository.FreyrRepositorio;
@@ -31,7 +31,7 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_family_group);
 
-        repository = ((FreyrApp) getApplication()).getRepositorio();
+        repository = ((FreyrApplication) getApplication()).getRepository();
 
         initViews();
         setupListeners();

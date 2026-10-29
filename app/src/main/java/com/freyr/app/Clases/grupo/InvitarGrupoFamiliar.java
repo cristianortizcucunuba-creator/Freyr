@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freyr.app.FreyrApp;
+import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Invitacion;
@@ -43,8 +43,8 @@ public class InvitarGrupoFamiliar extends Fragment {
                 false
         );
 
-        repository = ((FreyrApp) requireActivity()
-                .getApplication()).getRepositorio();
+        repository = ((FreyrApplication) requireActivity()
+                .getApplication()).getRepository();
 
         initViews(view);
         setupRecyclerView();

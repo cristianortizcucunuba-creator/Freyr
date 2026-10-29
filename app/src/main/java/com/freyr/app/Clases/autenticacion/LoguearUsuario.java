@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freyr.app.FreyrApp;
+import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepositorio;
@@ -28,14 +28,14 @@ public class LoguearUsuario extends AppCompatActivity {
     private Button btnMaria;
     private Button btnCarlos;
 
-    private FreyrRepositorio repository;
+    private FreyrRepositorio repositorio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        repository = ((FreyrApp) getApplication()).getRepositorio();
+        repositorio = ((FreyrApplication) getApplication()).getRepository();
 
         iniciarVistas();
         setupListeners();
@@ -93,7 +93,7 @@ public class LoguearUsuario extends AppCompatActivity {
         txError.setVisibility(View.GONE);
         btnLogin.setEnabled(false);
 
-        repository.login(nombre, password, new FreyrRepositorio.Callback<Usuario>() {
+        repositorio.login(nombre, password, new FreyrRepositorio.Callback<Usuario>() {
             @Override
             public void onSuccess(Usuario result) {
                 runOnUiThread(() -> {

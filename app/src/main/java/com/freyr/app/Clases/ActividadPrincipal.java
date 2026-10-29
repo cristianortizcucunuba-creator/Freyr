@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.freyr.app.data.model.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.freyr.app.FreyrApp;
+import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.repository.FreyrRepositorio;
 import com.freyr.app.Clases.autenticacion.LoguearUsuario;
@@ -37,7 +37,7 @@ public class ActividadPrincipal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        repository = ((FreyrApp) getApplication()).getRepositorio();
+        repository = ((FreyrApplication) getApplication()).getRepository();
 
         // Comprueba que exista una sesión iniciada.
         if (repository.getCurrentUserId() == null) {

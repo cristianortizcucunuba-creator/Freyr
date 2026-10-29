@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.freyr.app.FreyrApp;
+import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
@@ -40,7 +40,7 @@ public class AñadirDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_debt);
 
-        repository = ((FreyrApp) getApplication()).getRepositorio();
+        repository = ((FreyrApplication) getApplication()).getRepository();
 
         initViews();
         setupListeners();

@@ -4,7 +4,7 @@ import android.app.Application;
 import com.freyr.app.data.local.FreyrDatabase;
 import com.freyr.app.data.repository.FreyrRepositorio;
 
-public class FreyrApp extends Application {
+public class FreyrApplication extends Application {
     private FreyrRepositorio repository;
 
     @Override
@@ -14,7 +14,7 @@ public class FreyrApp extends Application {
         repository = new FreyrRepositorio(this);
     }
 
-    public FreyrRepositorio getRepositorio() {
+    public FreyrRepositorio getRepository() {
         return repository;
     }
 }

@@ -19,7 +19,7 @@ import com.freyr.app.data.model.Deuda;
 import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDeDeudas;
 import com.freyr.app.Clases.deuda.AñadirDeuda;
 import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
@@ -42,7 +42,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
 
     private listaDeDeudas adaptadorDeudas;
-    private FreyrRepository repositorio;
+    private FreyrRepositorio repositorio;
     private String idGrupo;
     private Grupofamiliar grupoActual;
 
@@ -106,7 +106,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             repositorio.inviteUser(
                     idGrupo,
                     identifier,
-                    new FreyrRepository.Callback<Void>() {
+                    new FreyrRepositorio.Callback<Void>() {
                         @Override
                         public void onSuccess(Void result) {
                             runOnUiThread(() -> {
@@ -277,10 +277,10 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         double remaining = Math.max(0.0, total - paid);
 
-        txMontoTotalGrupo.setText(FreyrRepository.formatCurrency(total));
-        txMontoAbonadoGrupo.setText(FreyrRepository.formatCurrency(paid));
+        txMontoTotalGrupo.setText(FreyrRepositorio.formatCurrency(total));
+        txMontoAbonadoGrupo.setText(FreyrRepositorio.formatCurrency(paid));
         txMontoPendienteGrupo.setText(
-                FreyrRepository.formatCurrency(remaining)
+                FreyrRepositorio.formatCurrency(remaining)
         );
     }
 }

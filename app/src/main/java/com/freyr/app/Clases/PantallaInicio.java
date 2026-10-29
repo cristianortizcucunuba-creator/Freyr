@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.appcompat.app.AppCompatActivity;
-import com.freyr.app.FreyrApp;
+import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.repository.FreyrRepositorio;
 import com.freyr.app.Clases.autenticacion.LoguearUsuario;
@@ -23,7 +23,7 @@ public class PantallaInicio extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (isFinishing() || isDestroyed()) return;
 
-            FreyrRepositorio repositorio = ((FreyrApp) getApplication()).getRepositorio();
+            FreyrRepositorio repositorio = ((FreyrApplication) getApplication()).getRepository();
             String idUsuarioActual = repositorio.getCurrentUserId();
 
             Intent intent;

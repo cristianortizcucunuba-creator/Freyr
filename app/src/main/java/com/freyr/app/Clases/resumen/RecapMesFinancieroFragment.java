@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.freyr.app.FreyrApp;
+import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.*;
 import com.freyr.app.data.repository.FreyrRepositorio;
@@ -52,7 +52,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        repositorio = ((FreyrApp) requireActivity().getApplication()).getRepositorio();
+        repositorio = ((FreyrApplication) requireActivity().getApplication()).getRepository();
         inicializarVistas(vista);
         configurarListeners();
         configurarRecyclerView();
