@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Track debts, installments &amp; payoffs"
-                android:textColor="@color/freyr_text_secondary"
+                android:textColor="@color/freyr_card_bg"
                 android:textSize="12sp" />
         </LinearLayout>
 
