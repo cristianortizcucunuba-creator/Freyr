@@ -40,7 +40,7 @@ public class AñadirDeuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_debt);
 
-        repository = ((FreyrApp) getApplication()).getRepositorio();
+        repositorio = ((FreyrApp) getApplication()).getRepositorio();
 
         iniciarVistas();
         setupListeners();
@@ -115,7 +115,6 @@ public class AñadirDeuda extends AppCompatActivity {
 
     private void loadData() {
         repositorio.observarTodosLosUsuarios().observe(this, users -> {
-        repositorio.getAllUsersLive().observe(this, users -> {
             if (users != null) {
                 // El repositorio entrega una lista; la convertimos a arreglo.
                 Cuentas = users.toArray(new Usuario[0]);

@@ -41,8 +41,6 @@ public class ActividadPrincipal extends AppCompatActivity {
 
         // Comprueba que exista una sesión iniciada.
         if (repository.obtenerIdUsuarioActual() == null) {
-            startActivity(new Intent(this, LoguearUsuario.class));
-        if (repository.getCurrentUserId() == null) {
             Intent intent = new Intent(this, LoguearUsuario.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
