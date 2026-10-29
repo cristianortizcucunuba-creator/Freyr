@@ -67,12 +67,12 @@
 
         <!-- User Profile -->
         <activity
-            android:name=".Clases.profile.VerPerfilActivity"
+            android:name=".Clases.perfil.VerPerfilActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".Clases.profile.ActividadEditarPerfil"
+            android:name=".Clases.perfil.ActividadEditarPerfil"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 

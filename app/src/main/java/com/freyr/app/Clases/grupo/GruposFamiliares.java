@@ -23,7 +23,7 @@ import com.freyr.app.Clases.listas.listaDeGruposFamiliares;
 
 public class GruposFamiliares extends Fragment {
 
-    private Button btnCreateGroup;
+    private Button btnCreargrupo;
     private RecyclerView rvFamilyGroups;
     private listaDeGruposFamiliares groupAdapter;
 
@@ -54,12 +54,12 @@ public class GruposFamiliares extends Fragment {
     }
 
     private void initViews(View view) {
-        btnCreateGroup = view.findViewById(R.id.btn_create_group);
+        btnCreargrupo = view.findViewById(R.id.btn_create_group);
         rvFamilyGroups = view.findViewById(R.id.rv_family_groups);
     }
 
     private void setupListeners() {
-        btnCreateGroup.setOnClickListener(v -> {
+        btnCreargrupo.setOnClickListener(v -> {
             Intent intent = new Intent(
                     getActivity(),
                     CrearGrupoFamiliar.class

@@ -22,7 +22,7 @@ import com.freyr.app.Clases.deuda.AñadirDeuda;
 import com.freyr.app.Clases.deuda.RegistrarAbonosDeuda;
 import com.freyr.app.Clases.deuda.DetallesDeuda;
 import com.freyr.app.Clases.grupo.CrearGrupoFamiliar;
-import com.freyr.app.Clases.profile.ActividadEditarPerfil;
+import com.freyr.app.Clases.perfil.ActividadEditarPerfil;
 
 //Pantalla de inicio con el resumen financiero del usuario
 public class RecapMesFinancieroFragment extends Fragment {

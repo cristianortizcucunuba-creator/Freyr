@@ -239,7 +239,7 @@ public class DeudasRecycler extends RecyclerView.Adapter<DeudasRecycler.DebtView
         public DebtViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvName = itemView.findViewById(R.id.tv_debt_name);
+            tvName = itemView.findViewById(R.id.tx_nombre_deuda);
             tvScope = itemView.findViewById(R.id.tv_debt_scope);
             tvDesc = itemView.findViewById(R.id.tv_debt_desc);
             tvStatus = itemView.findViewById(R.id.tv_debt_status);

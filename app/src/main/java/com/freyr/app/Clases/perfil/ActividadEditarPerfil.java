@@ -1,4 +1,4 @@
-package com.freyr.app.Clases.profile;
+package com.freyr.app.Clases.perfil;
 
 import android.os.Bundle;
 import android.view.View;

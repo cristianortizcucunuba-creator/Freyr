@@ -27,12 +27,15 @@ public class Grupofamiliar {
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
 
+    public String getName() { return name; }
     public String getNombre() { return name; }
     public void setName(String name) { this.name = name; }
 
+    public String getCreatorId() { return creatorId; }
     public String getCreadorId() { return creatorId; }
     public void setCreatorId(String creatorId) { this.creatorId = creatorId; }
 
+    public List<String> getMemberIds() { return memberIds; }
     public List<String> getMiembrosIds() { return memberIds; }
     public void setMemberIds(List<String> memberIds) { this.memberIds = memberIds; }
 

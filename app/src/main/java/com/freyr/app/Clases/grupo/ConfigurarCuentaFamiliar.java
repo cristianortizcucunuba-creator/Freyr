@@ -27,11 +27,11 @@ import com.freyr.app.Clases.deuda.DetallesDeuda;
 
 public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
-    private ImageButton btnBack;
-    private TextView tvGroupTitle;
-    private Button btnAddGroupDebt;
-    private TextView tvGroupTotalAmt;
-    private TextView tvGroupPaidAmt;
+    private ImageButton btnVolver;
+    private TextView txTituloGrupo;
+    private Button btnAgregarDeudaGrupo;
+    private TextView txMontoTotalGrupo;
+    private TextView txMontoAbonadoGrupo;
     private TextView tvGroupRemainingAmt;
     private TextView tvMembersList;
     private EditText etInviteIdentifier;
@@ -70,11 +70,11 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnBack = findViewById(R.id.btn_back);
-        tvGroupTitle = findViewById(R.id.tv_group_title);
-        btnAddGroupDebt = findViewById(R.id.btn_add_group_debt);
-        tvGroupTotalAmt = findViewById(R.id.tv_group_total_amt);
-        tvGroupPaidAmt = findViewById(R.id.tv_group_paid_amt);
+        btnVolver = findViewById(R.id.btn_back);
+        txTituloGrupo = findViewById(R.id.tv_group_title);
+        btnAgregarDeudaGrupo = findViewById(R.id.btn_add_group_debt);
+        txMontoTotalGrupo = findViewById(R.id.tv_group_total_amt);
+        txMontoAbonadoGrupo = findViewById(R.id.tv_group_paid_amt);
         tvGroupRemainingAmt = findViewById(R.id.tv_group_remaining_amt);
         tvMembersList = findViewById(R.id.tv_members_list);
         etInviteIdentifier = findViewById(R.id.et_invite_identifier);
@@ -85,9 +85,9 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBack.setOnClickListener(v -> finish());
+        btnVolver.setOnClickListener(v -> finish());
 
-        btnAddGroupDebt.setOnClickListener(v -> {
+        btnAgregarDeudaGrupo.setOnClickListener(v -> {
             Intent intent = new Intent(this, AñadirDeuda.class);
             intent.putExtra("group_id", groupId);
             startActivity(intent);
@@ -186,7 +186,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
                 for (Grupofamiliar group : groups) {
                     if (group.getId().equals(groupId)) {
                         currentGroup = group;
-                        tvGroupTitle.setText(group.getNombre());
+                        txTituloGrupo.setText(group.getNombre());
 
                         // El adapter recibe un arreglo de grupos.
                         debtAdapter.setGrupos(new Grupofamiliar[]{group});
@@ -276,8 +276,8 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
         double remaining = Math.max(0.0, total - paid);
 
-        tvGroupTotalAmt.setText(FreyrRepository.formatCurrency(total));
-        tvGroupPaidAmt.setText(FreyrRepository.formatCurrency(paid));
+        txMontoTotalGrupo.setText(FreyrRepository.formatCurrency(total));
+        txMontoAbonadoGrupo.setText(FreyrRepository.formatCurrency(paid));
         tvGroupRemainingAmt.setText(
                 FreyrRepository.formatCurrency(remaining)
         );

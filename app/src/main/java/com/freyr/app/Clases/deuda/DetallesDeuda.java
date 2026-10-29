@@ -74,7 +74,7 @@ public class DetallesDeuda extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_back);
         btnDeleteDebt = findViewById(R.id.btn_delete_debt);
         tvTitle = findViewById(R.id.tv_title);
-        tvDebtName = findViewById(R.id.tv_debt_name);
+        tvDebtName = findViewById(R.id.tx_nombre_deuda);
         tvDebtDesc = findViewById(R.id.tv_debt_desc);
         tvDebtStatus = findViewById(R.id.tv_debt_status);
         tvAssignedInfo = findViewById(R.id.tv_assigned_info);

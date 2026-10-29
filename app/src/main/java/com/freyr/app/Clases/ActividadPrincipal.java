@@ -15,7 +15,7 @@ import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.repository.FreyrRepository;
 import com.freyr.app.Clases.autenticacion.LoguearUsuario;
-import com.freyr.app.Clases.profile.VerPerfilActivity;
+import com.freyr.app.Clases.perfil.VerPerfilActivity;
 import com.freyr.app.Clases.resumen.RecapMesFinancieroFragment;
 import com.freyr.app.Clases.deuda.FinanzasPersonales;
 import com.freyr.app.Clases.grupo.GruposFamiliares;

@@ -240,7 +240,7 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
         public ContenedorDeudas(@NonNull View vistaObj) {
             super(vistaObj);
 
-            tvNombre = vistaObj.findViewById(R.id.tv_debt_name);
+            tvNombre = vistaObj.findViewById(R.id.tx_nombre_deuda);
             tvTipoDeuda = vistaObj.findViewById(R.id.tv_debt_scope);
             tvDescrip = vistaObj.findViewById(R.id.tv_debt_desc);
             tvEstado = vistaObj.findViewById(R.id.tv_debt_status);
