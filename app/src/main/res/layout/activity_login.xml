@@ -70,7 +70,7 @@
                     android:layout_marginBottom="16dp" />
 
                 <TextView
-                    android:id="@+id/tv_error"
+                    android:id="@+id/tx_error"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#D32F2F"
@@ -136,7 +136,7 @@
 
                 <!-- Enlace para Crear Cuenta -->
                 <TextView
-                    android:id="@+id/tv_go_to_register"
+                    android:id="@+id/tx_go_to_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¿No tienes una cuenta? Regístrate aquí"
@@ -170,7 +170,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btn_demo_juan"
+                        android:id="@+id/btn_juan"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
@@ -182,7 +182,7 @@
                         app:backgroundTint="@null" />
 
                     <Button
-                        android:id="@+id/btn_demo_maria"
+                        android:id="@+id/btn_maria"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"
@@ -195,7 +195,7 @@
                         app:backgroundTint="@null" />
 
                     <Button
-                        android:id="@+id/btn_demo_carlos"
+                        android:id="@+id/btn_carlos"
                         android:layout_width="0dp"
                         android:layout_height="36dp"
                         android:layout_weight="1"

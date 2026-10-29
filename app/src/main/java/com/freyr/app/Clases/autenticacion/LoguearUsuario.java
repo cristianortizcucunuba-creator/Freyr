@@ -13,22 +13,20 @@ import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 import com.freyr.app.Clases.MainActivity;
 
-/**
- * Actividad de inicio de sesión de usuario en Freyr.
- * Valida credenciales locales de acceso y ofrece botones de acceso rápido
- * demostrativo para pruebas inmediatas con los perfiles sembrados.
- */
+ // Inicio de sesión de usuario en Freyr.
+ // Demostracion para pruebas con los perfiles sembrados.
+
 public class LoguearUsuario extends AppCompatActivity {
 
     private EditText etIdentifier;
     private EditText etPassword;
     private Button btnLogin;
-    private TextView tvGoToRegister;
-    private TextView tvError;
+    private TextView txGoToRegister;
+    private TextView txError;
 
-    private Button btnDemoJuan;
-    private Button btnDemoMaria;
-    private Button btnDemoCarlos;
+    private Button btnJuan;
+    private Button btnMaria;
+    private Button btnCarlos;
 
     private FreyrRepository repository;
 
@@ -47,35 +45,35 @@ public class LoguearUsuario extends AppCompatActivity {
         etIdentifier = findViewById(R.id.et_identifier);
         etPassword = findViewById(R.id.et_password);
         btnLogin = findViewById(R.id.btn_login);
-        tvGoToRegister = findViewById(R.id.tv_go_to_register);
-        tvError = findViewById(R.id.tv_error);
+        txGoToRegister = findViewById(R.id.tx_go_to_register);
+        txError = findViewById(R.id.tx_error);
 
-        btnDemoJuan = findViewById(R.id.btn_demo_juan);
-        btnDemoMaria = findViewById(R.id.btn_demo_maria);
-        btnDemoCarlos = findViewById(R.id.btn_demo_carlos);
+        btnJuan = findViewById(R.id.btn_juan);
+        btnMaria = findViewById(R.id.btn_maria);
+        btnCarlos = findViewById(R.id.btn_carlos);
     }
 
     private void setupListeners() {
         btnLogin.setOnClickListener(v -> doLogin());
 
-        tvGoToRegister.setOnClickListener(v -> {
+        txGoToRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoguearUsuario.this, RegistrarUsuario.class);
             startActivity(intent);
         });
 
-        btnDemoJuan.setOnClickListener(v -> {
+        btnJuan.setOnClickListener(v -> {
             etIdentifier.setText("juan");
             etPassword.setText("password123");
             doLogin();
         });
 
-        btnDemoMaria.setOnClickListener(v -> {
+        btnMaria.setOnClickListener(v -> {
             etIdentifier.setText("maria");
             etPassword.setText("password123");
             doLogin();
         });
 
-        btnDemoCarlos.setOnClickListener(v -> {
+        btnCarlos.setOnClickListener(v -> {
             etIdentifier.setText("carlos");
             etPassword.setText("password123");
             doLogin();
@@ -87,12 +85,12 @@ public class LoguearUsuario extends AppCompatActivity {
         String password = etPassword.getText().toString();
 
         if (identifier.isEmpty()) {
-            tvError.setText("Por favor ingresa tu nombre de usuario o correo.");
-            tvError.setVisibility(View.VISIBLE);
+            txError.setText("Por favor ingresa tu nombre de usuario o correo.");
+            txError.setVisibility(View.VISIBLE);
             return;
         }
 
-        tvError.setVisibility(View.GONE);
+        txError.setVisibility(View.GONE);
         btnLogin.setEnabled(false);
 
         repository.login(identifier, password, new FreyrRepository.Callback<Usuario>() {
@@ -110,8 +108,8 @@ public class LoguearUsuario extends AppCompatActivity {
             public void onError(String error) {
                 runOnUiThread(() -> {
                     btnLogin.setEnabled(true);
-                    tvError.setText(error);
-                    tvError.setVisibility(View.VISIBLE);
+                    txError.setText(error);
+                    txError.setVisibility(View.VISIBLE);
                 });
             }
         });

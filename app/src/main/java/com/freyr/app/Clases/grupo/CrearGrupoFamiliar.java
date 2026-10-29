@@ -39,7 +39,7 @@ public class CrearGrupoFamiliar extends AppCompatActivity {
 
     private void initViews() {
         btnBack = findViewById(R.id.btn_back);
-        tvError = findViewById(R.id.tv_error);
+        tvError = findViewById(R.id.tx_error);
         etGroupName = findViewById(R.id.et_group_name);
         btnSaveGroup = findViewById(R.id.btn_save_group);
     }
