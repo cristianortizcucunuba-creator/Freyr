@@ -14,7 +14,7 @@ import com.freyr.app.R;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepositorio;
 
-// registro de nuevas cuentas de usuario en Freyr..
+// registro de nuevas cuentas de usuario en Freyr.
 // Valida nombre completo, usuario único, correo y confirmación de contraseña
 
 public class RegistrarUsuario extends AppCompatActivity {
