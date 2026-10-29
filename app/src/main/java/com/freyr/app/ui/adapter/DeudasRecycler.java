@@ -20,6 +20,10 @@ import com.freyr.app.data.model.Payment;
 import com.freyr.app.data.model.User;
 import com.freyr.app.data.repository.FreyrRepository;
 
+//chiques help no se nada no me dejaaaa ayuda chicos
+//sip
+//no se de que disfrazarme.
+
 public class DeudasRecycler extends RecyclerView.Adapter<DeudasRecycler.DebtViewHolder> {
 
     // Interfaz que define las acciones disponibles al seleccionar una deuda.
