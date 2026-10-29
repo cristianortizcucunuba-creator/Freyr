@@ -14,7 +14,7 @@ import com.freyr.app.data.repository.FreyrRepositorio;
 import com.freyr.app.Clases.ActividadPrincipal;
 
  // Inicio de sesión de usuario en Freyr.
- // Demostracion para pruebas con los perfiles sembrados.
+ // Demostracion para pruebas con los perfiles puestos.
 
 public class LoguearUsuario extends AppCompatActivity {
 
