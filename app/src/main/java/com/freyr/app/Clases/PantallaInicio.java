@@ -1,6 +1,7 @@
 package com.freyr.app.Clases;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -27,10 +28,28 @@ public class PantallaInicio extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         VideoView videoView = findViewById(R.id.videoViewSplash);
+
+        // Cambia 'nuevo_video_intro' si le pusiste otro nombre a tu MP4 en res/raw
         String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.nuevo_video_intro;
         videoView.setVideoURI(Uri.parse(videoPath));
 
-        // Cuando el video termine de reproducirse, decide a qué pantalla ir
+        // Ajustar la escala del video para que tome toda la pantalla sin bordes (Center Crop)
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                float videoRatio = mp.getVideoWidth() / (float) mp.getVideoHeight();
+                float screenRatio = videoView.getWidth() / (float) videoView.getHeight();
+                float scaleX = videoRatio / screenRatio;
+
+                if (scaleX >= 1f) {
+                    videoView.setScaleX(scaleX);
+                } else {
+                    videoView.setScaleY(1f / scaleX);
+                }
+            }
+        });
+
+        // Transición automática al terminar la animación
         videoView.setOnCompletionListener(mp -> {
             if (isFinishing() || isDestroyed()) return;
 
