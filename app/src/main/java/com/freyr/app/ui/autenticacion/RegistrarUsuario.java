@@ -89,7 +89,7 @@ public class RegistrarUsuario extends AppCompatActivity {
         tvError.setVisibility(View.GONE);
         btnRegister.setEnabled(false);
 
-        repository.register(fullName, username, email, password, new FreyrRepository.Callback<User>() {
+        repository.register(fullName, username, email, password, new FreyrRepository.Callback<>() {
             @Override
             public void onSuccess(User result) {
                 runOnUiThread(() -> {

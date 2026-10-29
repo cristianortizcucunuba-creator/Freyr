@@ -25,7 +25,9 @@ public class User {
         this.avatarColor = avatarColor;
         this.createdAt = createdAt;
     }
-
+    public String getUsername() {
+        return username;
+    }
     @NonNull
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
