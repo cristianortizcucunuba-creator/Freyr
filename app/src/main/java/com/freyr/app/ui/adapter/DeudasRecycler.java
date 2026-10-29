@@ -22,6 +22,7 @@ import com.freyr.app.data.repository.FreyrRepository;
 
 //chiques help no se nada no me dejaaaa ayuda chicos
 //sip
+//no se de que disfrazarme.
 
 public class DeudasRecycler extends RecyclerView.Adapter<DeudasRecycler.DebtViewHolder> {
 
