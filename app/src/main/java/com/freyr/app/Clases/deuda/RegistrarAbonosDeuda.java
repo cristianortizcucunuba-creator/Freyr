@@ -158,7 +158,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
 
         double paid = 0.0;
         for (Pago payment : payments) {
-            paid += payment.getAmount();
+            paid += payment.getMonto();
         }
 
         currentRemaining = Math.max(0.0, currentDebt.getAmount() - paid);

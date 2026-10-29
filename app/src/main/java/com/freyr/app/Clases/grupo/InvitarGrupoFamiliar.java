@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Invitation;
+import com.freyr.app.data.model.Invitacion;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 import com.freyr.app.Clases.listas.listaDeInvitaciones;
@@ -28,7 +28,7 @@ public class InvitarGrupoFamiliar extends Fragment {
     private listaDeInvitaciones invitationAdapter;
 
     private FreyrRepository repository;
-    private Invitation[] allInvitations = new Invitation[0];
+    private Invitacion[] allInvitations = new Invitacion[0];
 
     @Nullable
     @Override
@@ -63,9 +63,9 @@ public class InvitarGrupoFamiliar extends Fragment {
                 requireContext(),
                 new listaDeInvitaciones.OnInvitationResponseListener() {
                     @Override
-                    public void onAccept(Invitation invitation) {
+                    public void onAccept(Invitacion invitacion) {
                         repository.respondToInvitation(
-                                invitation.getId(),
+                                invitacion.getId(),
                                 true,
                                 new FreyrRepository.Callback<Void>() {
                                     @Override
@@ -98,9 +98,9 @@ public class InvitarGrupoFamiliar extends Fragment {
                     }
 
                     @Override
-                    public void onDecline(Invitation invitation) {
+                    public void onDecline(Invitacion invitacion) {
                         repository.respondToInvitation(
-                                invitation.getId(),
+                                invitacion.getId(),
                                 false,
                                 new FreyrRepository.Callback<Void>() {
                                     @Override
@@ -169,23 +169,23 @@ public class InvitarGrupoFamiliar extends Fragment {
                 getViewLifecycleOwner(),
                 invitations -> {
                     if (invitations != null) {
-                        allInvitations = invitations.toArray(new Invitation[0]);
+                        allInvitations = invitations.toArray(new Invitacion[0]);
 
-                        Invitation[] pendingInvitations =
-                                new Invitation[allInvitations.length];
+                        Invitacion[] pendingInvitations =
+                                new Invitacion[allInvitations.length];
                         int count = 0;
 
-                        for (Invitation invitation : allInvitations) {
-                            if (invitation.getInvitedUserId().equals(userId)
+                        for (Invitacion invitacion : allInvitations) {
+                            if (invitacion.getInvitedUserId().equals(userId)
                                     && "pending".equalsIgnoreCase(
-                                    invitation.getStatus()
+                                    invitacion.getStatus()
                             )) {
-                                pendingInvitations[count] = invitation;
+                                pendingInvitations[count] = invitacion;
                                 count++;
                             }
                         }
 
-                        Invitation[] result = new Invitation[count];
+                        Invitacion[] result = new Invitacion[count];
                         System.arraycopy(
                                 pendingInvitations,
                                 0,

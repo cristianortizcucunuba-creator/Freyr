@@ -69,85 +69,85 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
             @NonNull ViewGroup contenedorPadre, int tipoVista) {
 
         // Carga el diseño XML de cada tarjeta de grupo familiar.
-        View view = LayoutInflater.from(context)
+        View vista = LayoutInflater.from(context)
                 .inflate(R.layout.item_family_group, contenedorPadre, false);
 
-        return new ContenedorGrupo(view);
+        return new ContenedorGrupo(vista);
     }
 
     @Override
     public void onBindViewHolder(
-            @NonNull ContenedorGrupo holder, int position) {
+            @NonNull ContenedorGrupo contenedor, int posicion) {
 
         // Obtiene el grupo correspondiente a la posición actual.
-        Grupofamiliar group = groups[position];
+        Grupofamiliar grupo = groups[posicion];
 
-        holder.tvName.setText(group.getName());
+        contenedor.txNombre.setText(grupo.getNombre());
 
         // Comprueba si el usuario actual creó este grupo.
-        boolean isCreator = group.getCreatorId() != null
-                && group.getCreatorId().equals(idUsuarioActual);
+        boolean creador = grupo.getCreadorId() != null
+                && grupo.getCreadorId().equals(idUsuarioActual);
 
         // Muestra la etiqueta de administrador solamente al creador.
-        holder.tvAdmin.setVisibility(
-                isCreator ? View.VISIBLE : View.GONE);
+        contenedor.txAdmin.setVisibility(
+                creador ? View.VISIBLE : View.GONE);
 
         // Variables para calcular las deudas y los pagos del grupo.
-        int debtsCount = 0;
-        double totalDebt = 0.0;
-        double totalPaid = 0.0;
+        int cantidadDeudas = 0;
+        double totalDeudas = 0.0;
+        double totalAbonado = 0.0;
 
         // Recorre las deudas y selecciona las que pertenecen al grupo.
         for (Deuda debt : todasLasDeudas) {
 
-            if (group.getId().equals(debt.getFamilyGroupId())) {
+            if (grupo.getId().equals(debt.getGrupoFamiliarId())) {
 
-                debtsCount++;
-                totalDebt += debt.getAmount();
+                cantidadDeudas++;
+                totalDeudas += debt.getAmount();
 
                 // Suma los pagos relacionados con la deuda actual.
                 for (Pago payment : todosLosPagos) {
 
-                    if (payment.getDebtId().equals(debt.getId())) {
-                        totalPaid += payment.getAmount();
+                    if (payment.getDeudaId().equals(debt.getId())) {
+                        totalAbonado += payment.getMonto();
                     }
                 }
             }
         }
 
         // Calcula el saldo pendiente, sin permitir valores negativos.
-        double remaining = Math.max(0.0, totalDebt - totalPaid);
+        double saldoPendiente = Math.max(0.0, totalDeudas - totalAbonado);
 
         // Obtiene la cantidad de integrantes del grupo.
-        int memberCount = group.getMemberIds() != null
-                ? group.getMemberIds().size()
+        int cantidadMiembros = grupo.getMiembrosIds() != null
+                ? grupo.getMiembrosIds().size()
                 : 0;
 
         // Construye un texto con el número de miembros y deudas.
-        String membersText = memberCount
-                + (memberCount == 1 ? " miembro" : " miembros");
+        String textoMiembros = cantidadMiembros
+                + (cantidadMiembros == 1 ? " miembro" : " miembros");
 
-        String debtsText = debtsCount
-                + (debtsCount == 1
+        String textoDeudas = cantidadDeudas
+                + (cantidadDeudas == 1
                 ? " deuda familiar"
                 : " deudas familiares");
 
-        holder.tvMembersCount.setText(membersText + " · " + debtsText);
+        contenedor.txCantidadMiembros.setText(textoMiembros + " · " + textoDeudas);
 
         // Muestra los valores económicos con el formato del proyecto.
-        holder.tvTotal.setText(
-                FreyrRepository.formatCurrency(totalDebt));
+        contenedor.txTotal.setText(
+                FreyrRepository.formatCurrency(totalDeudas));
 
-        holder.tvPaid.setText(
-                FreyrRepository.formatCurrency(totalPaid));
+        contenedor.txAbonado.setText(
+                FreyrRepository.formatCurrency(totalAbonado));
 
-        holder.tvRemaining.setText(
-                FreyrRepository.formatCurrency(remaining));
+        contenedor.txPendiente.setText(
+                FreyrRepository.formatCurrency(saldoPendiente));
 
         // Abre los detalles cuando se selecciona el grupo.
-        holder.itemView.setOnClickListener(v -> {
+        contenedor.itemView.setOnClickListener(v -> {
             if (manejador != null) {
-                manejador.alTocarGrupo(group);
+                manejador.alTocarGrupo(grupo);
             }
         });
     }
@@ -161,19 +161,19 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
     // Mantiene las referencias a las vistas de cada tarjeta.
     static class ContenedorGrupo extends RecyclerView.ViewHolder {
 
-        TextView tvName, tvAdmin, tvMembersCount;
-        TextView tvTotal, tvPaid, tvRemaining;
+        TextView txNombre, txAdmin, txCantidadMiembros;
+        TextView txTotal, txAbonado, txPendiente;
 
         public ContenedorGrupo(@NonNull View itemView) {
             super(itemView);
 
-            tvName = itemView.findViewById(R.id.tv_group_name);
-            tvAdmin = itemView.findViewById(R.id.tv_admin_badge);
-            tvMembersCount = itemView.findViewById(R.id.tv_group_members_count);
+            txNombre = itemView.findViewById(R.id.tx_saldo_pendiente_grupo);
+            txAdmin = itemView.findViewById(R.id.tx_etiqueta_admin);
+            txCantidadMiembros = itemView.findViewById(R.id.tx_cantidad_integrantes);
 
-            tvTotal = itemView.findViewById(R.id.tv_group_total_debt);
-            tvPaid = itemView.findViewById(R.id.tv_group_total_paid);
-            tvRemaining = itemView.findViewById(R.id.tv_group_total_remaining);
+            txTotal = itemView.findViewById(R.id.tx_deuda_total_grupo);
+            txAbonado = itemView.findViewById(R.id.tx_total_pagado_grupo);
+            txPendiente = itemView.findViewById(R.id.tx_saldo_pendiente_grupo);
         }
     }
 }

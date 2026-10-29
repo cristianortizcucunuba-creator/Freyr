@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
  * esta clase abstracta, las entidades en `com.freyr.app.data.model` o las interfaces DAO.
  */
 @Database(
-    entities = {Usuario.class, Grupofamiliar.class, Deuda.class, Pago.class, Invitation.class},
+    entities = {Usuario.class, Grupofamiliar.class, Deuda.class, Pago.class, Invitacion.class},
     version = 1,
     exportSchema = false
 )
@@ -160,7 +160,7 @@ public abstract class FreyrDatabase extends RoomDatabase {
                 ));
 
                 // 5. Invitación para Carlos
-                invitationDao.insertInvitation(new Invitation(
+                invitationDao.insertInvitation(new Invitacion(
                     "inv-carlos-1", familyGroup.getId(), carlos.getId(), juan.getId(), "pending", "2026-02-24T10:00:00Z"
                 ));
             });

@@ -13,22 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.R;
 import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Invitation;
+import com.freyr.app.data.model.Invitacion;
 import com.freyr.app.data.model.Usuario;
 
 public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitaciones.InvitationViewHolder> {
 
     // Define las acciones que se ejecutan al aceptar o rechazar una invitación.
     public interface OnInvitationResponseListener {
-        void onAccept(Invitation invitation);
-        void onDecline(Invitation invitation);
+        void onAccept(Invitacion invitacion);
+        void onDecline(Invitacion invitacion);
     }
 
     private final Context context;
     private final OnInvitationResponseListener listener;
 
     // Arreglos que almacenan las invitaciones, grupos familiares y usuarios.
-    private Invitation[] invitations = new Invitation[0];
+    private Invitacion[] invitations = new Invitacion[0];
     private Grupofamiliar[] allGroups = new Grupofamiliar[0];
     private Usuario[] allUsers = new Usuario[0];
 
@@ -38,9 +38,9 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
     }
 
     // Actualiza las invitaciones que se mostrarán en pantalla.
-    public void setInvitations(Invitation[] invitations) {
+    public void setInvitations(Invitacion[] invitations) {
         this.invitations = invitations != null
-                ? invitations : new Invitation[0];
+                ? invitations : new Invitacion[0];
 
         notifyDataSetChanged();
     }
@@ -78,14 +78,14 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
             @NonNull InvitationViewHolder holder, int position) {
 
         // Obtiene la invitación correspondiente a la posición actual.
-        Invitation invitation = invitations[position];
+        Invitacion invitacion = invitations[position];
 
         // Busca el nombre del grupo familiar al que pertenece la invitación.
         String groupName = "Grupo Familiar";
 
         for (Grupofamiliar group : allGroups) {
-            if (group.getId().equals(invitation.getFamilyGroupId())) {
-                groupName = group.getName();
+            if (group.getId().equals(invitacion.getFamilyGroupId())) {
+                groupName = group.getNombre();
                 break;
             }
         }
@@ -96,7 +96,7 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
         String inviterName = "Un miembro familiar";
 
         for (Usuario user : allUsers) {
-            if (user.getId().equals(invitation.getInvitedByUserId())) {
+            if (user.getId().equals(invitacion.getInvitedByUserId())) {
                 inviterName = user.getNomCompl()
                         + " (@" + user.getNomUsuario() + ")";
                 break;
@@ -109,14 +109,14 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
         // Ejecuta la acción correspondiente al aceptar la invitación.
         holder.btnAccept.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onAccept(invitation);
+                listener.onAccept(invitacion);
             }
         });
 
         // Ejecuta la acción correspondiente al rechazar la invitación.
         holder.btnDecline.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onDecline(invitation);
+                listener.onDecline(invitacion);
             }
         });
     }

@@ -67,7 +67,7 @@ public class VerPerfilActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
         btnGoToEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(VerPerfilActivity.this, EditProfileActivity.class);
+            Intent intent = new Intent(VerPerfilActivity.this, ActividadEditarPerfil.class);
             startActivity(intent);
         });
     }
@@ -130,13 +130,13 @@ public class VerPerfilActivity extends AppCompatActivity {
         double paidTotal = 0.0;
         for (Pago p : allPayments) {
             if (uid.equals(p.getUserId())) {
-                paidTotal += p.getAmount();
+                paidTotal += p.getMonto();
             }
         }
 
         int groupsCount = 0;
         for (Grupofamiliar g : allGroups) {
-            if (g.getMemberIds() != null && g.getMemberIds().contains(uid)) {
+            if (g.getMiembrosIds() != null && g.getMiembrosIds().contains(uid)) {
                 groupsCount++;
             }
         }

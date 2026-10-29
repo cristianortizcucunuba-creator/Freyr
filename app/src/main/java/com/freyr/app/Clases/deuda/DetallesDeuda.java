@@ -78,7 +78,7 @@ public class DetallesDeuda extends AppCompatActivity {
         tvDebtDesc = findViewById(R.id.tv_debt_desc);
         tvDebtStatus = findViewById(R.id.tv_debt_status);
         tvAssignedInfo = findViewById(R.id.tv_assigned_info);
-        tvTotalAmt = findViewById(R.id.tv_total_amt);
+        tvTotalAmt = findViewById(R.id.tx_etiqueta_admin);
         tvPaidAmt = findViewById(R.id.tv_paid_amt);
         tvRemainingAmt = findViewById(R.id.tv_remaining_amt);
         pbDetailProgress = findViewById(R.id.pb_detail_progress);
@@ -138,7 +138,7 @@ public class DetallesDeuda extends AppCompatActivity {
                     .setTitle("Eliminar abono")
                     .setMessage(
                             "¿Deseas eliminar este abono de "
-                                    + FreyrRepository.formatCurrency(payment.getAmount())
+                                    + FreyrRepository.formatCurrency(payment.getMonto())
                                     + "?"
                     )
                     .setPositiveButton("Eliminar", (dialog, which) ->
@@ -217,7 +217,7 @@ public class DetallesDeuda extends AppCompatActivity {
         double paid = 0.0;
 
         for (Pago payment : allPayments) {
-            paid += payment.getAmount();
+            paid += payment.getMonto();
         }
 
         double remaining = Math.max(0.0, total - paid);

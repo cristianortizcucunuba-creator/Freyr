@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
 
             Intent intent;
             if (currentUserId != null && !currentUserId.trim().isEmpty()) {
-                intent = new Intent(SplashActivity.this, MainActivity.class);
+                intent = new Intent(SplashActivity.this, ActividadPrincipal.class);
             } else {
                 intent = new Intent(SplashActivity.this, LoguearUsuario.class);
             }

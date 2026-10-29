@@ -7,9 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.freyr.app.Clases.ActividadPrincipal;
 import com.freyr.app.FreyrApplication;
 import com.freyr.app.R;
-import com.freyr.app.Clases.MainActivity;
+import com.freyr.app.Clases.ActividadPrincipal;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 
@@ -91,7 +93,7 @@ public class RegistrarUsuario extends AppCompatActivity {
             @Override
             public void onSuccess(Usuario result) {
                 runOnUiThread(() -> {
-                    Intent intent = new Intent(RegistrarUsuario.this, MainActivity.class);
+                    Intent intent = new Intent(RegistrarUsuario.this, ActividadPrincipal.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
