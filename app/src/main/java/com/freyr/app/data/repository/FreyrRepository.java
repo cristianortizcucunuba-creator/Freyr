@@ -244,7 +244,7 @@ public class FreyrRepository {
             List<Pago> payments = database.paymentDao().getPaymentsForDebt(debtId);
             double currentPaid = 0.0;
             for (Pago p : payments) {
-                currentPaid += p.getAmount();
+                currentPaid += p.getMonto();
             }
 
             double newTotalPaid = currentPaid + amount;
@@ -278,7 +278,7 @@ public class FreyrRepository {
                 List<Pago> remainingPayments = database.paymentDao().getPaymentsForDebt(debtId);
                 double totalPaid = 0.0;
                 for (Pago p : remainingPayments) {
-                    totalPaid += p.getAmount();
+                    totalPaid += p.getMonto();
                 }
                 if (totalPaid < debt.getAmount()) {
                     debt.setStatus("pending");
@@ -326,7 +326,7 @@ public class FreyrRepository {
                 return;
             }
 
-            if (group.getMemberIds().contains(target.getId())) {
+            if (group.getMiembrosIds().contains(target.getId())) {
                 callback.onError(target.getNomCompl() + " is already a member of this group.");
                 return;
             }
@@ -360,8 +360,8 @@ public class FreyrRepository {
 
             if (accept) {
                 Grupofamiliar group = database.familyGroupDao().getGroupById(invite.getFamilyGroupId());
-                if (group != null && !group.getMemberIds().contains(invite.getInvitedUserId())) {
-                    List<String> updated = new ArrayList<>(group.getMemberIds());
+                if (group != null && !group.getMiembrosIds().contains(invite.getInvitedUserId())) {
+                    List<String> updated = new ArrayList<>(group.getMiembrosIds());
                     updated.add(invite.getInvitedUserId());
                     group.setMemberIds(updated);
                     database.familyGroupDao().updateGroup(group);

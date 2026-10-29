@@ -140,7 +140,7 @@
                                 android:textColor="@color/freyr_text_secondary"
                                 android:textSize="10sp" />
                             <TextView
-                                android:id="@+id/tv_total_amt"
+                                android:id="@+id/tx_etiqueta_admin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="$3,000,000"

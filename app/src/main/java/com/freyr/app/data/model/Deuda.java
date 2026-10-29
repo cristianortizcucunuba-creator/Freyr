@@ -46,7 +46,7 @@ public class Deuda {
     public String getAssignedUserId() { return assignedUserId; }
     public void setAssignedUserId(String assignedUserId) { this.assignedUserId = assignedUserId; }
 
-    public String getFamilyGroupId() { return familyGroupId; }
+    public String getGrupoFamiliarId() { return familyGroupId; }
     public void setFamilyGroupId(String familyGroupId) { this.familyGroupId = familyGroupId; }
 
     public String getStatus() { return status; }

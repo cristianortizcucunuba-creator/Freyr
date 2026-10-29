@@ -146,7 +146,7 @@ public class FinanzasPersonales extends Fragment {
         int count = 0;
 
         for (Deuda debt : allDebts) {
-            boolean isPersonal = debt.getFamilyGroupId() == null
+            boolean isPersonal = debt.getGrupoFamiliarId() == null
                     && (uid.equals(debt.getAssignedUserId())
                     || uid.equals(debt.getCreatedBy()));
 
@@ -156,8 +156,8 @@ public class FinanzasPersonales extends Fragment {
 
             double paid = 0.0;
             for (Pago payment : allPayments) {
-                if (payment.getDebtId().equals(debt.getId())) {
-                    paid += payment.getAmount();
+                if (payment.getDeudaId().equals(debt.getId())) {
+                    paid += payment.getMonto();
                 }
             }
 

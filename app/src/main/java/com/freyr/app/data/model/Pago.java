@@ -30,13 +30,13 @@ public class Pago {
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
 
-    public String getDebtId() { return debtId; }
+    public String getDeudaId() { return debtId; }
     public void setDebtId(String debtId) { this.debtId = debtId; }
 
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
 
-    public double getAmount() { return amount; }
+    public double getMonto() { return amount; }
     public void setAmount(double amount) { this.amount = amount; }
 
     public String getDate() { return date; }

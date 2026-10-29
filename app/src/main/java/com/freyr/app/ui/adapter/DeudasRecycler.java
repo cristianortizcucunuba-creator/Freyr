@@ -101,14 +101,14 @@ public class DeudasRecycler extends RecyclerView.Adapter<DeudasRecycler.DebtView
         // Construye el texto que identifica el grupo de la deuda.
         StringBuilder scopeText = new StringBuilder();
 
-        if (debt.getFamilyGroupId() != null) {
+        if (debt.getGrupoFamiliarId() != null) {
 
             String groupName = "Grupo Familiar";
 
             // Busca el grupo familiar asociado a la deuda.
             for (Grupofamiliar group : allGroups) {
-                if (group.getId().equals(debt.getFamilyGroupId())) {
-                    groupName = group.getName();
+                if (group.getId().equals(debt.getGrupoFamiliarId())) {
+                    groupName = group.getNombre();
                     break;
                 }
             }
@@ -142,8 +142,8 @@ public class DeudasRecycler extends RecyclerView.Adapter<DeudasRecycler.DebtView
         double paid = 0.0;
 
         for (Pago payment : allPayments) {
-            if (payment.getDebtId().equals(debt.getId())) {
-                paid += payment.getAmount();
+            if (payment.getDeudaId().equals(debt.getId())) {
+                paid += payment.getMonto();
             }
         }
 
@@ -244,7 +244,7 @@ public class DeudasRecycler extends RecyclerView.Adapter<DeudasRecycler.DebtView
             tvDesc = itemView.findViewById(R.id.tv_debt_desc);
             tvStatus = itemView.findViewById(R.id.tv_debt_status);
 
-            tvTotal = itemView.findViewById(R.id.tv_debt_total);
+            tvTotal = itemView.findViewById(R.id.tx_deuda_total_grupo);
             tvPaid = itemView.findViewById(R.id.tv_debt_paid);
             tvRemaining = itemView.findViewById(R.id.tv_debt_remaining);
 

@@ -14,7 +14,7 @@
 
         <!-- Banner de bienvenida -->
         <TextView
-            android:id="@+id/tx_nombre_bienvenida"
+            android:id="@+id/tx_saldo_pendiente_grupo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resumen Financiero"
@@ -434,7 +434,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tx_cantidad_deudas_pendientes"
+                        android:id="@+id/tx_cantidad_integrantes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -514,7 +514,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tx_total_pagos_personales"
+                        android:id="@+id/tx_total_pagado_grupo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$0"

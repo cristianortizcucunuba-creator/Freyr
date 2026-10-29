@@ -58,7 +58,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     }
 
     private void inicializarVistas(View view) {
-        txNombreBienvenida = view.findViewById(R.id.tx_nombre_bienvenida);
+        txNombreBienvenida = view.findViewById(R.id.tx_saldo_pendiente_grupo);
         txSubtituloBienvenida = view.findViewById(R.id.tx_subtitulo_bienvenida);
         cardEditarPerfil = view.findViewById(R.id.card_accion_editar_perfil);
         cardAgregarDeuda = view.findViewById(R.id.card_accion_agregar_deuda);
@@ -70,9 +70,9 @@ public class RecapMesFinancieroFragment extends Fragment {
         txHistorialTotalPagado = view.findViewById(R.id.tx_historial_total_pagado);
         txHistorialTotalPendiente = view.findViewById(R.id.tx_historial_total_pendiente);
         txMontoTotalPendiente = view.findViewById(R.id.tx_monto_total_pendiente);
-        txCantidadDeudasPendientes = view.findViewById(R.id.tx_cantidad_deudas_pendientes);
+        txCantidadDeudasPendientes = view.findViewById(R.id.tx_cantidad_integrantes);
         txCantidadDeudasPagadas = view.findViewById(R.id.tx_cantidad_deudas_pagadas);
-        txTotalPagosPersonales = view.findViewById(R.id.tx_total_pagos_personales);
+        txTotalPagosPersonales = view.findViewById(R.id.tx_total_pagado_grupo);
         txTotalDeudasFamiliares = view.findViewById(R.id.tx_total_deudas_familiares);
         rvDeudasActivas = view.findViewById(R.id.rv_deudas_activas);
     }
@@ -160,8 +160,8 @@ public class RecapMesFinancieroFragment extends Fragment {
         Deuda[] activas = new Deuda[Math.min(3, todasLasDeudasallDebts.length)];
         int contador = 0;
         for (Deuda d : todasLasDeudasallDebts) {
-            boolean relevante = (d.getFamilyGroupId() == null && (usuarioid.equals(d.getAssignedUserId()) || usuarioid.equals(d.getCreatedBy())))
-                    || (d.getFamilyGroupId() != null && contiene(userGroupIds, d.getFamilyGroupId()));
+            boolean relevante = (d.getGrupoFamiliarId() == null && (usuarioid.equals(d.getAssignedUserId()) || usuarioid.equals(d.getCreatedBy())))
+                    || (d.getGrupoFamiliarId() != null && contiene(userGroupIds, d.getGrupoFamiliarId()));
             if (relevante) {
                 double pagado = obtenerMontoPagado(d);
                 double relevant = Math.max(0.0, d.getAmount() - pagado);
@@ -183,8 +183,8 @@ public class RecapMesFinancieroFragment extends Fragment {
         int cantidadPendientes = 0, cantidadPagadas = 0;
         double totalDebido = 0.0, totalPagado = 0.0, totalPorPagar = 0.0;
         for (Deuda d : todasLasDeudasallDebts) {
-            boolean relevant = (d.getFamilyGroupId() == null && (usuarioid.equals(d.getAssignedUserId()) || usuarioid.equals(d.getCreatedBy())))
-                    || (d.getFamilyGroupId() != null && contiene(idsGruposUsuario, d.getFamilyGroupId()));
+            boolean relevant = (d.getGrupoFamiliarId() == null && (usuarioid.equals(d.getAssignedUserId()) || usuarioid.equals(d.getCreatedBy())))
+                    || (d.getGrupoFamiliarId() != null && contiene(idsGruposUsuario, d.getGrupoFamiliarId()));
             if (relevant) {
                 totalDebido += d.getAmount();
                 double pagado = obtenerMontoPagado(d);
@@ -195,9 +195,9 @@ public class RecapMesFinancieroFragment extends Fragment {
             }
         }
         double pagosPersonales = 0.0;
-        for (Pago p : todosLosPagos) if (usuarioid.equals(p.getUserId())) pagosPersonales += p.getAmount();
+        for (Pago p : todosLosPagos) if (usuarioid.equals(p.getUserId())) pagosPersonales += p.getMonto();
         double pendienteFamiliar = 0.0;
-        for (Deuda d : todasLasDeudasallDebts) if (d.getFamilyGroupId() != null && contiene(idsGruposUsuario, d.getFamilyGroupId()))
+        for (Deuda d : todasLasDeudasallDebts) if (d.getGrupoFamiliarId() != null && contiene(idsGruposUsuario, d.getGrupoFamiliarId()))
             pendienteFamiliar += Math.max(0.0, d.getAmount() - obtenerMontoPagado(d));
         double totalPendiente = Math.max(0.0, totalDebido - totalPagado);
         if (txHistorialTotalDebido != null) txHistorialTotalDebido.setText(FreyrRepository.formatCurrency(totalDebido));
@@ -215,7 +215,7 @@ public class RecapMesFinancieroFragment extends Fragment {
         String[] ids = new String[todosLosGrupos.length];
         int count = 0;
         for (Grupofamiliar group : todosLosGrupos)
-            if (group.getMemberIds() != null && group.getMemberIds().contains(userId)) ids[count++] = group.getId();
+            if (group.getMiembrosIds() != null && group.getMiembrosIds().contains(userId)) ids[count++] = group.getId();
         String[] result = new String[count];
         System.arraycopy(ids, 0, result, 0, count);
         return result;
@@ -228,7 +228,7 @@ public class RecapMesFinancieroFragment extends Fragment {
 
     private double obtenerMontoPagado(Deuda debt) {
         double paid = 0.0;
-        for (Pago payment : todosLosPagos) if (payment.getDebtId().equals(debt.getId())) paid += payment.getAmount();
+        for (Pago payment : todosLosPagos) if (payment.getDeudaId().equals(debt.getId())) paid += payment.getMonto();
         return paid;
     }
 }

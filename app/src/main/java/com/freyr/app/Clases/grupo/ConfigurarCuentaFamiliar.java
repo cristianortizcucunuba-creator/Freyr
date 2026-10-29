@@ -186,7 +186,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
                 for (Grupofamiliar group : groups) {
                     if (group.getId().equals(groupId)) {
                         currentGroup = group;
-                        tvGroupTitle.setText(group.getName());
+                        tvGroupTitle.setText(group.getNombre());
 
                         // El adapter recibe un arreglo de grupos.
                         debtAdapter.setGrupos(new Grupofamiliar[]{group});
@@ -203,7 +203,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
                 int count = 0;
 
                 for (Deuda debt : debts) {
-                    if (groupId.equals(debt.getFamilyGroupId())) {
+                    if (groupId.equals(debt.getGrupoFamiliarId())) {
                         matchingDebts[count] = debt;
                         count++;
                     }
@@ -232,16 +232,16 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
 
     // Actualiza el texto con los miembros del grupo.
     private void updateMembersDisplay() {
-        if (currentGroup == null || currentGroup.getMemberIds() == null) {
+        if (currentGroup == null || currentGroup.getMiembrosIds() == null) {
             return;
         }
 
         String[] displayNames =
-                new String[currentGroup.getMemberIds().size()];
+                new String[currentGroup.getMiembrosIds().size()];
 
         int index = 0;
-        for (String userId : currentGroup.getMemberIds()) {
-            boolean isCreator = userId.equals(currentGroup.getCreatorId());
+        for (String userId : currentGroup.getMiembrosIds()) {
+            boolean isCreator = userId.equals(currentGroup.getCreadorId());
             String name = "Usuario (" + userId + ")";
 
             for (Usuario user : allUsers) {
@@ -268,8 +268,8 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
             total += debt.getAmount();
 
             for (Pago payment : allPayments) {
-                if (payment.getDebtId().equals(debt.getId())) {
-                    paid += payment.getAmount();
+                if (payment.getDeudaId().equals(debt.getId())) {
+                    paid += payment.getMonto();
                 }
             }
         }

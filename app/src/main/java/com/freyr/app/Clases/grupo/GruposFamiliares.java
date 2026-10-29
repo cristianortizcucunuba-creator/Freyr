@@ -101,8 +101,8 @@ public class GruposFamiliares extends Fragment {
                         int count = 0;
 
                         for (Grupofamiliar group : groups) {
-                            if (group.getMemberIds() != null
-                                    && group.getMemberIds().contains(uid)) {
+                            if (group.getMiembrosIds() != null
+                                    && group.getMiembrosIds().contains(uid)) {
                                 matchingGroups[count] = group;
                                 count++;
                             }

@@ -85,7 +85,7 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
 
         for (Grupofamiliar group : allGroups) {
             if (group.getId().equals(invitacion.getFamilyGroupId())) {
-                groupName = group.getName();
+                groupName = group.getNombre();
                 break;
             }
         }

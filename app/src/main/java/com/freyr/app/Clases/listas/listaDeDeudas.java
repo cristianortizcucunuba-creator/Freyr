@@ -102,14 +102,14 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
         // Construye el texto que identifica el grupo de la deuda.
         StringBuilder contexto = new StringBuilder();
 
-        if (debt.getFamilyGroupId() != null) {
+        if (debt.getGrupoFamiliarId() != null) {
 
             String nomGrupo = "Grupo Familiar";
 
             // Busca el grupo familiar asociado a la deuda.
             for (Grupofamiliar group : todosLosGrupos) {
-                if (group.getId().equals(debt.getFamilyGroupId())) {
-                    nomGrupo = group.getName();
+                if (group.getId().equals(debt.getGrupoFamiliarId())) {
+                    nomGrupo = group.getNombre();
                     break;
                 }
             }
@@ -143,8 +143,8 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
         double abonado = 0.0;
 
         for (Pago payment : todosLosPagos) {
-            if (payment.getDebtId().equals(debt.getId())) {
-                abonado += payment.getAmount();
+            if (payment.getDeudaId().equals(debt.getId())) {
+                abonado += payment.getMonto();
             }
         }
 
@@ -245,7 +245,7 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
             tvDescrip = vistaObj.findViewById(R.id.tv_debt_desc);
             tvEstado = vistaObj.findViewById(R.id.tv_debt_status);
 
-            tvTotal = vistaObj.findViewById(R.id.tv_debt_total);
+            tvTotal = vistaObj.findViewById(R.id.tx_deuda_total_grupo);
             tvAbonado = vistaObj.findViewById(R.id.tv_debt_paid);
             tvRestante = vistaObj.findViewById(R.id.tv_debt_remaining);
 

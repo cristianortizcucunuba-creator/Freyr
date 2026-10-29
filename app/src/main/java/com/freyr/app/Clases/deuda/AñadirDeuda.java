@@ -137,8 +137,8 @@ public class AñadirDeuda extends AppCompatActivity {
                 int count = 0;
 
                 for (Grupofamiliar group : groups) {
-                    if (group.getMemberIds() != null
-                            && group.getMemberIds().contains(currentUid)) {
+                    if (group.getMiembrosIds() != null
+                            && group.getMiembrosIds().contains(currentUid)) {
                         matchingGroups[count] = group;
                         count++;
                     }
@@ -150,7 +150,7 @@ public class AñadirDeuda extends AppCompatActivity {
 
                 String[] groupNames = new String[count];
                 for (int i = 0; i < count; i++) {
-                    groupNames[i] = userGroups[i].getName();
+                    groupNames[i] = userGroups[i].getNombre();
                 }
 
                 ArrayAdapter<String> groupAdapter = new ArrayAdapter<>(
@@ -170,8 +170,8 @@ public class AñadirDeuda extends AppCompatActivity {
     // Actualiza las opciones de responsable del grupo seleccionado.
     private void updateMemberSpinner(Grupofamiliar group) {
         int groupMemberCount = 0;
-        if (group != null && group.getMemberIds() != null) {
-            groupMemberCount = group.getMemberIds().size();
+        if (group != null && group.getMiembrosIds() != null) {
+            groupMemberCount = group.getMiembrosIds().size();
         }
 
         // La primera opción representa a toda la familia.
@@ -181,10 +181,10 @@ public class AñadirDeuda extends AppCompatActivity {
         memberNames[0] = "Toda la familia (Compartida)";
         memberIds[0] = null;
 
-        if (group != null && group.getMemberIds() != null) {
+        if (group != null && group.getMiembrosIds() != null) {
             int index = 1;
 
-            for (String userId : group.getMemberIds()) {
+            for (String userId : group.getMiembrosIds()) {
                 String name = "Miembro (" + userId + ")";
 
                 for (Usuario user : allUsers) {
