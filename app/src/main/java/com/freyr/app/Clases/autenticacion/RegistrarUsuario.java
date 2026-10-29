@@ -13,21 +13,19 @@ import com.freyr.app.Clases.MainActivity;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 
-/**
- * Actividad para el registro de nuevas cuentas de usuario en Freyr.
- * Valida nombre completo, usuario único, correo y confirmación de contraseña
- * antes de registrar e iniciar la sesión automáticamente.
- */
+// registro de nuevas cuentas de usuario en Freyr.
+// Valida nombre completo, usuario único, correo y confirmación de contraseña
+
 public class RegistrarUsuario extends AppCompatActivity {
 
-    private EditText etFullName;
-    private EditText etUsername;
+    private EditText etNombre;
+    private EditText etNombreUsuario;
     private EditText etEmail;
-    private EditText etPassword;
-    private EditText etConfirmPassword;
-    private Button btnRegister;
-    private TextView tvGoToLogin;
-    private TextView tvError;
+    private EditText etContraseña;
+    private EditText etConfirmarContraseña;
+    private Button btnRegistrar;
+    private TextView txGoToLogin;
+    private TextView txError;
 
     private FreyrRepository repository;
 
@@ -43,27 +41,27 @@ public class RegistrarUsuario extends AppCompatActivity {
     }
 
     private void initViews() {
-        etFullName = findViewById(R.id.et_full_name);
-        etUsername = findViewById(R.id.et_username);
+        etNombre = findViewById(R.id.et_full_name);
+        etNombreUsuario = findViewById(R.id.et_username);
         etEmail = findViewById(R.id.et_email);
-        etPassword = findViewById(R.id.et_password);
-        etConfirmPassword = findViewById(R.id.et_confirm_password);
-        btnRegister = findViewById(R.id.btn_register);
-        tvGoToLogin = findViewById(R.id.tv_go_to_login);
-        tvError = findViewById(R.id.tx_error);
+        etContraseña = findViewById(R.id.et_password);
+        etConfirmarContraseña = findViewById(R.id.et_confirm_password);
+        btnRegistrar = findViewById(R.id.btn_register);
+        txGoToLogin = findViewById(R.id.tx_go_to_login);
+        txError = findViewById(R.id.tx_error);
     }
 
     private void setupListeners() {
-        btnRegister.setOnClickListener(v -> doRegister());
-        tvGoToLogin.setOnClickListener(v -> finish());
+        btnRegistrar.setOnClickListener(v -> doRegister());
+        txGoToLogin.setOnClickListener(v -> finish());
     }
 
     private void doRegister() {
-        String fullName = etFullName.getText().toString().trim();
-        String username = etUsername.getText().toString().trim();
+        String fullName = etNombre.getText().toString().trim();
+        String username = etNombreUsuario.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString();
-        String confirmPassword = etConfirmPassword.getText().toString();
+        String password = etContraseña.getText().toString();
+        String confirmPassword = etConfirmarContraseña.getText().toString();
 
         if (fullName.isEmpty()) {
             showError("El nombre completo es requerido.");
@@ -86,8 +84,8 @@ public class RegistrarUsuario extends AppCompatActivity {
             return;
         }
 
-        tvError.setVisibility(View.GONE);
-        btnRegister.setEnabled(false);
+        txError.setVisibility(View.GONE);
+        btnRegistrar.setEnabled(false);
 
         repository.register(fullName, username, email, password, new FreyrRepository.Callback<Usuario>() {
             @Override
@@ -103,7 +101,7 @@ public class RegistrarUsuario extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 runOnUiThread(() -> {
-                    btnRegister.setEnabled(true);
+                    btnRegistrar.setEnabled(true);
                     showError(error);
                 });
             }
@@ -111,7 +109,7 @@ public class RegistrarUsuario extends AppCompatActivity {
     }
 
     private void showError(String message) {
-        tvError.setText(message);
-        tvError.setVisibility(View.VISIBLE);
+        txError.setText(message);
+        txError.setVisibility(View.VISIBLE);
     }
 }
