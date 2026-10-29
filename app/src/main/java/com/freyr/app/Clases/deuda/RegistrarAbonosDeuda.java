@@ -58,7 +58,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnBack = findViewById(R.id.btn_volver);
+        btnBack = findViewById(R.id.btn_atras);
         tvForDebtName = findViewById(R.id.tv_for_debt_name);
         tvStatusTotal = findViewById(R.id.tv_status_total);
         tvStatusPaid = findViewById(R.id.tv_status_paid);

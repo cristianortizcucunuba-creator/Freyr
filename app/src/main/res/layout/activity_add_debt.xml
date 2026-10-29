@@ -21,7 +21,7 @@
             android:layout_marginBottom="16dp">
 
             <ImageButton
-                android:id="@+id/btn_volver"
+                android:id="@+id/btn_atras"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -60,7 +60,7 @@
             android:textStyle="bold" />
 
         <RadioGroup
-            android:id="@+id/rg_debt_type"
+            android:id="@+id/rg_tipo_deuda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -69,7 +69,7 @@
             android:layout_marginBottom="16dp">
 
             <RadioButton
-                android:id="@+id/rb_personal_debt"
+                android:id="@+id/rb_deuda_personal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -79,7 +79,7 @@
                 android:buttonTint="@color/freyr_primary" />
 
             <RadioButton
-                android:id="@+id/rb_family_debt"
+                android:id="@+id/rb_deuda_familiar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -99,7 +99,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_debt_name"
+            android:id="@+id/et_nombre_deuda"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
@@ -126,7 +126,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_debt_amount"
+            android:id="@+id/et_monto"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"
@@ -196,7 +196,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_debt_description"
+            android:id="@+id/et_descripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minLines="2"
@@ -216,7 +216,7 @@
 
         <!-- Botón Guardar Deuda -->
         <Button
-            android:id="@+id/btn_save_debt"
+            android:id="@+id/btn_guardar_deuda"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:background="@drawable/bg_button_primary"

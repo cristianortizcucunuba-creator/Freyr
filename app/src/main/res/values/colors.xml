@@ -8,7 +8,7 @@
     <color name="freyr_card_bg">#1E1E1E</color>
 
     <!-- Backgrounds (Dominant background: #2E110E) -->
-    <color name="freyr_background">#FAF7F8</color>
+    <color name="freyr_background">#F7F3EF</color>
     <color name="freyr_surface">#56070C</color>
     <color name="freyr_surface_variant">#7C3129</color>
     <color name="freyr_surface_card">#8F3D38</color>

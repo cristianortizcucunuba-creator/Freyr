@@ -73,7 +73,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnVolver = findViewById(R.id.btn_volver);
+        btnVolver = findViewById(R.id.btn_atras);
         txTituloGrupo = findViewById(R.id.texto_titulo_grupo);
         btnAgregarDeudaGrupo = findViewById(R.id.btn_agregar_deuda_grupo);
         txMontoTotalGrupo = findViewById(R.id.texto_total_deuda_grupo);

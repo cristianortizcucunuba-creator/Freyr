@@ -44,7 +44,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnBack = findViewById(R.id.btn_volver);
+        btnBack = findViewById(R.id.btn_atras);
         tvFeedback = findViewById(R.id.tv_feedback);
         etFullName = findViewById(R.id.et_nombre_completo);
         etUsername = findViewById(R.id.et_usuario);
