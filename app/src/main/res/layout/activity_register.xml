@@ -4,176 +4,216 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/freyr_background">
+    android:background="@drawable/fondologin">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="36dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_register"
-            android:textColor="@color/freyr_primary"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="20dp"
-            android:text="Únete a Freyr para gestionar tus finanzas personales y familiares"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/tx_error"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#D32F2F"
-            android:textSize="12sp"
-            android:visibility="gone"
-            android:layout_marginBottom="12dp" />
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeWidth="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Nombre Completo -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Nombre completo *"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-        <EditText
-            android:id="@+id/et_nombre_completo"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="Nombre"
-            android:inputType="textPersonName"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Crear cuenta"
+                    android:textAlignment="center"
+                    android:textColor="#2D1B22"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
 
-        <!-- Nombre de Usuario -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Nombre de usuario *"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="Únete a Freyr para gestionar tus finanzas personales y familiares"
+                    android:textAlignment="center"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/et_usuario"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="Apodo"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/tx_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#D32F2F"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="12dp" />
 
-        <!-- Correo Electrónico -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Correo electrónico *"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre completo"
+                    android:textColorHint="#550724"
+                    app:hintTextColor="#550724"
+                    app:boxStrokeColor="#550724"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="a-z@gmail.com"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_nombre_completo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:textColor="#2D1B22" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Contraseña -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Contraseña (mínimo 6 caracteres) *"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre de usuario"
+                    android:textColorHint="#550724"
+                    app:hintTextColor="#550724"
+                    app:boxStrokeColor="#550724"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/et_contraseña"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="••••••••"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="14dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_usuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="#2D1B22" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Confirmar Contraseña -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Confirmar contraseña *"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Correo electrónico"
+                    android:textColorHint="#550724"
+                    app:hintTextColor="#550724"
+                    app:boxStrokeColor="#550724"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/et_confirmar_contraseña"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="••••••••"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="24dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:textColor="#2D1B22" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Botón de Registro -->
-        <Button
-            android:id="@+id/btn_registrar"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:background="@drawable/bg_button_primary"
-            android:text="Registrar cuenta e ingresar"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:backgroundTint="@null" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contraseña (mínimo 6 caracteres)"
+                    android:textColorHint="#550724"
+                    app:hintTextColor="#550724"
+                    app:boxStrokeColor="#550724"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="#550724"
+                    android:layout_marginBottom="16dp">
 
-        <!-- Volver a Login -->
-        <TextView
-            android:id="@+id/tx_go_to_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="¿Ya tienes cuenta? Inicia sesión aquí"
-            android:textColor="@color/freyr_primary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:padding="16dp"
-            android:clickable="true"
-            android:focusable="true" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_contraseña"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:textColor="#2D1B22" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirmar contraseña"
+                    android:textColorHint="#550724"
+                    app:hintTextColor="#550724"
+                    app:boxStrokeColor="#550724"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="#550724"
+                    android:layout_marginBottom="28dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_confirmar_contraseña"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:textColor="#2D1B22" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_registrar"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Registrar cuenta e ingresar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="12dp"
+                    app:backgroundTint="#550724"
+                    android:elevation="2dp" />
+
+                <TextView
+                    android:id="@+id/tx_go_to_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:padding="8dp"
+                    android:text="¿Ya tienes cuenta? Inicia sesión aquí"
+                    android:textColor="#550724"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
-
