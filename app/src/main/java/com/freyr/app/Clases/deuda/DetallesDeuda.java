@@ -158,7 +158,7 @@ public class DetallesDeuda extends AppCompatActivity {
                 // El repositorio entrega una lista; la convertimos a arreglo.
                 allUsers = users.toArray(new Usuario[0]);
 
-                paymentAdapter.setUsers(allUsers);
+                paymentAdapter.setUsuarios(allUsers);
                 updateAssignedLabel();
             }
         });
@@ -180,7 +180,7 @@ public class DetallesDeuda extends AppCompatActivity {
             if (payments != null) {
                 // El adapter trabaja con arreglos.
                 allPayments = payments.toArray(new Pago[0]);
-                paymentAdapter.setPayments(allPayments);
+                paymentAdapter.setPagos(allPayments);
 
                 int paymentCount = allPayments.length;
                 String countLabel = paymentCount == 1 ? "ABONO" : "ABONOS";

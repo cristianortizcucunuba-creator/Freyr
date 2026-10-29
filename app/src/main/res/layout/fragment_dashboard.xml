@@ -14,7 +14,7 @@
 
         <!-- Banner de bienvenida -->
         <TextView
-            android:id="@+id/tx_saldo_pendiente_grupo"
+            android:id="@+id/tx_nombre_grupo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Resumen Financiero"

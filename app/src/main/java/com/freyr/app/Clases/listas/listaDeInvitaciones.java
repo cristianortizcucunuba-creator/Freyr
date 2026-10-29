@@ -16,46 +16,46 @@ import com.freyr.app.data.model.Grupofamiliar;
 import com.freyr.app.data.model.Invitacion;
 import com.freyr.app.data.model.Usuario;
 
-public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitaciones.InvitationViewHolder> {
+public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitaciones.ContenedorInvitacion> {
 
     // Define las acciones que se ejecutan al aceptar o rechazar una invitación.
-    public interface OnInvitationResponseListener {
-        void onAccept(Invitacion invitacion);
-        void onDecline(Invitacion invitacion);
+    public interface AccionesRespuestaInvitacion {
+        void Aceptar(Invitacion invitacion);
+        void Rechazar(Invitacion invitacion);
     }
 
-    private final Context context;
-    private final OnInvitationResponseListener listener;
+    private final Context contexto;
+    private final AccionesRespuestaInvitacion accionRespuesta;
 
     // Arreglos que almacenan las invitaciones, grupos familiares y usuarios.
-    private Invitacion[] invitations = new Invitacion[0];
-    private Grupofamiliar[] allGroups = new Grupofamiliar[0];
-    private Usuario[] allUsers = new Usuario[0];
+    private Invitacion[] invitaciones = new Invitacion[0];
+    private Grupofamiliar[] todosLosGrupos = new Grupofamiliar[0];
+    private Usuario[] todosLosUsuarios = new Usuario[0];
 
-    public listaDeInvitaciones(Context context, OnInvitationResponseListener listener) {
-        this.context = context;
-        this.listener = listener;
+    public listaDeInvitaciones(Context context, AccionesRespuestaInvitacion accionRespuesta) {
+        this.contexto = context;
+        this.accionRespuesta = accionRespuesta;
     }
 
     // Actualiza las invitaciones que se mostrarán en pantalla.
-    public void setInvitations(Invitacion[] invitations) {
-        this.invitations = invitations != null
-                ? invitations : new Invitacion[0];
+    public void setInvitaciones(Invitacion[] invitaciones) {
+        this.invitaciones = invitaciones != null
+                ? invitaciones : new Invitacion[0];
 
         notifyDataSetChanged();
     }
 
     // Actualiza los grupos familiares disponibles.
-    public void setGroups(Grupofamiliar[] groups) {
-        this.allGroups = groups != null
+    public void setGrupos(Grupofamiliar[] groups) {
+        this.todosLosGrupos = groups != null
                 ? groups : new Grupofamiliar[0];
 
         notifyDataSetChanged();
     }
 
     // Actualiza la información de los usuarios.
-    public void setUsers(Usuario[] users) {
-        this.allUsers = users != null
+    public void setUsuarios(Usuario[] users) {
+        this.todosLosUsuarios = users != null
                 ? users : new Usuario[0];
 
         notifyDataSetChanged();
@@ -63,60 +63,60 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
 
     @NonNull
     @Override
-    public InvitationViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
+    public ContenedorInvitacion onCreateViewHolder(
+            @NonNull ViewGroup contenedorPadre, int viewType) {
 
         // Carga el diseño XML correspondiente a una invitación.
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_invitation, parent, false);
+        View vista = LayoutInflater.from(contexto)
+                .inflate(R.layout.item_invitation, contenedorPadre, false);
 
-        return new InvitationViewHolder(view);
+        return new ContenedorInvitacion(vista);
     }
 
     @Override
     public void onBindViewHolder(
-            @NonNull InvitationViewHolder holder, int position) {
+            @NonNull ContenedorInvitacion contenedor, int posicion) {
 
         // Obtiene la invitación correspondiente a la posición actual.
-        Invitacion invitacion = invitations[position];
+        Invitacion invitacion = invitaciones[posicion];
 
         // Busca el nombre del grupo familiar al que pertenece la invitación.
-        String groupName = "Grupo Familiar";
+        String nombreGrupo = "Grupo Familiar";
 
-        for (Grupofamiliar group : allGroups) {
-            if (group.getId().equals(invitacion.getFamilyGroupId())) {
-                groupName = group.getNombre();
+        for (Grupofamiliar group : todosLosGrupos) {
+            if (group.getId().equals(invitacion.getGrupoFamiliarId())) {
+                nombreGrupo = group.getNombre();
                 break;
             }
         }
 
-        holder.tvGroupName.setText(groupName);
+        contenedor.txNombreGrupo.setText(nombreGrupo);
 
         // Busca al usuario que envió la invitación.
-        String inviterName = "Un miembro familiar";
+        String nombreRemitente = "Un miembro familiar";
 
-        for (Usuario user : allUsers) {
-            if (user.getId().equals(invitacion.getInvitedByUserId())) {
-                inviterName = user.getNomCompl()
+        for (Usuario user : todosLosUsuarios) {
+            if (user.getId().equals(invitacion.getUsuarioInvitadorId())) {
+                nombreRemitente = user.getNomCompl()
                         + " (@" + user.getNomUsuario() + ")";
                 break;
             }
         }
 
         // Muestra quién envió la invitación.
-        holder.tvFrom.setText("Invitado por " + inviterName);
+        contenedor.txRemitente.setText("Invitado por " + nombreRemitente);
 
         // Ejecuta la acción correspondiente al aceptar la invitación.
-        holder.btnAccept.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onAccept(invitacion);
+        contenedor.btnAceptar.setOnClickListener(v -> {
+            if (accionRespuesta != null) {
+                accionRespuesta.Aceptar(invitacion);
             }
         });
 
         // Ejecuta la acción correspondiente al rechazar la invitación.
-        holder.btnDecline.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onDecline(invitacion);
+        contenedor.btnRechazar.setOnClickListener(v -> {
+            if (accionRespuesta != null) {
+                accionRespuesta.Rechazar(invitacion);
             }
         });
     }
@@ -124,23 +124,23 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
     @Override
     public int getItemCount() {
         // Devuelve la cantidad de invitaciones almacenadas en el arreglo.
-        return invitations.length;
+        return invitaciones.length;
     }
 
     // Mantiene las referencias a las vistas de cada invitación.
-    static class InvitationViewHolder extends RecyclerView.ViewHolder {
+    static class ContenedorInvitacion extends RecyclerView.ViewHolder {
 
-        TextView tvGroupName, tvFrom;
-        Button btnAccept, btnDecline;
+        TextView txNombreGrupo, txRemitente;
+        Button btnAceptar, btnRechazar;
 
-        public InvitationViewHolder(@NonNull View itemView) {
+        public ContenedorInvitacion(@NonNull View itemView) {
             super(itemView);
 
-            tvGroupName = itemView.findViewById(R.id.tv_invite_group_name);
-            tvFrom = itemView.findViewById(R.id.tv_invite_from);
+            txNombreGrupo = itemView.findViewById(R.id.tx_nombre_grupo_invitacion);
+            txRemitente = itemView.findViewById(R.id.tx_remitente_invitacion);
 
-            btnAccept = itemView.findViewById(R.id.btn_accept_invite);
-            btnDecline = itemView.findViewById(R.id.btn_decline_invite);
+            btnAceptar = itemView.findViewById(R.id.btn_aceptar_invitacion);
+            btnRechazar = itemView.findViewById(R.id.btn_rechazar_invitacion);
         }
     }
 }

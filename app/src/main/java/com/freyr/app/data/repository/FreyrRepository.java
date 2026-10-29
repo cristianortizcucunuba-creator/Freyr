@@ -333,7 +333,7 @@ public class FreyrRepository {
 
             List<Invitacion> allInvites = database.invitationDao().getAllInvitations();
             for (Invitacion inv : allInvites) {
-                if (inv.getFamilyGroupId().equals(groupId) && inv.getInvitedUserId().equals(target.getId()) && "pending".equals(inv.getStatus())) {
+                if (inv.getGrupoFamiliarId().equals(groupId) && inv.getInvitedUserId().equals(target.getId()) && "pending".equals(inv.getStatus())) {
                     callback.onError("An invitation is already pending for " + target.getNomCompl());
                     return;
                 }
@@ -359,7 +359,7 @@ public class FreyrRepository {
             if (invite == null) return;
 
             if (accept) {
-                Grupofamiliar group = database.familyGroupDao().getGroupById(invite.getFamilyGroupId());
+                Grupofamiliar group = database.familyGroupDao().getGroupById(invite.getGrupoFamiliarId());
                 if (group != null && !group.getMiembrosIds().contains(invite.getInvitedUserId())) {
                     List<String> updated = new ArrayList<>(group.getMiembrosIds());
                     updated.add(invite.getInvitedUserId());

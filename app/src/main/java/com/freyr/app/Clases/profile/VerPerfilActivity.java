@@ -129,7 +129,7 @@ public class VerPerfilActivity extends AppCompatActivity {
 
         double paidTotal = 0.0;
         for (Pago p : allPayments) {
-            if (uid.equals(p.getUserId())) {
+            if (uid.equals(p.getUsuarioId())) {
                 paidTotal += p.getMonto();
             }
         }

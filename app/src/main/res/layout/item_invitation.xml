@@ -15,7 +15,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tv_invite_group_name"
+            android:id="@+id/tx_nombre_grupo_invitacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Familia Pérez González"
@@ -24,7 +24,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_invite_from"
+            android:id="@+id/tx_remitente_invitacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Invitado por Juan Pérez (@juan)"
@@ -40,7 +40,7 @@
             android:layout_marginTop="12dp">
 
             <Button
-                android:id="@+id/btn_decline_invite"
+                android:id="@+id/btn_rechazar_invitacion"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="@string/btn_reject"
@@ -53,7 +53,7 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/btn_accept_invite"
+                android:id="@+id/btn_aceptar_invitacion"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:text="@string/btn_accept_invite"

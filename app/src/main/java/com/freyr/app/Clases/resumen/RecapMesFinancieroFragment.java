@@ -58,7 +58,7 @@ public class RecapMesFinancieroFragment extends Fragment {
     }
 
     private void inicializarVistas(View view) {
-        txNombreBienvenida = view.findViewById(R.id.tx_saldo_pendiente_grupo);
+        txNombreBienvenida = view.findViewById(R.id.tx_nombre_grupo);
         txSubtituloBienvenida = view.findViewById(R.id.tx_subtitulo_bienvenida);
         cardEditarPerfil = view.findViewById(R.id.card_accion_editar_perfil);
         cardAgregarDeuda = view.findViewById(R.id.card_accion_agregar_deuda);
@@ -195,7 +195,7 @@ public class RecapMesFinancieroFragment extends Fragment {
             }
         }
         double pagosPersonales = 0.0;
-        for (Pago p : todosLosPagos) if (usuarioid.equals(p.getUserId())) pagosPersonales += p.getMonto();
+        for (Pago p : todosLosPagos) if (usuarioid.equals(p.getUsuarioId())) pagosPersonales += p.getMonto();
         double pendienteFamiliar = 0.0;
         for (Deuda d : todasLasDeudasallDebts) if (d.getGrupoFamiliarId() != null && contiene(idsGruposUsuario, d.getGrupoFamiliarId()))
             pendienteFamiliar += Math.max(0.0, d.getAmount() - obtenerMontoPagado(d));

@@ -28,13 +28,13 @@ public class Invitacion {
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
 
-    public String getFamilyGroupId() { return familyGroupId; }
+    public String getGrupoFamiliarId() { return familyGroupId; }
     public void setFamilyGroupId(String familyGroupId) { this.familyGroupId = familyGroupId; }
 
     public String getInvitedUserId() { return invitedUserId; }
     public void setInvitedUserId(String invitedUserId) { this.invitedUserId = invitedUserId; }
 
-    public String getInvitedByUserId() { return invitedByUserId; }
+    public String getUsuarioInvitadorId() { return invitedByUserId; }
     public void setInvitedByUserId(String invitedByUserId) { this.invitedByUserId = invitedByUserId; }
 
     public String getStatus() { return status; }

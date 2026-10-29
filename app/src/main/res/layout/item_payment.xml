@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_payment_amount"
+                android:id="@+id/tx_monto_pago"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$1,000,000"
@@ -32,7 +32,7 @@
                 android:fontFamily="monospace" />
 
             <TextView
-                android:id="@+id/tv_payment_info"
+                android:id="@+id/tx_informacion_pago"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Abonado por Juan · 2026-02-15"
@@ -41,7 +41,7 @@
                 android:layout_marginTop="2dp" />
 
             <TextView
-                android:id="@+id/tv_payment_desc"
+                android:id="@+id/tx_descripcion_pago"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="&quot;Cuota inicial&quot;"
@@ -53,7 +53,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/btn_delete_payment"
+            android:id="@+id/btn_eliminar_pago"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:background="?attr/selectableItemBackgroundBorderless"

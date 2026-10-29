@@ -122,7 +122,7 @@
                     android:textColor="@color/freyr_text_secondary"
                     android:textSize="10sp" />
                 <TextView
-                    android:id="@+id/tv_group_total_remaining"
+                    android:id="@+id/tx_saldo_pendiente_grupo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$260.000"

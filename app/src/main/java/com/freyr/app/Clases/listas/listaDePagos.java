@@ -16,27 +16,27 @@ import com.freyr.app.data.model.Pago;
 import com.freyr.app.data.model.Usuario;
 import com.freyr.app.data.repository.FreyrRepository;
 
-public class listaDePagos extends RecyclerView.Adapter<listaDePagos.PaymentViewHolder> {
+public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPago> {
 
     // Define la acción que se ejecuta al eliminar un pago.
-    public interface OnDeletePaymentListener {
-        void onDeletePayment(Pago payment);
+    public interface AlEliminarPago {
+        void alEliminarPago(Pago payment);
     }
 
     private final Context context;
-    private final OnDeletePaymentListener deleteListener;
+    private final AlEliminarPago accionAlEliminar;
 
     // Arreglos que almacenan los pagos y los usuarios.
     private Pago[] payments = new Pago[0];
-    private Usuario[] allUsers = new Usuario[0];
+    private Usuario[] todosLosUsuarios = new Usuario[0];
 
-    public listaDePagos(Context context, OnDeletePaymentListener deleteListener) {
-        this.context = context;
-        this.deleteListener = deleteListener;
+    public listaDePagos(Context contexto, AlEliminarPago accionAlEliminar) {
+        this.context = contexto;
+        this.accionAlEliminar = accionAlEliminar;
     }
 
     // Actualiza el arreglo de pagos y refresca la pantalla.
-    public void setPayments(Pago[] payments) {
+    public void setPagos(Pago[] payments) {
         this.payments = payments != null
                 ? payments : new Pago[0];
 
@@ -44,8 +44,8 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.PaymentViewH
     }
 
     // Actualiza el arreglo de usuarios y refresca la pantalla.
-    public void setUsers(Usuario[] users) {
-        this.allUsers = users != null
+    public void setUsuarios(Usuario[] users) {
+        this.todosLosUsuarios = users != null
                 ? users : new Usuario[0];
 
         notifyDataSetChanged();
@@ -53,62 +53,62 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.PaymentViewH
 
     @NonNull
     @Override
-    public PaymentViewHolder onCreateViewHolder(
-            @NonNull ViewGroup parent, int viewType) {
+    public ContenedorPago onCreateViewHolder(
+            @NonNull ViewGroup contenedorPadre, int tipoVista) {
 
         // Carga el diseño XML de cada pago.
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_payment, parent, false);
+        View vista = LayoutInflater.from(context)
+                .inflate(R.layout.item_payment, contenedorPadre, false);
 
-        return new PaymentViewHolder(view);
+        return new ContenedorPago(vista);
     }
 
     @Override
     public void onBindViewHolder(
-            @NonNull PaymentViewHolder holder, int position) {
+            @NonNull ContenedorPago contenedor, int posicion) {
 
         // Obtiene el pago correspondiente a esta posición.
-        Pago payment = payments[position];
+        Pago payment = payments[posicion];
 
         // Muestra el valor del pago con formato de moneda.
-        holder.tvAmount.setText(
+        contenedor.txMonto.setText(
                 FreyrRepository.formatCurrency(payment.getMonto())
         );
 
         // Busca el nombre del usuario que realizó el pago.
-        String userName = "Usuario";
+        String nombreUsuario = "Usuario";
 
-        for (Usuario user : allUsers) {
-            if (user.getId().equals(payment.getUserId())) {
-                userName = user.getNomCompl();
+        for (Usuario user : todosLosUsuarios) {
+            if (user.getId().equals(payment.getUsuarioId())) {
+                nombreUsuario = user.getNomCompl();
                 break;
             }
         }
 
         // Muestra quién pagó y la fecha del pago.
-        holder.tvInfo.setText(
-                "Pagado por " + userName + " · " + payment.getDate()
+        contenedor.txInfo.setText(
+                "Pagado por " + nombreUsuario + " · " + payment.getDate()
         );
 
         // Muestra la descripción solo si existe y no está vacía.
-        if (payment.getDescription() != null
-                && !payment.getDescription().trim().isEmpty()) {
+        if (payment.getDescripcion() != null
+                && !payment.getDescripcion().trim().isEmpty()) {
 
-            holder.tvDesc.setText(
-                    "\"" + payment.getDescription() + "\""
+            contenedor.txDescrip.setText(
+                    "\"" + payment.getDescripcion() + "\""
             );
 
-            holder.tvDesc.setVisibility(View.VISIBLE);
+            contenedor.txDescrip.setVisibility(View.VISIBLE);
 
         } else {
             // Oculta el campo cuando el pago no tiene descripción.
-            holder.tvDesc.setVisibility(View.GONE);
+            contenedor.txDescrip.setVisibility(View.GONE);
         }
 
         // Ejecuta la acción de eliminar cuando se pulsa el botón.
-        holder.btnDelete.setOnClickListener(v -> {
-            if (deleteListener != null) {
-                deleteListener.onDeletePayment(payment);
+        contenedor.btnEliminar.setOnClickListener(v -> {
+            if (accionAlEliminar != null) {
+                accionAlEliminar.alEliminarPago(payment);
             }
         });
     }
@@ -120,18 +120,18 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.PaymentViewH
     }
 
     // Mantiene las referencias a las vistas de cada pago.
-    static class PaymentViewHolder extends RecyclerView.ViewHolder {
+    static class ContenedorPago extends RecyclerView.ViewHolder {
 
-        TextView tvAmount, tvInfo, tvDesc;
-        ImageButton btnDelete;
+        TextView txMonto, txInfo, txDescrip;
+        ImageButton btnEliminar;
 
-        public PaymentViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public ContenedorPago(@NonNull View vistaElemento) {
+            super(vistaElemento);
 
-            tvAmount = itemView.findViewById(R.id.tv_payment_amount);
-            tvInfo = itemView.findViewById(R.id.tv_payment_info);
-            tvDesc = itemView.findViewById(R.id.tv_payment_desc);
-            btnDelete = itemView.findViewById(R.id.btn_delete_payment);
+            txMonto = vistaElemento.findViewById(R.id.tx_monto_pago);
+            txInfo = vistaElemento.findViewById(R.id.tx_informacion_pago);
+            txDescrip = vistaElemento.findViewById(R.id.tx_descripcion_pago);
+            btnEliminar = vistaElemento.findViewById(R.id.btn_eliminar_pago);
         }
     }
 }

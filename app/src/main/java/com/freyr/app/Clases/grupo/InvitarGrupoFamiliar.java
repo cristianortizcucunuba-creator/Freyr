@@ -61,9 +61,9 @@ public class InvitarGrupoFamiliar extends Fragment {
     private void setupRecyclerView() {
         invitationAdapter = new listaDeInvitaciones(
                 requireContext(),
-                new listaDeInvitaciones.OnInvitationResponseListener() {
+                new listaDeInvitaciones.AccionesRespuestaInvitacion() {
                     @Override
-                    public void onAccept(Invitacion invitacion) {
+                    public void Aceptar(Invitacion invitacion) {
                         repository.respondToInvitation(
                                 invitacion.getId(),
                                 true,
@@ -98,7 +98,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                     }
 
                     @Override
-                    public void onDecline(Invitacion invitacion) {
+                    public void Rechazar(Invitacion invitacion) {
                         repository.respondToInvitation(
                                 invitacion.getId(),
                                 false,
@@ -147,7 +147,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                 getViewLifecycleOwner(),
                 groups -> {
                     if (groups != null) {
-                        invitationAdapter.setGroups(
+                        invitationAdapter.setGrupos(
                                 groups.toArray(new Grupofamiliar[0])
                         );
                     }
@@ -158,7 +158,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                 getViewLifecycleOwner(),
                 users -> {
                     if (users != null) {
-                        invitationAdapter.setUsers(
+                        invitationAdapter.setUsuarios(
                                 users.toArray(new Usuario[0])
                         );
                     }
@@ -194,7 +194,7 @@ public class InvitarGrupoFamiliar extends Fragment {
                                 count
                         );
 
-                        invitationAdapter.setInvitations(result);
+                        invitationAdapter.setInvitaciones(result);
                         tvNoInvitations.setVisibility(
                                 count == 0 ? View.VISIBLE : View.GONE
                         );

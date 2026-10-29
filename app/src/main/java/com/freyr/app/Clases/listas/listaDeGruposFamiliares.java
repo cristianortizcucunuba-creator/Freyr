@@ -167,7 +167,7 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
         public ContenedorGrupo(@NonNull View itemView) {
             super(itemView);
 
-            txNombre = itemView.findViewById(R.id.tx_saldo_pendiente_grupo);
+            txNombre = itemView.findViewById(R.id.tx_nombre_grupo);
             txAdmin = itemView.findViewById(R.id.tx_etiqueta_admin);
             txCantidadMiembros = itemView.findViewById(R.id.tx_cantidad_integrantes);
 

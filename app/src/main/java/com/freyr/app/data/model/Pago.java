@@ -33,7 +33,7 @@ public class Pago {
     public String getDeudaId() { return debtId; }
     public void setDebtId(String debtId) { this.debtId = debtId; }
 
-    public String getUserId() { return userId; }
+    public String getUsuarioId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
 
     public double getMonto() { return amount; }
@@ -42,7 +42,7 @@ public class Pago {
     public String getDate() { return date; }
     public void setDate(String date) { this.date = date; }
 
-    public String getDescription() { return description; }
+    public String getDescripcion() { return description; }
     public void setDescription(String description) { this.description = description; }
 
     public String getCreatedAt() { return createdAt; }
