@@ -163,21 +163,21 @@
                 android:id="@+id/tv_members_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MIEMBROS"
-                android:textColor="@color/freyr_text_secondary"
-                android:textSize="11sp"
-                android:textStyle="bold"
+                android:layout_marginBottom="6dp"
                 android:letterSpacing="0.05"
-                android:layout_marginBottom="6dp" />
+                android:text="MIEMBROS"
+                android:textColor="@color/freyr_card_bg"
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/texto_lista_miembros"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
                 android:text="Juan Pérez (Admin), María González"
-                android:textColor="@color/freyr_text_primary"
-                android:textSize="13sp"
-                android:layout_marginBottom="14dp" />
+                android:textColor="@color/freyr_card_bg"
+                android:textSize="13sp" />
 
             <!-- Caja de envío de invitación -->
             <androidx.cardview.widget.CardView
@@ -249,12 +249,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DEUDAS FAMILIARES COMPARTIDAS"
-                android:textColor="@color/freyr_text_secondary"
-                android:textSize="11sp"
-                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
                 android:letterSpacing="0.05"
-                android:layout_marginBottom="8dp" />
+                android:text="DEUDAS FAMILIARES COMPARTIDAS"
+                android:textColor="@color/freyr_card_bg"
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/texto_sin_deudas_grupo"

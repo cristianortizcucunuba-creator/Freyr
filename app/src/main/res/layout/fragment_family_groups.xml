@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Manage shared household expenses"
-                android:textColor="@color/freyr_text_secondary"
+                android:textColor="@color/freyr_card_bg"
                 android:textSize="12sp" />
         </LinearLayout>
 
