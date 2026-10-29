@@ -20,7 +20,8 @@ import com.freyr.app.data.model.Payment;
 import com.freyr.app.data.model.User;
 import com.freyr.app.data.repository.FreyrRepository;
 
-//chiques help no se nada
+//chiques help no se nada no me dejaaaa ayuda chicos
+//sip
 
 public class DeudasRecycler extends RecyclerView.Adapter<DeudasRecycler.DebtViewHolder> {
 
