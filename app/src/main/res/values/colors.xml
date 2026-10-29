@@ -8,10 +8,10 @@
     <color name="freyr_card_bg">#1E1E1E</color>
 
     <!-- Backgrounds (Dominant background: #2E110E) -->
-    <color name="freyr_background">#E1CCD4</color>
-    <color name="freyr_surface">#3D1814</color>
-    <color name="freyr_surface_variant">#481E19</color>
-    <color name="freyr_surface_card">#3D1814</color>
+    <color name="freyr_background">#FAF7F8</color>
+    <color name="freyr_surface">#56070C</color>
+    <color name="freyr_surface_variant">#7C3129</color>
+    <color name="freyr_surface_card">#8F3D38</color>
 
     <!-- Contrast & Text (Dominant text & contrast: #E1CCD4) -->
     <color name="freyr_secondary">#E1CCD4</color>
