@@ -1,4 +1,4 @@
-package com.freyr.app.data.model;
+package com.freyr.app.data.datos;
 
 /**
  * Modelo de resumen e historial financiero completo de Freyr.

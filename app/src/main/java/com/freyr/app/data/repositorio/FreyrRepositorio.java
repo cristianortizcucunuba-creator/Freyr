@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.freyr.app.data.local.FreyrDatabase;
-import com.freyr.app.data.model.*;
+import com.freyr.app.data.datos.*;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;

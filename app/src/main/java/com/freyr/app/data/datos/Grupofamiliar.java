@@ -1,4 +1,4 @@
-package com.freyr.app.data.model;
+package com.freyr.app.data.datos;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

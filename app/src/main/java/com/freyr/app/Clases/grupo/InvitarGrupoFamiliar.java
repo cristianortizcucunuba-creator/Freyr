@@ -15,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Invitacion;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Grupofamiliar;
+import com.freyr.app.data.datos.Invitacion;
+import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.listas.listaDeInvitaciones;
 

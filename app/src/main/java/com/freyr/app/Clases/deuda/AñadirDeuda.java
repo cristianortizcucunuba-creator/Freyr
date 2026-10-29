@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Deuda;
-import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Deuda;
+import com.freyr.app.data.datos.Grupofamiliar;
+import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 public class AñadirDeuda extends AppCompatActivity {

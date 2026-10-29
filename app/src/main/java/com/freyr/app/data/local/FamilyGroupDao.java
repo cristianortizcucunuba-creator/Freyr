@@ -2,7 +2,7 @@ package com.freyr.app.data.local;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
-import com.freyr.app.data.model.Grupofamiliar;
+import com.freyr.app.data.datos.Grupofamiliar;
 
 import java.util.List;
 

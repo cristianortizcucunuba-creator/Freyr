@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.freyr.app.Clases.ActividadPrincipal;
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
 // registro de nuevas cuentas de usuario en Freyr.

@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.freyr.app.R;
-import com.freyr.app.data.model.Grupofamiliar;
-import com.freyr.app.data.model.Invitacion;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Grupofamiliar;
+import com.freyr.app.data.datos.Invitacion;
+import com.freyr.app.data.datos.Usuario;
 
 public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitaciones.ContenedorInvitacion> {
 

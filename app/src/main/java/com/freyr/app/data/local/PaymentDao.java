@@ -3,7 +3,7 @@ package com.freyr.app.data.local;
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
 
-import com.freyr.app.data.model.Pago;
+import com.freyr.app.data.datos.Pago;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@ package com.freyr.app.data.local;
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
 
-import com.freyr.app.data.model.Invitacion;
+import com.freyr.app.data.datos.Invitacion;
 
 import java.util.List;
 

@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.data.model.*;
+import com.freyr.app.data.datos.*;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 import com.freyr.app.Clases.ActividadPrincipal;
 import com.freyr.app.Clases.listas.listaDeDeudas;

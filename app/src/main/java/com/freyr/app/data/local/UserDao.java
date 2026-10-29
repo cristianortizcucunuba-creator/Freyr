@@ -2,7 +2,7 @@ package com.freyr.app.data.local;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Usuario;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.freyr.app.data.model.Usuario;
+import com.freyr.app.data.datos.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
