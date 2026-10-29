@@ -71,18 +71,18 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnVolver = findViewById(R.id.btn_back);
-        txTituloGrupo = findViewById(R.id.tv_group_title);
-        btnAgregarDeudaGrupo = findViewById(R.id.btn_add_group_debt);
-        txMontoTotalGrupo = findViewById(R.id.tv_group_total_amt);
-        txMontoAbonadoGrupo = findViewById(R.id.tv_group_paid_amt);
-        txMontoPendienteGrupo = findViewById(R.id.tv_group_remaining_amt);
-        txListaIntegrantes = findViewById(R.id.tv_members_list);
-        etIdentificadorInvitacion = findViewById(R.id.et_invite_identifier);
-        btnEnviarInvitacion = findViewById(R.id.btn_send_invite);
-        txRespuestaInvitacion = findViewById(R.id.tv_invite_feedback);
-        txSinDeudasGrupo = findViewById(R.id.tv_no_group_debts);
-        rvDeudasGrupo = findViewById(R.id.rv_group_debts);
+        btnVolver = findViewById(R.id.btn_volver);
+        txTituloGrupo = findViewById(R.id.texto_titulo_grupo);
+        btnAgregarDeudaGrupo = findViewById(R.id.btn_agregar_deuda_grupo);
+        txMontoTotalGrupo = findViewById(R.id.texto_total_deuda_grupo);
+        txMontoAbonadoGrupo = findViewById(R.id.texto_total_pagado_grupo);
+        txMontoPendienteGrupo = findViewById(R.id.texto_saldo_pendiente_grupo);
+        txListaIntegrantes = findViewById(R.id.texto_lista_miembros);
+        etIdentificadorInvitacion = findViewById(R.id.identificador_invitacion);
+        btnEnviarInvitacion = findViewById(R.id.enviar_invitacion);
+        txRespuestaInvitacion = findViewById(R.id.texto_resultado_invitacion);
+        txSinDeudasGrupo = findViewById(R.id.texto_sin_deudas_grupo);
+        rvDeudasGrupo = findViewById(R.id.lista_visual_deudas_grupo);
     }
 
     private void setupListeners() {
