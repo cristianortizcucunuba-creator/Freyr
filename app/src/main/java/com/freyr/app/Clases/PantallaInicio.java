@@ -10,13 +10,10 @@ import com.freyr.app.R;
 import com.freyr.app.data.repository.FreyrRepository;
 import com.freyr.app.Clases.autenticacion.LoguearUsuario;
 
-/**
- * Pantalla de inicio (Splash / Startup Screen) que muestra el logo detallado
- * de Freyr (Image 2) en la paleta oscura antes de pasar a la actividad principal.
- */
-public class SplashActivity extends AppCompatActivity {
+//Pantalla de inicio que muestra el logo detallado Freyr (Image 2) en la paleta oscura antes de pasar a la actividad principal.
+public class PantallaInicio extends AppCompatActivity {
 
-    private static final int SPLASH_DURATION_MS = 1400;
+    private static final int DURACION_INICIO_MS = 1400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +23,18 @@ public class SplashActivity extends AppCompatActivity {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (isFinishing() || isDestroyed()) return;
 
-            FreyrRepository repository = ((FreyrApplication) getApplication()).getRepository();
-            String currentUserId = repository.getCurrentUserId();
+            FreyrRepository repositorio = ((FreyrApplication) getApplication()).getRepository();
+            String idUsuarioActual = repositorio.getCurrentUserId();
 
             Intent intent;
-            if (currentUserId != null && !currentUserId.trim().isEmpty()) {
-                intent = new Intent(SplashActivity.this, ActividadPrincipal.class);
+            if (idUsuarioActual != null && !idUsuarioActual.trim().isEmpty()) {
+                intent = new Intent(PantallaInicio.this, ActividadPrincipal.class);
             } else {
-                intent = new Intent(SplashActivity.this, LoguearUsuario.class);
+                intent = new Intent(PantallaInicio.this, LoguearUsuario.class);
             }
 
             startActivity(intent);
             finish();
-        }, SPLASH_DURATION_MS);
+        }, DURACION_INICIO_MS);
     }
 }

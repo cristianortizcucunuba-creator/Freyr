@@ -29,7 +29,7 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     private FreyrRepository repository;
 
-    // Guarda los usuarios en un arreglo.
+    //Guarda los usuarios en un arreglo.
     private Usuario[] allUsers = new Usuario[0];
     private Usuario currentUser;
 
