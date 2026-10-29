@@ -55,7 +55,7 @@ public class AñadirDeuda extends AppCompatActivity {
     }
 
     private void initViews() {
-        btnBack = findViewById(R.id.btn_back);
+        btnBack = findViewById(R.id.btn_volver);
         tvError = findViewById(R.id.tx_error);
         rgDebtType = findViewById(R.id.rg_debt_type);
         rbPersonal = findViewById(R.id.rb_personal_debt);
