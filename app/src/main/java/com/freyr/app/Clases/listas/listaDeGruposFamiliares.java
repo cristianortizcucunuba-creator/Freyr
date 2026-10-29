@@ -167,12 +167,12 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
         public ContenedorGrupo(@NonNull View itemView) {
             super(itemView);
 
-            txNombre = itemView.findViewById(R.id.tx_nombre_grupo);
-            txAdmin = itemView.findViewById(R.id.tx_etiqueta_admin);
-            txCantidadMiembros = itemView.findViewById(R.id.tx_cantidad_integrantes);
+            txNombre = itemView.findViewById(R.id.tx_nom_grupo);
+            txAdmin = itemView.findViewById(R.id.tx_etiq_admin);
+            txCantidadMiembros = itemView.findViewById(R.id.tx_cantidad_miembros_grupo);
 
-            txTotal = itemView.findViewById(R.id.tx_deuda_total_grupo);
-            txAbonado = itemView.findViewById(R.id.tx_total_pagado_grupo);
+            txTotal = itemView.findViewById(R.id.tx_grupo_deuda_total);
+            txAbonado = itemView.findViewById(R.id.tx_total_abonado_grupo);
             txPendiente = itemView.findViewById(R.id.tx_saldo_pendiente_grupo);
         }
     }

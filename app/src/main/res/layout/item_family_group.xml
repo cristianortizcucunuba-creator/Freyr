@@ -21,7 +21,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_group_name"
+                android:id="@+id/tx_nom_grupo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -31,7 +31,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_admin_badge"
+                android:id="@+id/tx_etiq_admin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Administrador"
@@ -46,7 +46,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_group_members_count"
+            android:id="@+id/tx_cantidad_miembros_grupo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2 miembros · 2 deudas familiares"
@@ -78,7 +78,7 @@
                     android:textColor="@color/freyr_text_secondary"
                     android:textSize="10sp" />
                 <TextView
-                    android:id="@+id/tv_group_total_debt"
+                    android:id="@+id/tx_grupo_deuda_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$470.000"
@@ -100,7 +100,7 @@
                     android:textColor="@color/freyr_text_secondary"
                     android:textSize="10sp" />
                 <TextView
-                    android:id="@+id/tv_group_total_paid"
+                    android:id="@+id/tx_total_abonado_grupo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$210.000"
