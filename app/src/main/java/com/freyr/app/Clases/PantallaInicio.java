@@ -1,26 +1,37 @@
 package com.freyr.app.Clases;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.view.WindowManager;
+import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.freyr.app.Clases.autenticacion.LoguearUsuario;
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
-import com.freyr.app.Clases.autenticacion.LoguearUsuario;
 
-//Pantalla de inicio que muestra el logo detallado Freyr (Image 2) en la paleta oscura antes de pasar a la actividad principal.
 public class PantallaInicio extends AppCompatActivity {
-
-    private static final int DURACION_INICIO_MS = 1400;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Ocultar barra superior durante el video (Pantalla Completa)
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
+
         setContentView(R.layout.activity_splash);
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+        VideoView videoView = findViewById(R.id.videoViewSplash);
+        String videoPath = "android.resource://" + getPackageName() + "/" + R.raw.nuevo_video_intro;
+        videoView.setVideoURI(Uri.parse(videoPath));
+
+        // Cuando el video termine de reproducirse, decide a qué pantalla ir
+        videoView.setOnCompletionListener(mp -> {
             if (isFinishing() || isDestroyed()) return;
 
             FreyrRepositorio repositorio = ((FreyrApp) getApplication()).getRepository();
@@ -35,6 +46,8 @@ public class PantallaInicio extends AppCompatActivity {
 
             startActivity(intent);
             finish();
-        }, DURACION_INICIO_MS);
+        });
+
+        videoView.start();
     }
 }
