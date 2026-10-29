@@ -86,13 +86,13 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
         // Obtiene la deuda correspondiente a esta posición.
         Deuda debt = deudas[posicion];
 
-        contenedor.tvNombre.setText(debt.getName());
+        contenedor.tvNombre.setText(debt.getNombre());
 
         // Muestra la descripción solamente si contiene texto.
-        if (debt.getDescription() != null
-                && !debt.getDescription().trim().isEmpty()) {
+        if (debt.getDescripcion() != null
+                && !debt.getDescripcion().trim().isEmpty()) {
 
-            contenedor.tvDescrip.setText(debt.getDescription());
+            contenedor.tvDescrip.setText(debt.getDescripcion());
             contenedor.tvDescrip.setVisibility(View.VISIBLE);
 
         } else {
@@ -121,12 +121,12 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
         }
 
         // Busca al usuario responsable de la deuda.
-        if (debt.getAssignedUserId() != null) {
+        if (debt.getIdUsuarioAsignado() != null) {
 
             String nombreResponsable = null;
 
             for (Usuario user : todosLosUsuarios) {
-                if (user.getId().equals(debt.getAssignedUserId())) {
+                if (user.getId().equals(debt.getIdUsuarioAsignado())) {
                     nombreResponsable = user.getNomCompl();
                     break;
                 }
@@ -149,14 +149,14 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
         }
 
         // Calcula cuánto dinero queda pendiente.
-        double restante = Math.max(0.0, debt.getAmount() - abonado);
+        double restante = Math.max(0.0, debt.getMonto() - abonado);
 
         boolean estPagada = restante == 0.0
-                || "abonado".equalsIgnoreCase(debt.getStatus());
+                || "abonado".equalsIgnoreCase(debt.getEstado());
 
         // Presenta los valores monetarios.
         contenedor.tvTotal.setText(
-                FreyrRepositorio.formatCurrency(debt.getAmount()));
+                FreyrRepositorio.formatCurrency(debt.getMonto()));
 
         contenedor.tvAbonado.setText(
                 FreyrRepositorio.formatCurrency(abonado));
@@ -193,9 +193,9 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
             contenedor.btnPagar.setVisibility(View.VISIBLE);
 
             // Calcula el porcentaje pagado y evita dividir entre cero.
-            int porcentaje = debt.getAmount() > 0
+            int porcentaje = debt.getMonto() > 0
                     ? (int) Math.min(
-                    100, (abonado / debt.getAmount()) * 100)
+                    100, (abonado / debt.getMonto()) * 100)
                     : 0;
 
             contenedor.barProgreso.setProgress(porcentaje);

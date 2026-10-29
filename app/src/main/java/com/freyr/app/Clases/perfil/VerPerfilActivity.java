@@ -122,7 +122,7 @@ public class VerPerfilActivity extends AppCompatActivity {
 
         int debtsCount = 0;
         for (Deuda d : allDebts) {
-            if (uid.equals(d.getAssignedUserId()) || uid.equals(d.getCreatedBy())) {
+            if (uid.equals(d.getIdUsuarioAsignado()) || uid.equals(d.getCreadoPor())) {
                 debtsCount++;
             }
         }

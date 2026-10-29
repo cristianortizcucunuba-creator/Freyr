@@ -9,46 +9,46 @@ public class Usuario {
     @PrimaryKey
     @NonNull
     private String id;
-    private String fullName;
-    private String username;
+    private String nombreCompl;
+    private String nomUsuar;
     private String email;
-    private String password;
-    private String avatarColor;
-    private String createdAt;
+    private String contraseña;
+    private String colorAvatar;
+    private String fechaCreacion;
 
-    public Usuario(@NonNull String id, String fullName, String username, String email, String password, String avatarColor, String createdAt) {
+    public Usuario(@NonNull String id, String nombreCompl, String nomUsuar, String email, String contraseña, String colorAvatar, String fechaCreacion) {
         this.id = id;
-        this.fullName = fullName;
-        this.username = username;
+        this.nombreCompl = nombreCompl;
+        this.nomUsuar = nomUsuar;
         this.email = email;
-        this.password = password;
-        this.avatarColor = avatarColor;
-        this.createdAt = createdAt;
+        this.contraseña = contraseña;
+        this.colorAvatar = colorAvatar;
+        this.fechaCreacion = fechaCreacion;
     }
-    public String getUsername() {
-        return username;
+    public String getNomUsuar() {
+        return nomUsuar;
     }
     @NonNull
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
 
-    public String getFullName() { return fullName; }
-    public String getNomCompl() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public String getNombreCompl() { return nombreCompl; }
+    public String getNomCompl() { return nombreCompl; }
+    public void setNombreCompl(String nombreCompl) { this.nombreCompl = nombreCompl; }
 
 
-    public String getNomUsuario() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    public String getNomUsuario() { return nomUsuar; }
+    public void setNomUsuar(String nomUsuar) { this.nomUsuar = nomUsuar; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public String getContraseña() { return contraseña; }
+    public void setContraseña(String contraseña) { this.contraseña = contraseña; }
 
-    public String getAvatarColor() { return avatarColor; }
-    public void setAvatarColor(String avatarColor) { this.avatarColor = avatarColor; }
+    public String getColorAvatar() { return colorAvatar; }
+    public void setColorAvatar(String colorAvatar) { this.colorAvatar = colorAvatar; }
 
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public String getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(String fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 }

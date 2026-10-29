@@ -270,7 +270,7 @@ public class ConfigurarCuentaFamiliar extends AppCompatActivity {
         double totalPagado = 0.0;
 
         for (Deuda debt : deudasDelGrupo) {
-            total += debt.getAmount();
+            total += debt.getMonto();
 
             for (Pago payment : todosLosPagos) {
                 if (payment.getDeudaId().equals(debt.getId())) {

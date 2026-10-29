@@ -9,39 +9,39 @@ public class Invitacion {
     @PrimaryKey
     @NonNull
     private String id;
-    private String familyGroupId;
-    private String invitedUserId;
-    private String invitedByUserId;
-    private String status; // "pending", "accepted", "declined"
-    private String createdAt;
+    private String idGrupoFamiliar;
+    private String idUsuarioInvitado;
+    private String idUsuarioInvitador;
+    private String estado; // "pending", "accepted", "declined"
+    private String fechaCreacion;
 
-    public Invitacion(@NonNull String id, String familyGroupId, String invitedUserId, String invitedByUserId, String status, String createdAt) {
+    public Invitacion(@NonNull String id, String idGrupoFamiliar, String idUsuarioInvitado, String idUsuarioInvitador, String estado, String fechaCreacion) {
         this.id = id;
-        this.familyGroupId = familyGroupId;
-        this.invitedUserId = invitedUserId;
-        this.invitedByUserId = invitedByUserId;
-        this.status = status;
-        this.createdAt = createdAt;
+        this.idGrupoFamiliar = idGrupoFamiliar;
+        this.idUsuarioInvitado = idUsuarioInvitado;
+        this.idUsuarioInvitador = idUsuarioInvitador;
+        this.estado = estado;
+        this.fechaCreacion = fechaCreacion;
     }
 
     @NonNull
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
 
-    public String getFamilyGroupId() { return familyGroupId; }
-    public String getGrupoFamiliarId() { return familyGroupId; }
-    public void setFamilyGroupId(String familyGroupId) { this.familyGroupId = familyGroupId; }
+    public String getIdGrupoFamiliar() { return idGrupoFamiliar; }
+    public String getGrupoFamiliarId() { return idGrupoFamiliar; }
+    public void setIdGrupoFamiliar(String idGrupoFamiliar) { this.idGrupoFamiliar = idGrupoFamiliar; }
 
-    public String getInvitedUserId() { return invitedUserId; }
-    public void setInvitedUserId(String invitedUserId) { this.invitedUserId = invitedUserId; }
+    public String getIdUsuarioInvitado() { return idUsuarioInvitado; }
+    public void setIdUsuarioInvitado(String idUsuarioInvitado) { this.idUsuarioInvitado = idUsuarioInvitado; }
 
-    public String getInvitedByUserId() { return invitedByUserId; }
-    public String getUsuarioInvitadorId() { return invitedByUserId; }
-    public void setInvitedByUserId(String invitedByUserId) { this.invitedByUserId = invitedByUserId; }
+    public String getIdUsuarioInvitador() { return idUsuarioInvitador; }
+    public String getUsuarioInvitadorId() { return idUsuarioInvitador; }
+    public void setIdUsuarioInvitador(String idUsuarioInvitador) { this.idUsuarioInvitador = idUsuarioInvitador; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public String getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(String fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 }

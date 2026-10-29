@@ -20,7 +20,7 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE id = :id LIMIT 1")
     LiveData<Usuario> getUserByIdLive(String id);
 
-    @Query("SELECT * FROM users WHERE LOWER(email) = LOWER(:identifier) OR LOWER(username) = LOWER(:identifier) LIMIT 1")
+    @Query("SELECT * FROM users WHERE LOWER(email) = LOWER(:identifier) OR LOWER(nomUsuar) = LOWER(:identifier) LIMIT 1")
     Usuario getUserByIdentifier(String identifier);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -176,9 +176,9 @@ public class InvitarGrupoFamiliar extends Fragment {
                         int cantidad = 0;
 
                         for (Invitacion invitacion : todasLasInvitaciones) {
-                            if (invitacion.getInvitedUserId().equals(idUsuario)
+                            if (invitacion.getIdUsuarioInvitado().equals(idUsuario)
                                     && "pending".equalsIgnoreCase(
-                                    invitacion.getStatus()
+                                    invitacion.getEstado()
                             )) {
                                 invitacionesPendientes [cantidad] = invitacion;
                                 cantidad++;

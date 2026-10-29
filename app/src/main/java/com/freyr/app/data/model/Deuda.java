@@ -9,53 +9,53 @@ public class Deuda {
     @PrimaryKey
     @NonNull
     private String id;
-    private String name;
-    private String description;
-    private double amount;
-    private String assignedUserId; // null means whole family or unassigned
-    private String familyGroupId; // null means personal debt
-    private String status; // "pending" or "paid"
-    private String createdAt;
-    private String createdBy;
+    private String nombre;
+    private String descripcion;
+    private double monto;
+    private String idUsuarioAsignado; // null means whole family or unassigned
+    private String idGrupoFamiliar; // null means personal debt
+    private String estado; // "pending" or "paid"
+    private String fechaCreacion;
+    private String creadoPor;
 
-    public Deuda(@NonNull String id, String name, String description, double amount, String assignedUserId, String familyGroupId, String status, String createdAt, String createdBy) {
+    public Deuda(@NonNull String id, String nombre, String descripcion, double monto, String idUsuarioAsignado, String idGrupoFamiliar, String estado, String fechaCreacion, String creadoPor) {
         this.id = id;
-        this.name = name;
-        this.description = description;
-        this.amount = amount;
-        this.assignedUserId = assignedUserId;
-        this.familyGroupId = familyGroupId;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.monto = monto;
+        this.idUsuarioAsignado = idUsuarioAsignado;
+        this.idGrupoFamiliar = idGrupoFamiliar;
+        this.estado = estado;
+        this.fechaCreacion = fechaCreacion;
+        this.creadoPor = creadoPor;
     }
 
     @NonNull
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public double getAmount() { return amount; }
-    public void setAmount(double amount) { this.amount = amount; }
+    public double getMonto() { return monto; }
+    public void setMonto(double monto) { this.monto = monto; }
 
-    public String getAssignedUserId() { return assignedUserId; }
-    public void setAssignedUserId(String assignedUserId) { this.assignedUserId = assignedUserId; }
+    public String getIdUsuarioAsignado() { return idUsuarioAsignado; }
+    public void setIdUsuarioAsignado(String idUsuarioAsignado) { this.idUsuarioAsignado = idUsuarioAsignado; }
 
-    public String getFamilyGroupId() { return familyGroupId; }
-    public String getGrupoFamiliarId() { return familyGroupId; }
-    public void setFamilyGroupId(String familyGroupId) { this.familyGroupId = familyGroupId; }
+    public String getIdGrupoFamiliar() { return idGrupoFamiliar; }
+    public String getGrupoFamiliarId() { return idGrupoFamiliar; }
+    public void setIdGrupoFamiliar(String idGrupoFamiliar) { this.idGrupoFamiliar = idGrupoFamiliar; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public String getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(String fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 
-    public String getCreatedBy() { return createdBy; }
-    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
+    public String getCreadoPor() { return creadoPor; }
+    public void setCreadoPor(String creadoPor) { this.creadoPor = creadoPor; }
 }

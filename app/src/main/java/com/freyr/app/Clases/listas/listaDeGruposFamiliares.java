@@ -103,7 +103,7 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
             if (grupo.getId().equals(debt.getGrupoFamiliarId())) {
 
                 cantidadDeudas++;
-                totalDeudas += debt.getAmount();
+                totalDeudas += debt.getMonto();
 
                 // Suma los pagos relacionados con la deuda actual.
                 for (Pago payment : todosLosPagos) {

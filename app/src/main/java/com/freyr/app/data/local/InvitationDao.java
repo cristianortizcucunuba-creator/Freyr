@@ -9,13 +9,13 @@ import java.util.List;
 
 @Dao
 public interface InvitationDao {
-    @Query("SELECT * FROM invitations ORDER BY createdAt DESC")
+    @Query("SELECT * FROM invitations ORDER BY fechaCreacion DESC")
     LiveData<List<Invitacion>> getAllInvitationsLive();
 
-    @Query("SELECT * FROM invitations ORDER BY createdAt DESC")
+    @Query("SELECT * FROM invitations ORDER BY fechaCreacion DESC")
     List<Invitacion> getAllInvitations();
 
-    @Query("SELECT * FROM invitations WHERE invitedUserId = :userId AND status = 'pending'")
+    @Query("SELECT * FROM invitations WHERE idUsuarioInvitado = :userId AND estado = 'pending'")
     LiveData<List<Invitacion>> getPendingInvitationsForUserLive(String userId);
 
     @Query("SELECT * FROM invitations WHERE id = :id LIMIT 1")

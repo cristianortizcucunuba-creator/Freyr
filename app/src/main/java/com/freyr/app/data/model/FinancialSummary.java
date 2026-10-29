@@ -8,58 +8,58 @@ package com.freyr.app.data.model;
  * - Total pendiente: Monto que continúa pendiente por saldar.
  */
 public class FinancialSummary {
-    private int pendingDebtsCount;
-    private int paidDebtsCount;
-    private double personalPaymentsTotal;
-    private double familyDebtsPendingTotal;
-    private double totalDebtAmount; // Total debido histórico
-    private double totalPaidAmount; // Total pagado
-    private double totalPendingAmount; // Total pendiente
+    private int cantidadDeudasPendientes;
+    private int cantidadDeudasPagadas;
+    private double totalPagosPersonales;
+    private double totalDeudasFamiliaresPendientes;
+    private double montoTotalDeuda; // Total debido histórico
+    private double montoTotalPagado; // Total pagado
+    private double montoTotalPendiente; // Total pendiente
 
     public FinancialSummary() {
-        this.pendingDebtsCount = 0;
-        this.paidDebtsCount = 0;
-        this.personalPaymentsTotal = 0.0;
-        this.familyDebtsPendingTotal = 0.0;
-        this.totalDebtAmount = 0.0;
-        this.totalPaidAmount = 0.0;
-        this.totalPendingAmount = 0.0;
+        this.cantidadDeudasPendientes = 0;
+        this.cantidadDeudasPagadas = 0;
+        this.totalPagosPersonales = 0.0;
+        this.totalDeudasFamiliaresPendientes = 0.0;
+        this.montoTotalDeuda = 0.0;
+        this.montoTotalPagado = 0.0;
+        this.montoTotalPendiente = 0.0;
     }
 
-    public FinancialSummary(int pendingDebtsCount, int paidDebtsCount, double personalPaymentsTotal,
-                            double familyDebtsPendingTotal, double totalPendingAmount, double totalPaidAmount) {
-        this.pendingDebtsCount = pendingDebtsCount;
-        this.paidDebtsCount = paidDebtsCount;
-        this.personalPaymentsTotal = personalPaymentsTotal;
-        this.familyDebtsPendingTotal = familyDebtsPendingTotal;
-        this.totalPendingAmount = totalPendingAmount;
-        this.totalPaidAmount = totalPaidAmount;
-        this.totalDebtAmount = totalPendingAmount + totalPaidAmount;
+    public FinancialSummary(int cantidadDeudasPendientes, int cantidadDeudasPagadas, double totalPagosPersonales,
+                            double totalDeudasFamiliaresPendientes, double montoTotalPendiente, double montoTotalPagado) {
+        this.cantidadDeudasPendientes = cantidadDeudasPendientes;
+        this.cantidadDeudasPagadas = cantidadDeudasPagadas;
+        this.totalPagosPersonales = totalPagosPersonales;
+        this.totalDeudasFamiliaresPendientes = totalDeudasFamiliaresPendientes;
+        this.montoTotalPendiente = montoTotalPendiente;
+        this.montoTotalPagado = montoTotalPagado;
+        this.montoTotalDeuda = montoTotalPendiente + montoTotalPagado;
     }
 
-    public FinancialSummary(int pendingDebtsCount, int paidDebtsCount, double personalPaymentsTotal,
-                            double familyDebtsPendingTotal, double totalDebtAmount, double totalPaidAmount, double totalPendingAmount) {
-        this.pendingDebtsCount = pendingDebtsCount;
-        this.paidDebtsCount = paidDebtsCount;
-        this.personalPaymentsTotal = personalPaymentsTotal;
-        this.familyDebtsPendingTotal = familyDebtsPendingTotal;
-        this.totalDebtAmount = totalDebtAmount;
-        this.totalPaidAmount = totalPaidAmount;
-        this.totalPendingAmount = totalPendingAmount;
+    public FinancialSummary(int cantidadDeudasPendientes, int cantidadDeudasPagadas, double totalPagosPersonales,
+                            double totalDeudasFamiliaresPendientes, double montoTotalDeuda, double montoTotalPagado, double montoTotalPendiente) {
+        this.cantidadDeudasPendientes = cantidadDeudasPendientes;
+        this.cantidadDeudasPagadas = cantidadDeudasPagadas;
+        this.totalPagosPersonales = totalPagosPersonales;
+        this.totalDeudasFamiliaresPendientes = totalDeudasFamiliaresPendientes;
+        this.montoTotalDeuda = montoTotalDeuda;
+        this.montoTotalPagado = montoTotalPagado;
+        this.montoTotalPendiente = montoTotalPendiente;
     }
 
-    public int getPendingDebtsCount() { return pendingDebtsCount; }
-    public int getPaidDebtsCount() { return paidDebtsCount; }
-    public double getPersonalPaymentsTotal() { return personalPaymentsTotal; }
-    public double getFamilyDebtsPendingTotal() { return familyDebtsPendingTotal; }
+    public int getCantidadDeudasPendientes() { return cantidadDeudasPendientes; }
+    public int getCantidadDeudasPagadas() { return cantidadDeudasPagadas; }
+    public double getTotalPagosPersonales() { return totalPagosPersonales; }
+    public double getTotalDeudasFamiliaresPendientes() { return totalDeudasFamiliaresPendientes; }
 
     // Métodos en español y en inglés para máxima compatibilidad
-    public double getTotalDebido() { return totalDebtAmount > 0 ? totalDebtAmount : (totalPendingAmount + totalPaidAmount); }
-    public double getTotalDebtAmount() { return getTotalDebido(); }
+    public double getTotalDebido() { return montoTotalDeuda > 0 ? montoTotalDeuda : (montoTotalPendiente + montoTotalPagado); }
+    public double getMontoTotalDeuda() { return getTotalDebido(); }
 
-    public double getTotalPagado() { return totalPaidAmount; }
-    public double getTotalPaidAmount() { return totalPaidAmount; }
+    public double getTotalPagado() { return montoTotalPagado; }
+    public double getMontoTotalPagado() { return montoTotalPagado; }
 
-    public double getTotalPendiente() { return totalPendingAmount; }
-    public double getTotalPendingAmount() { return totalPendingAmount; }
+    public double getTotalPendiente() { return montoTotalPendiente; }
+    public double getMontoTotalPendiente() { return montoTotalPendiente; }
 }

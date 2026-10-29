@@ -202,10 +202,10 @@ public class DetallesDeuda extends AppCompatActivity {
             return;
         }
 
-        tvTitle.setText(currentDebt.getName());
-        tvDebtName.setText(currentDebt.getName());
+        tvTitle.setText(currentDebt.getNombre());
+        tvDebtName.setText(currentDebt.getNombre());
 
-        String description = currentDebt.getDescription();
+        String description = currentDebt.getDescripcion();
         if (description != null && !description.trim().isEmpty()) {
             tvDebtDesc.setText(description);
             tvDebtDesc.setVisibility(View.VISIBLE);
@@ -213,7 +213,7 @@ public class DetallesDeuda extends AppCompatActivity {
             tvDebtDesc.setVisibility(View.GONE);
         }
 
-        double total = currentDebt.getAmount();
+        double total = currentDebt.getMonto();
         double paid = 0.0;
 
         for (Pago payment : allPayments) {
@@ -222,7 +222,7 @@ public class DetallesDeuda extends AppCompatActivity {
 
         double remaining = Math.max(0.0, total - paid);
         boolean isPaid = remaining == 0.0
-                || "paid".equalsIgnoreCase(currentDebt.getStatus());
+                || "paid".equalsIgnoreCase(currentDebt.getEstado());
 
         tvTotalAmt.setText(FreyrRepositorio.formatCurrency(total));
         tvPaidAmt.setText(FreyrRepositorio.formatCurrency(paid));
@@ -257,7 +257,7 @@ public class DetallesDeuda extends AppCompatActivity {
             return;
         }
 
-        String assignedUserId = currentDebt.getAssignedUserId();
+        String assignedUserId = currentDebt.getIdUsuarioAsignado();
         if (assignedUserId == null) {
             tvAssignedInfo.setText(
                     "Responsable: Toda la familia (Compartida)"

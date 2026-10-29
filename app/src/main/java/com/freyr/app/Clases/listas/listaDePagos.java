@@ -87,7 +87,7 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
 
         // Muestra quién pagó y la fecha del pago.
         contenedor.txInfo.setText(
-                "Pagado por " + nombreUsuario + " · " + payment.getDate()
+                "Pagado por " + nombreUsuario + " · " + payment.getFecha()
         );
 
         // Muestra la descripción solo si existe y no está vacía.

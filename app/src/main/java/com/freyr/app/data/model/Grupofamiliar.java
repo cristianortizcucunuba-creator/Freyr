@@ -9,36 +9,36 @@ public class Grupofamiliar {
     @PrimaryKey
     @NonNull
     private String id;
-    private String name;
-    private String creatorId;
-    private List<String> memberIds;
-    private String createdAt;
+    private String nombr;
+    private String idCreador;
+    private List<String> idDeMiembros;
+    private String fechaCreacion;
 
-    public Grupofamiliar(@NonNull String id, String name, String creatorId, List<String> memberIds, String createdAt) {
+    public Grupofamiliar(@NonNull String id, String nombr, String idCreador, List<String> idDeMiembros, String fechaCreacion) {
         this.id = id;
-        this.name = name;
-        this.creatorId = creatorId;
-        this.memberIds = memberIds;
-        this.createdAt = createdAt;
+        this.nombr = nombr;
+        this.idCreador = idCreador;
+        this.idDeMiembros = idDeMiembros;
+        this.fechaCreacion = fechaCreacion;
     }
 
     @NonNull
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
 
-    public String getName() { return name; }
+    public String getNombr() { return nombr; }
 
-    public String getNombre() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getNombre() { return nombr; }
+    public void setNombr(String nombr) { this.nombr = nombr; }
 
-    public String getCreatorId() { return creatorId; }
-    public String getCreadorId() { return creatorId; }
-    public void setCreatorId(String creatorId) { this.creatorId = creatorId; }
+    public String getIdCreador() { return idCreador; }
+    public String getCreadorId() { return idCreador; }
+    public void setIdCreador(String idCreador) { this.idCreador = idCreador; }
 
-    public List<String> getMemberIds() { return memberIds; }
-    public List<String> getMiembrosIds() { return memberIds; }
-    public void setMemberIds(List<String> memberIds) { this.memberIds = memberIds; }
+    public List<String> getIdDeMiembros() { return idDeMiembros; }
+    public List<String> getMiembrosIds() { return idDeMiembros; }
+    public void setIdDeMiembros(List<String> idDeMiembros) { this.idDeMiembros = idDeMiembros; }
 
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public String getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(String fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 }

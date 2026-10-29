@@ -125,9 +125,9 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
                 for (Deuda debt : debts) {
                     if (debt.getId().equals(debtId)) {
                         currentDebt = debt;
-                        tvForDebtName.setText("Para: " + debt.getName());
+                        tvForDebtName.setText("Para: " + debt.getNombre());
                         tvStatusTotal.setText(
-                                FreyrRepositorio.formatCurrency(debt.getAmount())
+                                FreyrRepositorio.formatCurrency(debt.getMonto())
                         );
                         recalculateBalances();
                         break;
@@ -161,7 +161,7 @@ public class RegistrarAbonosDeuda extends AppCompatActivity {
             paid += payment.getMonto();
         }
 
-        currentRemaining = Math.max(0.0, currentDebt.getAmount() - paid);
+        currentRemaining = Math.max(0.0, currentDebt.getMonto() - paid);
 
         tvStatusPaid.setText(FreyrRepositorio.formatCurrency(paid));
         tvStatusRemaining.setText(

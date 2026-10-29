@@ -9,46 +9,46 @@ public class Pago {
     @PrimaryKey
     @NonNull
     private String id;
-    private String debtId;
-    private String userId;
-    private double amount;
-    private String date;
-    private String description;
-    private String createdAt;
+    private String idDeuda;
+    private String idUsuario;
+    private double mont;
+    private String fecha;
+    private String descripciones;
+    private String fechaCreado;
 
-    public Pago(@NonNull String id, String debtId, String userId, double amount, String date, String description, String createdAt) {
+    public Pago(@NonNull String id, String idDeuda, String idUsuario, double mont, String fecha, String descripciones, String fechaCreado) {
         this.id = id;
-        this.debtId = debtId;
-        this.userId = userId;
-        this.amount = amount;
-        this.date = date;
-        this.description = description;
-        this.createdAt = createdAt;
+        this.idDeuda = idDeuda;
+        this.idUsuario = idUsuario;
+        this.mont = mont;
+        this.fecha = fecha;
+        this.descripciones = descripciones;
+        this.fechaCreado = fechaCreado;
     }
 
     @NonNull
     public String getId() { return id; }
     public void setId(@NonNull String id) { this.id = id; }
 
-    public String getDebtId() { return debtId; }
-    public String getDeudaId() { return debtId; }
-    public void setDebtId(String debtId) { this.debtId = debtId; }
+    public String getIdDeuda() { return idDeuda; }
+    public String getDeudaId() { return idDeuda; }
+    public void setIdDeuda(String idDeuda) { this.idDeuda = idDeuda; }
 
-    public String getUserId() { return userId; }
-    public String getUsuarioId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
+    public String getIdUsuario() { return idUsuario; }
+    public String getUsuarioId() { return idUsuario; }
+    public void setIdUsuario(String idUsuario) { this.idUsuario = idUsuario; }
 
-    public double getAmount() { return amount; }
-    public double getMonto() { return amount; }
-    public void setAmount(double amount) { this.amount = amount; }
+    public double getMont() { return mont; }
+    public double getMonto() { return mont; }
+    public void setMont(double mont) { this.mont = mont; }
 
-    public String getDate() { return date; }
-    public void setDate(String date) { this.date = date; }
+    public String getFecha() { return fecha; }
+    public void setFecha(String fecha) { this.fecha = fecha; }
 
-    public String getDescription() { return description; }
-    public String getDescripcion() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getDescripciones() { return descripciones; }
+    public String getDescripcion() { return descripciones; }
+    public void setDescripciones(String descripciones) { this.descripciones = descripciones; }
 
-    public String getCreatedAt() { return createdAt; }
-    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+    public String getFechaCreado() { return fechaCreado; }
+    public void setFechaCreado(String fechaCreado) { this.fechaCreado = fechaCreado; }
 }

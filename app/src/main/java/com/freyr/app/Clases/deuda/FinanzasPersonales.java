@@ -147,8 +147,8 @@ public class FinanzasPersonales extends Fragment {
 
         for (Deuda debt : allDebts) {
             boolean isPersonal = debt.getGrupoFamiliarId() == null
-                    && (uid.equals(debt.getAssignedUserId())
-                    || uid.equals(debt.getCreatedBy()));
+                    && (uid.equals(debt.getIdUsuarioAsignado())
+                    || uid.equals(debt.getCreadoPor()));
 
             if (!isPersonal) {
                 continue;
@@ -161,9 +161,9 @@ public class FinanzasPersonales extends Fragment {
                 }
             }
 
-            double remaining = Math.max(0.0, debt.getAmount() - paid);
+            double remaining = Math.max(0.0, debt.getMonto() - paid);
             boolean isPaid = remaining == 0.0
-                    || "paid".equalsIgnoreCase(debt.getStatus());
+                    || "paid".equalsIgnoreCase(debt.getEstado());
 
             if ("pending".equals(currentFilter) && !isPaid) {
                 filteredDebts[count++] = debt;
