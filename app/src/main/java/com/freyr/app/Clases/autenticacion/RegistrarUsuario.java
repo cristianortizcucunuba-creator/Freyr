@@ -12,6 +12,7 @@ import com.freyr.app.R;
 import com.freyr.app.data.model.User;
 import com.freyr.app.data.repository.FreyrRepository;
 import com.freyr.app.ui.MainActivity;
+//chiques como se logea un usuarioooo help
 
 /**
  * Actividad para el registro de nuevas cuentas de usuario en Freyr.
