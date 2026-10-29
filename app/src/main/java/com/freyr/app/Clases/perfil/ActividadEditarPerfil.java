@@ -9,10 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 
 /**
  * Actividad para la modificación y actualización del perfil del usuario en sesión.
@@ -28,7 +28,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
     private EditText etPassword;
     private Button btnSaveProfile;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
     private Usuario currentUser;
 
     @Override
@@ -36,7 +36,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
 
         initViews();
         setupListeners();
@@ -49,7 +49,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
         etFullName = findViewById(R.id.et_full_name);
         etUsername = findViewById(R.id.et_username);
         etEmail = findViewById(R.id.et_email);
-        etPassword = findViewById(R.id.et_password);
+        etPassword = findViewById(R.id.et_contraseña);
         btnSaveProfile = findViewById(R.id.btn_save_profile);
     }
 
@@ -110,7 +110,7 @@ public class ActividadEditarPerfil extends AppCompatActivity {
 
         btnSaveProfile.setEnabled(false);
 
-        repository.updateProfile(fullName, username, email, password, new FreyrRepository.Callback<Void>() {
+        repository.updateProfile(fullName, username, email, password, new FreyrRepositorio.Callback<Void>() {
             @Override
             public void onSuccess(Void result) {
                 runOnUiThread(() -> {

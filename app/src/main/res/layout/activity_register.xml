@@ -115,7 +115,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/et_contraseña"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/bg_edit_text"

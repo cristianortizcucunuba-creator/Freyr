@@ -9,11 +9,10 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.freyr.app.Clases.ActividadPrincipal;
-import com.freyr.app.FreyrApplication;
+import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
-import com.freyr.app.Clases.ActividadPrincipal;
 import com.freyr.app.data.model.Usuario;
-import com.freyr.app.data.repository.FreyrRepository;
+import com.freyr.app.data.repository.FreyrRepositorio;
 
 // registro de nuevas cuentas de usuario en Freyr.
 // Valida nombre completo, usuario único, correo y confirmación de contraseña
@@ -29,14 +28,14 @@ public class RegistrarUsuario extends AppCompatActivity {
     private TextView txGoToLogin;
     private TextView txError;
 
-    private FreyrRepository repository;
+    private FreyrRepositorio repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        repository = ((FreyrApplication) getApplication()).getRepository();
+        repository = ((FreyrApp) getApplication()).getRepositorio();
 
         initViews();
         setupListeners();
@@ -46,7 +45,7 @@ public class RegistrarUsuario extends AppCompatActivity {
         etNombre = findViewById(R.id.et_full_name);
         etNombreUsuario = findViewById(R.id.et_username);
         etEmail = findViewById(R.id.et_email);
-        etContraseña = findViewById(R.id.et_password);
+        etContraseña = findViewById(R.id.et_contraseña);
         etConfirmarContraseña = findViewById(R.id.et_confirm_password);
         btnRegistrar = findViewById(R.id.btn_register);
         txGoToLogin = findViewById(R.id.tx_go_to_login);
@@ -89,7 +88,7 @@ public class RegistrarUsuario extends AppCompatActivity {
         txError.setVisibility(View.GONE);
         btnRegistrar.setEnabled(false);
 
-        repository.register(fullName, username, email, password, new FreyrRepository.Callback<Usuario>() {
+        repository.register(fullName, username, email, password, new FreyrRepositorio.Callback<Usuario>() {
             @Override
             public void onSuccess(Usuario result) {
                 runOnUiThread(() -> {

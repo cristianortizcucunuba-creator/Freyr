@@ -10,7 +10,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class FreyrRepository {
+public class FreyrRepositorio {
 
     private final FreyrDatabase database;
     private final SharedPreferences prefs;
@@ -21,7 +21,7 @@ public class FreyrRepository {
         void onError(String error);
     }
 
-    public FreyrRepository(Context context) {
+    public FreyrRepositorio(Context context) {
         this.database = FreyrDatabase.getDatabase(context);
         this.prefs = context.getSharedPreferences("freyr_prefs", Context.MODE_PRIVATE);
         this.currentUserIdLive.setValue(prefs.getString("current_user_id", "user-juan"));
