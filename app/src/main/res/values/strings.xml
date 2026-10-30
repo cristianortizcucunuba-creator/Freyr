@@ -109,5 +109,6 @@
     <string name="msg_debt_created">¡Deuda creada exitosamente!</string>
     <string name="msg_group_created">¡Grupo familiar creado exitosamente!</string>
     <string name="msg_invitation_sent">¡Invitación enviada con éxito!</string>
+    <string name="default_user_initial">U</string>
 </resources>
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="44dp"
+    android:height="44dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Círculo base Ciruela -->
+    <path
+        android:fillColor="#550724"
+        android:pathData="M50,50m-48,0a48,48 0 1,0 96,0a48,48 0 1,0 -96,0" />
+
+    <!-- Cabeza centrada blanca -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,38m-16,0a16,16 0 1,0 32,0a16,16 0 1,0 -32,0" />
+
+    <!-- Hombros con curvatura suave dentro del círculo -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M18,84 C22,63 35,56 50,56 C65,56 78,63 82,84 C73,92 62,96 50,96 C38,96 27,92 18,84 Z" />
+</vector>

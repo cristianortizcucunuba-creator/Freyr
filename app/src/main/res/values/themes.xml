@@ -1,36 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.Freyr" parent="Theme.Material3.Dark.NoActionBar">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Freyr" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- 1. Barra de estado Ciruela para TODAS las pantallas de la app -->
+        <item name="android:statusBarColor">#550724</item>
 
-        <!-- Primary color palette -->
-        <item name="colorPrimary">@color/freyr_primary</item>
-        <item name="colorPrimaryDark">@color/freyr_primary_dark</item>
-        <item name="colorSecondary">@color/freyr_secondary</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorOnSecondary">@color/freyr_primary</item>
-
-        <!-- Background & Surface -->
-        <item name="android:colorBackground">@color/freyr_background</item>
-        <item name="colorSurface">@color/freyr_surface</item>
-        <item name="colorOnSurface">@color/freyr_text_primary</item>
-
-        <!-- Status & Navigation bars -->
-        <item name="android:statusBarColor">@color/freyr_background</item>
+        <!-- 2. 'false' hace que la hora, batería y wifi sean SIEMPRE blancos -->
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:navigationBarColor">@color/freyr_background</item>
-        <item name="android:windowLightNavigationBar">false</item>
 
-        <!-- Text & controls -->
-        <item name="android:textColor">@color/freyr_text_primary</item>
-        <item name="android:textColorHint">@color/freyr_text_secondary</item>
-        <item name="colorControlNormal">@color/freyr_secondary</item>
-        <item name="colorControlActivated">@color/freyr_primary</item>
-
+        <!-- Colores base de la marca -->
+        <item name="colorPrimary">#550724</item>
+        <item name="colorPrimaryVariant">#42091D</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:windowBackground">#FAF5F2</item>
     </style>
 
-    <!-- Splash screen theme -->
     <style name="Theme.Freyr.Splash" parent="Theme.Freyr">
-        <item name="android:windowBackground">@color/freyr_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
-
 </resources>

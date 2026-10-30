@@ -12,13 +12,13 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <!-- Encabezado superior con botón de regreso -->
+        <!-- HEADER CON FLECHA ATRÁS Y TÍTULO -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="20dp">
 
             <ImageButton
                 android:id="@+id/btn_atras"
@@ -26,20 +26,21 @@
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_menu_revert"
-                android:contentDescription="@string/btn_back"
+                android:contentDescription="Volver"
                 app:tint="@color/freyr_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_add_debt"
+                android:text="Añadir deuda"
                 android:textColor="@color/freyr_primary"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                android:layout_marginStart="8dp" />
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginStart="10dp" />
         </LinearLayout>
 
-        <!-- Banner de mensaje de error -->
+        <!-- Mensaje de error dinámico -->
         <TextView
             android:id="@+id/tx_error"
             android:layout_width="match_parent"
@@ -49,183 +50,201 @@
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
 
-        <!-- Selector de ámbito de deuda (Personal vs Familiar) -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:text="Tipo de deuda"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:id="@+id/rg_tipo_deuda"
+        <!-- TARJETA BLANCA ELEVADA DEL FORMULARIO -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/bg_button_secondary"
-            android:padding="4dp"
-            android:layout_marginBottom="16dp">
+            app:cardCornerRadius="22dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeWidth="0dp">
 
-            <RadioButton
-                android:id="@+id/rb_deuda_personal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/debt_scope_personal"
-                android:checked="true"
-                android:textColor="@color/freyr_text_primary"
-                android:buttonTint="@color/freyr_primary" />
-
-            <RadioButton
-                android:id="@+id/rb_deuda_familiar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/debt_scope_family"
-                android:textColor="@color/freyr_text_primary"
-                android:buttonTint="@color/freyr_primary" />
-        </RadioGroup>
-
-        <!-- 1. Nombre o concepto de la deuda -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/label_debt_name"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/et_nombre_deuda"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="Nombre de la deuda"
-            android:inputType="textCapSentences"
-            android:maxLines="1"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:clickable="true"
-            android:cursorVisible="true"
-            android:importantForAutofill="no"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 2. Monto total de la deuda -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/label_debt_amount"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/et_monto"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="000000"
-            android:inputType="numberDecimal"
-            android:maxLines="1"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:clickable="true"
-            android:cursorVisible="true"
-            android:importantForAutofill="no"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Opciones de grupo familiar (Visible cuando se selecciona Deuda Familiar) -->
-        <LinearLayout
-            android:id="@+id/layout_family_options"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/bg_card_rounded"
-            android:padding="16dp"
-            android:visibility="gone"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/label_debt_group"
-                android:textColor="@color/freyr_text_secondary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="4dp" />
-
-            <Spinner
-                android:id="@+id/spinner_family_group"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@drawable/bg_edit_text"
-                android:layout_marginBottom="12dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_assigned_member"
-                android:textColor="@color/freyr_text_secondary"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="4dp" />
+                android:orientation="vertical"
+                android:padding="20dp">
 
-            <Spinner
-                android:id="@+id/spinner_assigned_member"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@drawable/bg_edit_text" />
-        </LinearLayout>
+                <!-- SELECTOR MODERNO: Deuda personal vs Deuda familiar -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TIPO DE DEUDA"
+                    android:textColor="@color/freyr_primary"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.06"
+                    android:layout_marginBottom="8dp" />
 
-        <!-- 3. Descripción y notas -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/label_debt_description"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+                <RadioGroup
+                    android:id="@+id/rg_tipo_deuda"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/bg_button_secondary"
+                    android:padding="4dp"
+                    android:layout_marginBottom="20dp">
 
-        <EditText
-            android:id="@+id/et_descripcion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="2"
-            android:maxLines="4"
-            android:gravity="top|start"
-            android:background="@drawable/bg_edit_text"
-            android:hint="Descripción"
-            android:inputType="textMultiLine"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:clickable="true"
-            android:cursorVisible="true"
-            android:importantForAutofill="no"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="24dp" />
+                    <RadioButton
+                        android:id="@+id/rb_deuda_personal"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Personal"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:textColor="@color/freyr_text_primary"
+                        android:buttonTint="@color/freyr_primary" />
 
-        <!-- Botón Guardar Deuda -->
-        <Button
-            android:id="@+id/btn_guardar_deuda"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:background="@drawable/bg_button_primary"
-            android:text="@string/btn_save_debt"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:backgroundTint="@null" />
+                    <RadioButton
+                        android:id="@+id/rb_deuda_familiar"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Familiar"
+                        android:gravity="center"
+                        android:textColor="@color/freyr_text_primary"
+                        android:buttonTint="@color/freyr_primary" />
+                </RadioGroup>
+
+                <!-- CAMPO 1: Nombre de la deuda -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre de la deuda"
+                    android:textColorHint="@color/freyr_primary"
+                    app:hintTextColor="@color/freyr_primary"
+                    app:boxStrokeColor="@color/freyr_primary"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_nombre_deuda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:maxLines="1"
+                        android:textColor="@color/freyr_text_primary"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- CAMPO 2: Monto -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Monto total ($)"
+                    android:textColorHint="@color/freyr_primary"
+                    app:hintTextColor="@color/freyr_primary"
+                    app:boxStrokeColor="@color/freyr_primary"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_monto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textColor="@color/freyr_text_primary"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- OPCIONES FAMILIARES (Visibles al marcar Familiar) -->
+                <LinearLayout
+                    android:id="@+id/layout_family_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_button_secondary"
+                    android:padding="14dp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Grupo familiar"
+                        android:textColor="@color/freyr_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_family_group"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_edit_text"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Miembro asignado"
+                        android:textColor="@color/freyr_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_assigned_member"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_edit_text" />
+                </LinearLayout>
+
+                <!-- CAMPO 3: Descripción -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Descripción o notas"
+                    android:textColorHint="@color/freyr_primary"
+                    app:hintTextColor="@color/freyr_primary"
+                    app:boxStrokeColor="@color/freyr_primary"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    android:layout_marginBottom="24dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_descripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="2"
+                        android:maxLines="4"
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/freyr_text_primary"
+                        android:textSize="14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- BOTÓN PRINCIPAL CIRUELA -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_guardar_deuda"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Guardar deuda"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="14dp"
+                    app:backgroundTint="@color/freyr_primary"
+                    android:elevation="2dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>
-

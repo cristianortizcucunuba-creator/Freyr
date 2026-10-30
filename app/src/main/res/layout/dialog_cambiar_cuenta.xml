@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="22dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambiar cuenta"
+        android:textColor="#550724"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="14dp" />
+
+    <LinearLayout
+        android:id="@+id/container_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F0E8EB"
+        android:layout_marginVertical="12dp" />
+
+    <TextView
+        android:id="@+id/btn_dialog_ver_perfil"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:text="Ver perfil"
+        android:textColor="#2E0B17"
+        android:textSize="14sp"
+        android:paddingHorizontal="10dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <TextView
+        android:id="@+id/btn_dialog_logout"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center_vertical"
+        android:text="Cerrar sesión"
+        android:textColor="#DC2626"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:paddingHorizontal="10dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_dialog_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="14dp"
+        android:text="Cancelar"
+        android:textAllCaps="false"
+        android:textColor="#550724"
+        android:backgroundTint="#F8EEF1"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        app:cornerRadius="12dp" />
+</LinearLayout>

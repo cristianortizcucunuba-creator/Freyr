@@ -1,29 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Freyr Dark Minimalist Palette -->
-    <!-- Primary / Accent -->
-    <color name="freyr_primary">#69042A</color>
-    <color name="freyr_primary_dark">#4A031E</color>
-    <color name="freyr_primary_light">#85123A</color>
-    <color name="freyr_card_bg">#1E1E1E</color>
+    <!-- Paleta de Marca Freyr según el diseño -->
+    <color name="freyr_background">#FAF5F2</color>
+    <color name="freyr_surface">#FFFFFF</color>
 
-    <!-- Backgrounds (Dominant background: #2E110E) -->
-    <color name="freyr_background">#F7F3EF</color>
-    <color name="freyr_surface">#56070C</color>
-    <color name="freyr_surface_variant">#7C3129</color>
-    <color name="freyr_surface_card">#8F3D38</color>
+    <!-- Tonos vino tinto / borgoña -->
+    <color name="freyr_primary">#550724</color>
+    <color name="freyr_primary_dark">#42091D</color>
+    <color name="freyr_primary_light">#70253D</color>
+    <color name="freyr_wine_main">#5A162B</color>
+    <color name="freyr_wine_card">#601C31</color>
+    <color name="freyr_wine_card_secondary">#70253D</color>
+    <color name="freyr_wine_nav_active">#7B2D46</color>
 
-    <!-- Contrast & Text (Dominant text & contrast: #E1CCD4) -->
-    <color name="freyr_secondary">#E1CCD4</color>
-    <color name="freyr_secondary_light">#26E1CCD4</color>
-    <color name="freyr_secondary_subtle">#1AE1CCD4</color>
-    <color name="freyr_text_primary">#E1CCD4</color>
-    <color name="freyr_text_secondary">#F6F5CFD4</color>
-    <color name="freyr_border">#33E1CCD4</color>
+    <!-- Secundarios y Variantes -->
+    <color name="freyr_secondary">#7B2D46</color>
+    <color name="freyr_secondary_light">#E2C6CF</color>
+    <color name="freyr_secondary_subtle">#F5EAEF</color>
 
-    <!-- Status Indicators in Dark Palette -->
-    <color name="freyr_status_paid">#A5D6A7</color>
-    <color name="freyr_status_paid_bg">#1D3D24</color>
-    <color name="freyr_status_pending">#E1CCD4</color>
-    <color name="freyr_status_pending_bg">#33E1CCD4</color>
+    <!-- Estilo para el diálogo de cambiar usuario blanco y elegante -->
+    <style name="DialogFreyrElegante" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="android:background">@drawable/bg_dialog_rounded</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="android:textColorPrimary">#2D1B22</item>
+        <item name="colorPrimary">#550724</item>
+        <item name="colorAccent">#550724</item>
+        <!-- Barra de estado del celular en color ciruela con hora y batería blancas -->
+        <item name="android:statusBarColor">#550724</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Textos -->
+    <color name="freyr_text_title">#2E0B17</color>
+    <color name="freyr_text_primary">#2D1B22</color>
+    <color name="freyr_text_secondary">#7A656D</color>
+    <color name="freyr_text_sub_wine">#E2C6CF</color>
+    <color name="freyr_card_bg">#FAF5F2</color>
+
+    <!-- Estados -->
+    <color name="freyr_green_accent">#4ADE80</color>
+    <color name="freyr_status_paid">#10B981</color>
+    <color name="freyr_status_paid_bg">#E6F4EA</color>
+    <color name="freyr_status_pending_bg">#FDEEE9</color>
+
+    <!-- Fondos de iconos y bordes -->
+    <color name="freyr_circle_dark_card">#24FFFFFF</color>
+    <color name="freyr_circle_light_card">#F5EAEF</color>
+    <color name="freyr_card_border_light">#EFE3E7</color>
+    <color name="freyr_border">#E0D4D8</color>
 </resources>

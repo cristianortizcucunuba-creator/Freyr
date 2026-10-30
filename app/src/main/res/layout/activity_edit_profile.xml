@@ -12,12 +12,13 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <!-- HEADER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="20dp">
 
             <ImageButton
                 android:id="@+id/btn_atras"
@@ -25,19 +26,21 @@
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_menu_revert"
-                android:contentDescription="@string/btn_back"
+                android:contentDescription="Volver"
                 app:tint="@color/freyr_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_edit_profile"
+                android:text="Editar perfil"
                 android:textColor="@color/freyr_primary"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
+        <!-- Mensaje de feedback -->
         <TextView
             android:id="@+id/tv_feedback"
             android:layout_width="match_parent"
@@ -46,103 +49,141 @@
             android:visibility="gone"
             android:layout_marginBottom="12dp" />
 
-        <!-- Nombre Completo -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- TARJETA DEL FORMULARIO -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Nombre completo *"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            app:cardCornerRadius="22dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeWidth="0dp">
 
-        <EditText
-            android:id="@+id/et_nombre_completo"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:inputType="textPersonName"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <!-- Nombre de Usuario -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Nombre de usuario *"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+                <!-- Nombre completo -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre completo *"
+                    android:textColorHint="@color/freyr_primary"
+                    app:hintTextColor="@color/freyr_primary"
+                    app:boxStrokeColor="@color/freyr_primary"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/et_usuario"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_nombre_completo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:maxLines="1"
+                        android:textColor="@color/freyr_text_primary"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Correo Electrónico -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Correo electrónico *"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+                <!-- Nombre de usuario -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre de usuario *"
+                    android:textColorHint="@color/freyr_primary"
+                    app:hintTextColor="@color/freyr_primary"
+                    app:boxStrokeColor="@color/freyr_primary"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_usuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/freyr_text_primary"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Contraseña -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="Nueva contraseña (dejar en blanco para mantener la actual)"
-            android:textColor="@color/freyr_card_bg"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+                <!-- Correo electrónico -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Correo electrónico *"
+                    android:textColorHint="@color/freyr_primary"
+                    app:hintTextColor="@color/freyr_primary"
+                    app:boxStrokeColor="@color/freyr_primary"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/et_contraseña"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="••••••••"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:textColor="@color/freyr_text_primary"
-            android:textSize="14sp"
-            android:layout_marginBottom="24dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:textColor="@color/freyr_text_primary"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Botón de Guardar Perfil -->
-        <Button
-            android:id="@+id/btn_save_profile"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:background="@drawable/bg_button_primary"
-            android:text="@string/btn_save"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:backgroundTint="@null" />
+                <!-- Contraseña -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nueva contraseña (dejar en blanco para mantener)"
+                    android:textColorHint="@color/freyr_primary"
+                    app:hintTextColor="@color/freyr_primary"
+                    app:boxStrokeColor="@color/freyr_primary"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxCornerRadiusTopStart="14dp"
+                    app:boxCornerRadiusTopEnd="14dp"
+                    app:boxCornerRadiusBottomStart="14dp"
+                    app:boxCornerRadiusBottomEnd="14dp"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="@color/freyr_primary"
+                    android:layout_marginBottom="24dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_contraseña"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:textColor="@color/freyr_text_primary"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_save_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="Guardar cambios"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="14dp"
+                    app:backgroundTint="@color/freyr_primary"
+                    android:elevation="2dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>
-

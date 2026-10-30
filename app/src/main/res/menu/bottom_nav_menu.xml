@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_dashboard"
-        android:icon="@android:drawable/ic_menu_today"
+        android:icon="@drawable/ic_nav_home"
         android:title="Inicio" />
     <item
-        android:id="@+id/nav_personal"
-        android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="Personal" />
-    <item
         android:id="@+id/nav_groups"
-        android:icon="@drawable/ic_nav_home"
+        android:icon="@drawable/ic_nav_family"
         android:title="Familia" />
+    <item
+        android:id="@+id/nav_personal"
+        android:icon="@drawable/ic_nav_finances"
+        android:title="Finanzas" />
     <item
         android:id="@+id/nav_invitations"
         android:icon="@android:drawable/ic_dialog_email"
