@@ -129,7 +129,9 @@ public class ActividadPrincipal extends AppCompatActivity {
                 .commit();
     }
 
+
     private void observeUser() {
+
         repository.observarTodosLosUsuarios().observe(this, users -> {
 
             if (users == null) {
@@ -164,7 +166,38 @@ public class ActividadPrincipal extends AppCompatActivity {
                 tvUserInitials.setText("U");
             }
         });
+
+        repository.getIdUsuarioActualObservable().observe(this, idUsuario -> {
+
+            currentUser = null;
+
+            if (idUsuario != null) {
+
+                for (Usuario user : allUsers) {
+
+                    if (user.getId().equals(idUsuario)) {
+
+                        currentUser = user;
+
+                        String nombre = user.getNomCompl();
+
+                        String iniciales = nombre != null && nombre.length() >= 2
+                                ? nombre.substring(0, 2).toUpperCase()
+                                : "U";
+
+                        tvUserInitials.setText(iniciales);
+
+                        break;
+                    }
+                }
+            }
+
+            if (currentUser == null) {
+                tvUserInitials.setText("U");
+            }
+        });
     }
+
 
     /**
      * Muestra las cuentas disponibles y permite cambiar de usuario
@@ -194,8 +227,15 @@ public class ActividadPrincipal extends AppCompatActivity {
         userOptions[allUsers.length] = "Ver perfil";
         userOptions[allUsers.length + 1] = "Cerrar sesión";
 
+        String titulo = "Cambiar cuenta / Opciones";
+
+        if (currentUser != null) {
+            titulo = "Cuenta actual: " + currentUser.getNomCompl()
+                    + " (@" + currentUser.getNomUsuario() + ")";
+        }
+
         new AlertDialog.Builder(this)
-                .setTitle("Cambiar cuenta / Opciones")
+                .setTitle(titulo)
                 .setItems(userOptions, (dialog, which) -> {
                     if (which == allUsers.length + 1) {
                         // 1. Cierra la sesión en SharedPreferences (guarda null)

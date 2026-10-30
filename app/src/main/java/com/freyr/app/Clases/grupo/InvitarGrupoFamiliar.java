@@ -141,8 +141,6 @@ public class InvitarGrupoFamiliar extends Fragment {
     }
 
     private void observarDatos() {
-        String idUsuario = repositorio.obtenerIdUsuarioActual();
-
         repositorio.observarTodosLosGrupos().observe(
                 getViewLifecycleOwner(),
                 groups -> {
@@ -175,12 +173,14 @@ public class InvitarGrupoFamiliar extends Fragment {
                                 new Invitacion[todasLasInvitaciones.length];
                         int cantidad = 0;
 
+                        String idUsuarioActual = repositorio.obtenerIdUsuarioActual();
+
                         for (Invitacion invitacion : todasLasInvitaciones) {
-                            if (invitacion.getIdUsuarioInvitado().equals(idUsuario)
-                                    && "pending".equalsIgnoreCase(
-                                    invitacion.getEstado()
-                            )) {
-                                invitacionesPendientes [cantidad] = invitacion;
+                            if (idUsuarioActual != null
+                                    && idUsuarioActual.equals(invitacion.getIdUsuarioInvitado())
+                                    && "pendiente".equalsIgnoreCase(invitacion.getEstado())) {
+
+                                invitacionesPendientes[cantidad] = invitacion;
                                 cantidad++;
                             }
                         }

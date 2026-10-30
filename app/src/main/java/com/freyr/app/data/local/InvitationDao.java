@@ -15,7 +15,7 @@ public interface InvitationDao {
     @Query("SELECT * FROM invitations ORDER BY fechaCreacion DESC")
     List<Invitacion> getAllInvitations();
 
-    @Query("SELECT * FROM invitations WHERE idUsuarioInvitado = :userId AND estado = 'pending'")
+    @Query("SELECT * FROM invitations WHERE idUsuarioInvitado = :userId AND estado = 'pendiente'")
     LiveData<List<Invitacion>> getPendingInvitationsForUserLive(String userId);
 
     @Query("SELECT * FROM invitations WHERE id = :id LIMIT 1")
