@@ -12,7 +12,7 @@ public class Invitacion {
     private String idGrupoFamiliar;
     private String idUsuarioInvitado;
     private String idUsuarioInvitador;
-    private String estado; // "pending", "accepted", "declined"
+    private String estado; // "pendiente", "acepto", "rechazado"
     private String fechaCreacion;
 
     public Invitacion(@NonNull String id, String idGrupoFamiliar, String idUsuarioInvitado, String idUsuarioInvitador, String estado, String fechaCreacion) {

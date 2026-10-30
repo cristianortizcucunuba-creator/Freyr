@@ -1,32 +1,20 @@
 package com.freyr.app.Clases;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.freyr.app.data.datos.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.freyr.app.FreyrApp;
 import com.freyr.app.R;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
@@ -41,29 +29,28 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
     private FrameLayout btnProfileAvatar;
+    private TextView tvUserInitials;
 
     private FreyrRepositorio repository;
 
+    // Guarda los usuarios en un arreglo.
     private Usuario[] allUsers = new Usuario[0];
     private Usuario currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Barra ciruela (#550724) con iconos blancos
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            getWindow().setStatusBarColor(Color.parseColor("#550724"));
-        }
-
-        WindowInsetsControllerCompat insetsController =
-                new WindowInsetsControllerCompat(getWindow(), getWindow().getDecorView());
-        insetsController.setAppearanceLightStatusBars(false);
+        getWindow().setStatusBarColor(
+                getResources().getColor(R.color.freyr_background)
+        );
+        getWindow().setStatusBarColor(
+                getResources().getColor(R.color.freyr_background)
+        );
+        getWindow().getDecorView().setSystemUiVisibility(0);
 
         repository = ((FreyrApp) getApplication()).getRepositorio();
 
+        // Comprueba que exista una sesión iniciada.
         if (repository.obtenerIdUsuarioActual() == null) {
             Intent intent = new Intent(this, LoguearUsuario.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -73,9 +60,9 @@ public class ActividadPrincipal extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
-
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main_root), (view, windowInsets) -> {
+
                     Insets systemBars = windowInsets.getInsets(
                             WindowInsetsCompat.Type.systemBars()
                     );
@@ -84,7 +71,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                             view.getPaddingLeft(),
                             systemBars.top,
                             view.getPaddingRight(),
-                            0
+                            view.getPaddingBottom()
                     );
 
                     return windowInsets;
@@ -95,6 +82,7 @@ public class ActividadPrincipal extends AppCompatActivity {
         setupNavigation();
         observeUser();
 
+        // Muestra el panel principal al iniciar la actividad.
         if (savedInstanceState == null) {
             loadFragment(new RecapMesFinancieroFragment());
         }
@@ -103,10 +91,9 @@ public class ActividadPrincipal extends AppCompatActivity {
     private void initViews() {
         bottomNav = findViewById(R.id.bottom_navigation);
         btnProfileAvatar = findViewById(R.id.btn_profile_avatar);
+        tvUserInitials = findViewById(R.id.tv_user_initials);
 
-        if (btnProfileAvatar != null) {
-            btnProfileAvatar.setOnClickListener(v -> showAccountDialog());
-        }
+        btnProfileAvatar.setOnClickListener(v -> showAccountDialog());
     }
 
     private void setupNavigation() {
@@ -144,98 +131,93 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     private void observeUser() {
         repository.observarTodosLosUsuarios().observe(this, users -> {
+
             if (users == null) {
                 return;
             }
 
             allUsers = users.toArray(new Usuario[0]);
+
             String currentUid = repository.obtenerIdUsuarioActual();
+
             currentUser = null;
 
             for (Usuario user : allUsers) {
+
                 if (user.getId() != null && user.getId().equals(currentUid)) {
+
                     currentUser = user;
+
+                    String fullName = user.getNomCompl();
+
+                    String initials = fullName != null && fullName.length() >= 2
+                            ? fullName.substring(0, 2).toUpperCase()
+                            : "U";
+
+                    tvUserInitials.setText(initials);
+
                     break;
                 }
+            }
+
+            if (currentUser == null) {
+                tvUserInitials.setText("U");
             }
         });
     }
 
+    /**
+     * Muestra las cuentas disponibles y permite cambiar de usuario
+     * o cerrar la sesión actual limpiando el historial de navegación.
+     */
     private void showAccountDialog() {
-        if (currentUser == null) return;
+        if (currentUser == null) {
+            return;        }
 
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_cambiar_cuenta, null);
-        LinearLayout usersContainer = dialogView.findViewById(R.id.container_users);
-        TextView btnVerPerfil = dialogView.findViewById(R.id.btn_dialog_ver_perfil);
-        TextView btnLogout = dialogView.findViewById(R.id.btn_dialog_logout);
-        Button btnCancel = dialogView.findViewById(R.id.btn_dialog_cancel);
+        // Reserva una opción para cada usuario, una para Ver perfil y otra para cerrar sesión.
+        CharSequence[] userOptions = new CharSequence[allUsers.length + 2];
 
-        AlertDialog dialog = new MaterialAlertDialogBuilder(this)
-                .setView(dialogView)
-                .setBackground(new ColorDrawable(Color.TRANSPARENT))
-                .create();
+        for (int i = 0; i < allUsers.length; i++) {
+            Usuario user = allUsers[i];
+            String label = user.getNomCompl()
+                    + " (@"
+                    + user.getNomUsuario()
+                    + ")";
 
-        for (Usuario user : allUsers) {
-            LinearLayout userRow = new LinearLayout(this);
-            userRow.setOrientation(LinearLayout.HORIZONTAL);
-            userRow.setPadding(20, 22, 20, 22);
-            userRow.setGravity(Gravity.CENTER_VERTICAL);
-            userRow.setBackgroundResource(R.drawable.bg_dialog_item_ripple);
-
-            boolean isCurrent = user.getId() != null && user.getId().equals(currentUser.getId());
-
-            TextView tvInfo = new TextView(this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
-            tvInfo.setLayoutParams(params);
-            tvInfo.setText(user.getNomCompl() + " (@" + user.getNomUsuario() + ")");
-            tvInfo.setTextColor(isCurrent ? Color.parseColor("#550724") : Color.parseColor("#2E0B17"));
-            tvInfo.setTextSize(14f);
-            if (isCurrent) tvInfo.setTypeface(null, Typeface.BOLD);
-            userRow.addView(tvInfo);
-
-            if (isCurrent) {
-                TextView badge = new TextView(this);
-                badge.setText("Activo");
-                badge.setTextSize(11f);
-                badge.setTextColor(Color.parseColor("#550724"));
-                badge.setBackgroundColor(Color.parseColor("#F5EAEF"));
-                badge.setPadding(20, 8, 20, 8);
-                userRow.addView(badge);
+            if (user.getId().equals(currentUser.getId())) {
+                label += " (Sesión activa)";
             }
 
-            userRow.setOnClickListener(v -> {
-                dialog.dismiss();
-                repository.setLoggedInUser(user.getId());
-                loadFragment(new RecapMesFinancieroFragment());
-                bottomNav.setSelectedItemId(R.id.nav_dashboard);
-            });
-
-            usersContainer.addView(userRow);
+            userOptions[i] = label;
         }
 
-        btnVerPerfil.setOnClickListener(v -> {
-            dialog.dismiss();
-            startActivity(new Intent(ActividadPrincipal.this, VerPerfilActivity.class));
-        });
+        userOptions[allUsers.length] = "Ver perfil";
+        userOptions[allUsers.length + 1] = "Cerrar sesión";
 
-        btnLogout.setOnClickListener(v -> {
-            dialog.dismiss();
-            repository.setLoggedInUser(null);
-            Intent intent = new Intent(ActividadPrincipal.this, LoguearUsuario.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-        });
+        new AlertDialog.Builder(this)
+                .setTitle("Cambiar cuenta / Opciones")
+                .setItems(userOptions, (dialog, which) -> {
+                    if (which == allUsers.length + 1) {
+                        // 1. Cierra la sesión en SharedPreferences (guarda null)
+                        repository.setLoggedInUser(null);
 
-        btnCancel.setOnClickListener(v -> dialog.dismiss());
-
-        dialog.show();
-
-        if (dialog.getWindow() != null) {
-            GradientDrawable bgShape = new GradientDrawable();
-            bgShape.setColor(Color.WHITE);
-            bgShape.setCornerRadius(48f);
-            dialog.getWindow().setBackgroundDrawable(bgShape);
-        }
+                        // 2. Redirige a Login y borra el historial de pantallas previas
+                        Intent intent = new Intent(ActividadPrincipal.this, LoguearUsuario.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else if (which == allUsers.length) {
+                        // Ver perfil
+                        startActivity(new Intent(ActividadPrincipal.this, VerPerfilActivity.class));
+                    } else if (which >= 0 && which < allUsers.length) {
+                        // Cambia a la cuenta seleccionada.
+                        Usuario selectedUser = allUsers[which];
+                        repository.setLoggedInUser(selectedUser.getId());
+                        loadFragment(new RecapMesFinancieroFragment());
+                        bottomNav.setSelectedItemId(R.id.nav_dashboard);
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 }
