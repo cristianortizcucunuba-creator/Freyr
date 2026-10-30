@@ -33,7 +33,7 @@
             android:layout_height="1dp"
             android:layout_weight="1" />
 
-        <!-- Avatar con silueta de persona sin foto (abre cambiar cuenta al pulsar) -->
+        <!-- Avatar con iniciales del usuario (abre cambiar cuenta al pulsar) -->
         <FrameLayout
             android:id="@+id/btn_profile_avatar"
             android:layout_width="42dp"
@@ -42,13 +42,15 @@
             android:clickable="true"
             android:focusable="true">
 
-            <ImageView
-                android:id="@+id/iv_avatar_placeholder"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+            <TextView
+                android:id="@+id/tv_user_initials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_avatar_placeholder"
-                android:contentDescription="Perfil" />
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@string/default_user_initial" />
         </FrameLayout>
     </LinearLayout>
 
