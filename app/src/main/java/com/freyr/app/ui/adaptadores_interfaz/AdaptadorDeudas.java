@@ -1,5 +1,7 @@
+
 package com.freyr.app.ui.adaptadores_interfaz;
 
+// 1. IMPORTACIONES
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +21,22 @@ import com.freyr.app.data.datos.Pago;
 import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
-public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.ContenedorDeuda> {
 
-    // Interfaz que define las acciones disponibles al seleccionar una deuda.
+// 2. CLASE PRINCIPAL
+public class AdaptadorDeudas
+        extends RecyclerView.Adapter<AdaptadorDeudas.ContenedorDeuda> {
+
+    // 3. INTERFAZ: ACCIONES DISPONIBLES
+    // Define las acciones que se pueden realizar sobre una deuda.
     public interface AccionesDeuda {
+
         void alSeleccionarDeuda(Deuda debt);
+
         void alSolicitarPago(Deuda debt);
     }
 
+
+    // 4. ATRIBUTOS
     private final Context contexto;
     private final AccionesDeuda acciones;
 
@@ -37,10 +47,15 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
     private Grupofamiliar[] todosLosGrupos = new Grupofamiliar[0];
     private Usuario[] todosLosUsuarios = new Usuario[0];
 
+
+    // 5. CONSTRUCTOR
     public AdaptadorDeudas(Context contexto, AccionesDeuda acciones) {
         this.contexto = contexto;
         this.acciones = acciones;
     }
+
+
+    // 6. ACTUALIZACIÓN DE DATOS
 
     // Actualiza el arreglo de deudas y refresca la interfaz.
     public void setDeudas(Deuda[] debts) {
@@ -66,6 +81,8 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
         notifyDataSetChanged();
     }
 
+
+    // 7. CREACIÓN DEL CONTENEDOR DE VISTAS
     @NonNull
     @Override
     public ContenedorDeuda onCreateViewHolder(
@@ -78,6 +95,8 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
         return new ContenedorDeuda(vista);
     }
 
+
+    // 8. ASIGNACIÓN DE DATOS A CADA TARJETA
     @Override
     public void onBindViewHolder(
             @NonNull ContenedorDeuda contenedor, int posicion) {
@@ -98,6 +117,8 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
             contenedor.txDescrip.setVisibility(View.GONE);
         }
 
+
+        // 9. IDENTIFICACIÓN DEL ÁMBITO DE LA DEUDA
         // Construye el texto que identifica el grupo de la deuda.
         StringBuilder textoAmbito = new StringBuilder();
 
@@ -119,25 +140,30 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
             textoAmbito.append("Deuda Personal");
         }
 
+
+        // 10. IDENTIFICACIÓN DEL RESPONSABLE
         // Busca al usuario responsable de la deuda.
         if (debt.getIdUsuarioAsignado() != null) {
 
-            String nombreResponsable  = null;
+            String nombreResponsable = null;
 
             for (Usuario user : todosLosUsuarios) {
                 if (user.getId().equals(debt.getIdUsuarioAsignado())) {
-                    nombreResponsable  = user.getNomCompl();
+                    nombreResponsable = user.getNomCompl();
                     break;
                 }
             }
 
             if (nombreResponsable != null) {
-                textoAmbito.append(" · Responsable: ").append(nombreResponsable );
+                textoAmbito.append(" · Responsable: ")
+                        .append(nombreResponsable);
             }
         }
 
         contenedor.txAmbito.setText(textoAmbito.toString());
 
+
+        // 11. CÁLCULO DE LOS PAGOS
         // Suma todos los pagos relacionados con esta deuda.
         double montoPagado = 0.0;
 
@@ -148,12 +174,14 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
         }
 
         // Calcula cuánto dinero queda pendiente.
-        double remaining = Math.max(0.0, debt.getMonto() - montoPagado);
+        double remaining = Math.max(
+                0.0, debt.getMonto() - montoPagado);
 
         boolean isPaid = remaining == 0.0
                 || "montoPagado".equalsIgnoreCase(debt.getEstado());
 
-        // Presenta los valores monetarios.
+
+        // 12. PRESENTACIÓN DE LOS VALORES MONETARIOS
         contenedor.txTotal.setText(
                 FreyrRepositorio.formatearMoneda(debt.getMonto()));
 
@@ -163,7 +191,8 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
         contenedor.txPendiente.setText(
                 FreyrRepositorio.formatearMoneda(remaining));
 
-        // Actualiza el estado y la barra de progreso.
+
+        // 13. ACTUALIZACIÓN DEL ESTADO Y LA BARRA DE PROGRESO
         if (isPaid) {
 
             contenedor.txEstado.setText("Pagado");
@@ -200,6 +229,8 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
             contenedor.barProgreso.setProgress(porcentajePagado);
         }
 
+
+        // 14. CONFIGURACIÓN DE EVENTOS
         // Abre los detalles cuando se pulsa la tarjeta.
         contenedor.itemView.setOnClickListener(v -> {
             if (acciones != null) {
@@ -222,18 +253,25 @@ public class AdaptadorDeudas extends RecyclerView.Adapter<AdaptadorDeudas.Conten
         });
     }
 
+
+    // 15. CANTIDAD DE ELEMENTOS
     @Override
     public int getItemCount() {
+
         // Los arreglos utilizan length para indicar su tamaño.
         return debts.length;
     }
 
+
+    // 16. CONTENEDOR DE VISTAS
     // Conserva las referencias a las vistas de cada tarjeta.
     static class ContenedorDeuda extends RecyclerView.ViewHolder {
 
         TextView txNombre, txAmbito, txDescrip, txEstado;
         TextView txTotal, txPagado, txPendiente;
+
         ProgressBar barProgreso;
+
         Button btnHistorial, btnPagar;
 
         public ContenedorDeuda(@NonNull View itemView) {
