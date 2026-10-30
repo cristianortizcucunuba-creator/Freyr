@@ -1,6 +1,7 @@
 
 package com.freyr.app.Clases.listas;
 
+// 1. IMPORTACIONES
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,17 @@ import com.freyr.app.data.datos.Pago;
 import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
+
+// 2. CLASE PRINCIPAL
 public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPago> {
 
-    // Define la acción que se ejecuta al eliminar un pago.
+    // 3. INTERFAZ PARA ELIMINAR PAGOS
     public interface AlEliminarPago {
         void alEliminarPago(Pago payment);
     }
 
+
+    // 4. ATRIBUTOS
     private final Context context;
     private final AlEliminarPago accionAlEliminar;
 
@@ -30,10 +35,15 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
     private Pago[] payments = new Pago[0];
     private Usuario[] todosLosUsuarios = new Usuario[0];
 
+
+    // 5. CONSTRUCTOR
     public listaDePagos(Context contexto, AlEliminarPago accionAlEliminar) {
         this.context = contexto;
         this.accionAlEliminar = accionAlEliminar;
     }
+
+
+    // 6. ACTUALIZACIÓN DE DATOS
 
     // Actualiza el arreglo de pagos y refresca la pantalla.
     public void setPagos(Pago[] payments) {
@@ -51,18 +61,22 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
         notifyDataSetChanged();
     }
 
+
+    // 7. CREACIÓN DE LAS VISTAS DE CADA PAGO
     @NonNull
     @Override
     public ContenedorPago onCreateViewHolder(
             @NonNull ViewGroup contenedorPadre, int tipoVista) {
 
-        // Carga el diseño XML de cada pago.
+        // Carga el diseño XML correspondiente a cada pago.
         View vista = LayoutInflater.from(context)
                 .inflate(R.layout.item_payment, contenedorPadre, false);
 
         return new ContenedorPago(vista);
     }
 
+
+    // 8. ASIGNACIÓN DE DATOS A CADA PAGO
     @Override
     public void onBindViewHolder(
             @NonNull ContenedorPago contenedor, int posicion) {
@@ -70,12 +84,14 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
         // Obtiene el pago correspondiente a esta posición.
         Pago payment = payments[posicion];
 
-        // Muestra el valor del pago con formato de moneda.
+
+        // 8.1. MOSTRAR EL MONTO DEL PAGO
         contenedor.txMonto.setText(
                 FreyrRepositorio.formatearMoneda(payment.getMonto())
         );
 
-        // Busca el nombre del usuario que realizó el pago.
+
+        // 8.2. BUSCAR AL USUARIO QUE REALIZÓ EL PAGO
         String nombreUsuario = "Usuario";
 
         for (Usuario user : todosLosUsuarios) {
@@ -90,7 +106,8 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
                 "Pagado por " + nombreUsuario + " · " + payment.getFecha()
         );
 
-        // Muestra la descripción solo si existe y no está vacía.
+
+        // 8.3. MOSTRAR LA DESCRIPCIÓN DEL PAGO
         if (payment.getDescripcion() != null
                 && !payment.getDescripcion().trim().isEmpty()) {
 
@@ -105,7 +122,8 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
             contenedor.txDescrip.setVisibility(View.GONE);
         }
 
-        // Ejecuta la acción de eliminar cuando se pulsa el botón.
+
+        // 8.4. CONFIGURAR EL BOTÓN PARA ELIMINAR
         contenedor.btnEliminar.setOnClickListener(v -> {
             if (accionAlEliminar != null) {
                 accionAlEliminar.alEliminarPago(payment);
@@ -113,13 +131,16 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
         });
     }
 
+
+    // 9. CANTIDAD DE ELEMENTOS
     @Override
     public int getItemCount() {
         // Devuelve la cantidad de pagos almacenados.
         return payments.length;
     }
 
-    // Mantiene las referencias a las vistas de cada pago.
+
+    // 10. CONTENEDOR DE VISTAS
     static class ContenedorPago extends RecyclerView.ViewHolder {
 
         TextView txMonto, txInfo, txDescrip;
@@ -128,6 +149,7 @@ public class listaDePagos extends RecyclerView.Adapter<listaDePagos.ContenedorPa
         public ContenedorPago(@NonNull View vistaElemento) {
             super(vistaElemento);
 
+            // Relaciona los componentes de Java con los elementos del XML.
             txMonto = vistaElemento.findViewById(R.id.tx_monto_pago);
             txInfo = vistaElemento.findViewById(R.id.tx_informacion_pago);
             txDescrip = vistaElemento.findViewById(R.id.tx_descripcion_pago);

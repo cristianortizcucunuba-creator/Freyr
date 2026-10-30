@@ -1,20 +1,34 @@
+
 package com.freyr.app.data.datos;
 
 /**
  * Modelo de resumen e historial financiero completo de Freyr.
- * Calcula dinámicamente:
- * - Total debido: Monto total de todas las deudas registradas a lo largo de la historia.
- * - Total pagado: Monto total registrado en pagos.
- * - Total pendiente: Monto que continúa pendiente por saldar.
+ *
+ * Calcula y almacena:
+ * - Total debido: monto total de las deudas.
+ * - Total pagado: monto total registrado en pagos.
+ * - Total pendiente: monto que continúa pendiente por saldar.
  */
 public class FinancialSummary {
+
+    // =====================================================
+    // 1. ATRIBUTOS
+    // =====================================================
+
     private int cantidadDeudasPendientes;
     private int cantidadDeudasPagadas;
+
     private double totalPagosPersonales;
     private double totalDeudasFamiliaresPendientes;
-    private double montoTotalDeuda; // Total debido histórico
-    private double montoTotalPagado; // Total pagado
-    private double montoTotalPendiente; // Total pendiente
+
+    private double montoTotalDeuda;       // Total debido histórico
+    private double montoTotalPagado;      // Total pagado
+    private double montoTotalPendiente;   // Total pendiente
+
+
+    // =====================================================
+    // 2. CONSTRUCTOR POR DEFECTO
+    // =====================================================
 
     public FinancialSummary() {
         this.cantidadDeudasPendientes = 0;
@@ -26,19 +40,44 @@ public class FinancialSummary {
         this.montoTotalPendiente = 0.0;
     }
 
-    public FinancialSummary(int cantidadDeudasPendientes, int cantidadDeudasPagadas, double totalPagosPersonales,
-                            double totalDeudasFamiliaresPendientes, double montoTotalPendiente, double montoTotalPagado) {
+
+    // =====================================================
+    // 3. CONSTRUCTOR CON CÁLCULO AUTOMÁTICO DEL TOTAL
+    // =====================================================
+
+    public FinancialSummary(
+            int cantidadDeudasPendientes,
+            int cantidadDeudasPagadas,
+            double totalPagosPersonales,
+            double totalDeudasFamiliaresPendientes,
+            double montoTotalPendiente,
+            double montoTotalPagado) {
+
         this.cantidadDeudasPendientes = cantidadDeudasPendientes;
         this.cantidadDeudasPagadas = cantidadDeudasPagadas;
         this.totalPagosPersonales = totalPagosPersonales;
         this.totalDeudasFamiliaresPendientes = totalDeudasFamiliaresPendientes;
         this.montoTotalPendiente = montoTotalPendiente;
         this.montoTotalPagado = montoTotalPagado;
+
+        // El total debido se obtiene sumando lo pendiente y lo pagado.
         this.montoTotalDeuda = montoTotalPendiente + montoTotalPagado;
     }
 
-    public FinancialSummary(int cantidadDeudasPendientes, int cantidadDeudasPagadas, double totalPagosPersonales,
-                            double totalDeudasFamiliaresPendientes, double montoTotalDeuda, double montoTotalPagado, double montoTotalPendiente) {
+
+    // =====================================================
+    // 4. CONSTRUCTOR CON TODOS LOS VALORES
+    // =====================================================
+
+    public FinancialSummary(
+            int cantidadDeudasPendientes,
+            int cantidadDeudasPagadas,
+            double totalPagosPersonales,
+            double totalDeudasFamiliaresPendientes,
+            double montoTotalDeuda,
+            double montoTotalPagado,
+            double montoTotalPendiente) {
+
         this.cantidadDeudasPendientes = cantidadDeudasPendientes;
         this.cantidadDeudasPagadas = cantidadDeudasPagadas;
         this.totalPagosPersonales = totalPagosPersonales;
@@ -48,18 +87,66 @@ public class FinancialSummary {
         this.montoTotalPendiente = montoTotalPendiente;
     }
 
-    public int getCantidadDeudasPendientes() { return cantidadDeudasPendientes; }
-    public int getCantidadDeudasPagadas() { return cantidadDeudasPagadas; }
-    public double getTotalPagosPersonales() { return totalPagosPersonales; }
-    public double getTotalDeudasFamiliaresPendientes() { return totalDeudasFamiliaresPendientes; }
 
-    // Métodos en español y en inglés para máxima compatibilidad
-    public double getTotalDebido() { return montoTotalDeuda > 0 ? montoTotalDeuda : (montoTotalPendiente + montoTotalPagado); }
-    public double getMontoTotalDeuda() { return getTotalDebido(); }
+    // =====================================================
+    // 5. MÉTODOS GET
+    // =====================================================
 
-    public double getTotalPagado() { return montoTotalPagado; }
-    public double getMontoTotalPagado() { return montoTotalPagado; }
+    public int getCantidadDeudasPendientes() {
+        return cantidadDeudasPendientes;
+    }
 
-    public double getTotalPendiente() { return montoTotalPendiente; }
-    public double getMontoTotalPendiente() { return montoTotalPendiente; }
+    public int getCantidadDeudasPagadas() {
+        return cantidadDeudasPagadas;
+    }
+
+    public double getTotalPagosPersonales() {
+        return totalPagosPersonales;
+    }
+
+    public double getTotalDeudasFamiliaresPendientes() {
+        return totalDeudasFamiliaresPendientes;
+    }
+
+
+    // =====================================================
+    // 6. MÉTODOS PARA OBTENER EL TOTAL DEBIDO
+    // =====================================================
+
+    // Métodos en español y en inglés para compatibilidad.
+    public double getTotalDebido() {
+        return montoTotalDeuda > 0
+                ? montoTotalDeuda
+                : (montoTotalPendiente + montoTotalPagado);
+    }
+
+    public double getMontoTotalDeuda() {
+        return getTotalDebido();
+    }
+
+
+    // =====================================================
+    // 7. MÉTODOS PARA OBTENER EL TOTAL PAGADO
+    // =====================================================
+
+    public double getTotalPagado() {
+        return montoTotalPagado;
+    }
+
+    public double getMontoTotalPagado() {
+        return montoTotalPagado;
+    }
+
+
+    // =====================================================
+    // 8. MÉTODOS PARA OBTENER EL TOTAL PENDIENTE
+    // =====================================================
+
+    public double getTotalPendiente() {
+        return montoTotalPendiente;
+    }
+
+    public double getMontoTotalPendiente() {
+        return montoTotalPendiente;
+    }
 }

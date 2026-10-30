@@ -1,6 +1,7 @@
 
 package com.freyr.app.Clases.listas;
 
+// 1. IMPORTACIONES
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +17,18 @@ import com.freyr.app.data.datos.Grupofamiliar;
 import com.freyr.app.data.datos.Pago;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
+
+// 2. CLASE PRINCIPAL
 public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposFamiliares.ContenedorGrupo> {
 
-    // Interfaz para responder cuando el usuario selecciona un grupo.
+    // 3. INTERFAZ DE ACCIONES
+    // Define la acción que se ejecuta al seleccionar un grupo.
     public interface accionAlTocarGrupo {
         void alTocarGrupo(Grupofamiliar grupo);
     }
 
+
+    // 4. DECLARACIÓN DE ATRIBUTOS
     private final Context context;
     private final accionAlTocarGrupo manejador;
 
@@ -34,11 +40,18 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
     // Identificador del usuario que inició sesión.
     private String idUsuarioActual = "";
 
-    public listaDeGruposFamiliares(Context context, accionAlTocarGrupo manejador) {
+
+    // 5. CONSTRUCTOR
+    public listaDeGruposFamiliares(
+            Context context,
+            accionAlTocarGrupo manejador
+    ) {
         this.context = context;
         this.manejador = manejador;
     }
 
+
+    // 6. ACTUALIZACIÓN DE DATOS
     // Actualiza los grupos familiares que se mostrarán.
     public void setGrupos(Grupofamiliar[] groups) {
         this.groups = groups != null ? groups : new Grupofamiliar[0];
@@ -59,45 +72,61 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
 
     // Guarda el identificador del usuario actual.
     public void setIdUsuarioActual(String idUsuarioActual) {
-        this.idUsuarioActual = idUsuarioActual != null ? idUsuarioActual : "";
+        this.idUsuarioActual = idUsuarioActual != null
+                ? idUsuarioActual
+                : "";
+
         notifyDataSetChanged();
     }
 
+
+    // 7. CREACIÓN DE ELEMENTOS DE LA LISTA
     @NonNull
     @Override
     public ContenedorGrupo onCreateViewHolder(
-            @NonNull ViewGroup contenedorPadre, int tipoVista) {
+            @NonNull ViewGroup contenedorPadre,
+            int tipoVista
+    ) {
 
-        // Carga el diseño XML de cada tarjeta de grupo familiar.
+        // Cargar el diseño XML de cada tarjeta de grupo familiar.
         View vista = LayoutInflater.from(context)
                 .inflate(R.layout.item_family_group, contenedorPadre, false);
 
         return new ContenedorGrupo(vista);
     }
 
+
+    // 8. ASIGNACIÓN DE DATOS A CADA ELEMENTO
     @Override
     public void onBindViewHolder(
-            @NonNull ContenedorGrupo contenedor, int posicion) {
+            @NonNull ContenedorGrupo contenedor,
+            int posicion
+    ) {
 
-        // Obtiene el grupo correspondiente a la posición actual.
+        // Obtener el grupo correspondiente a la posición actual.
         Grupofamiliar grupo = groups[posicion];
 
         contenedor.txNombre.setText(grupo.getNombre());
 
-        // Comprueba si el usuario actual creó este grupo.
+
+        // 9. IDENTIFICACIÓN DEL ADMINISTRADOR
+        // Comprobar si el usuario actual creó este grupo.
         boolean creador = grupo.getCreadorId() != null
                 && grupo.getCreadorId().equals(idUsuarioActual);
 
-        // Muestra la etiqueta de administrador solamente al creador.
+        // Mostrar la etiqueta de administrador solamente al creador.
         contenedor.txAdmin.setVisibility(
-                creador ? View.VISIBLE : View.GONE);
+                creador ? View.VISIBLE : View.GONE
+        );
 
-        // Variables para calcular las deudas y los pagos del grupo.
+
+        // 10. CÁLCULO DE DEUDAS Y PAGOS
+        // Variables utilizadas para calcular los valores económicos.
         int cantidadDeudas = 0;
         double totalDeudas = 0.0;
         double totalAbonado = 0.0;
 
-        // Recorre las deudas y selecciona las que pertenecen al grupo.
+        // Recorrer las deudas y seleccionar las que pertenecen al grupo.
         for (Deuda debt : todasLasDeudas) {
 
             if (grupo.getId().equals(debt.getGrupoFamiliarId())) {
@@ -105,7 +134,7 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
                 cantidadDeudas++;
                 totalDeudas += debt.getMonto();
 
-                // Suma los pagos relacionados con la deuda actual.
+                // Sumar los pagos relacionados con la deuda actual.
                 for (Pago payment : todosLosPagos) {
 
                     if (payment.getDeudaId().equals(debt.getId())) {
@@ -115,50 +144,71 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
             }
         }
 
-        // Calcula el saldo pendiente, sin permitir valores negativos.
-        double saldoPendiente = Math.max(0.0, totalDeudas - totalAbonado);
+        // Calcular el saldo pendiente sin permitir valores negativos.
+        double saldoPendiente = Math.max(
+                0.0,
+                totalDeudas - totalAbonado
+        );
 
-        // Obtiene la cantidad de integrantes del grupo.
+
+        // 11. INFORMACIÓN DE LOS INTEGRANTES
+        // Obtener la cantidad de integrantes del grupo.
         int cantidadMiembros = grupo.getMiembrosIds() != null
                 ? grupo.getMiembrosIds().size()
                 : 0;
 
-        // Construye un texto con el número de miembros y deudas.
+        // Construir el texto con la cantidad de miembros.
         String textoMiembros = cantidadMiembros
                 + (cantidadMiembros == 1 ? " miembro" : " miembros");
 
+        // Construir el texto con la cantidad de deudas.
         String textoDeudas = cantidadDeudas
                 + (cantidadDeudas == 1
                 ? " deuda familiar"
                 : " deudas familiares");
 
-        contenedor.txCantidadMiembros.setText(textoMiembros + " · " + textoDeudas);
+        contenedor.txCantidadMiembros.setText(
+                textoMiembros + " · " + textoDeudas
+        );
 
-        // Muestra los valores económicos con el formato del proyecto.
+
+        // 12. ACTUALIZACIÓN DE VALORES MONETARIOS
+        // Mostrar los valores económicos con el formato del proyecto.
         contenedor.txTotal.setText(
-                FreyrRepositorio.formatearMoneda(totalDeudas));
+                FreyrRepositorio.formatearMoneda(totalDeudas)
+        );
 
         contenedor.txAbonado.setText(
-                FreyrRepositorio.formatearMoneda(totalAbonado));
+                FreyrRepositorio.formatearMoneda(totalAbonado)
+        );
 
         contenedor.txPendiente.setText(
-                FreyrRepositorio.formatearMoneda(saldoPendiente));
+                FreyrRepositorio.formatearMoneda(saldoPendiente)
+        );
 
-        // Abre los detalles cuando se selecciona el grupo.
+
+        // 13. CONFIGURACIÓN DE EVENTOS
+        // Abrir los detalles cuando se selecciona el grupo.
         contenedor.itemView.setOnClickListener(v -> {
+
             if (manejador != null) {
                 manejador.alTocarGrupo(grupo);
             }
         });
     }
 
+
+    // 14. CANTIDAD DE ELEMENTOS
     @Override
     public int getItemCount() {
+
         // Los arreglos utilizan length para conocer su tamaño.
         return groups.length;
     }
 
-    // Mantiene las referencias a las vistas de cada tarjeta.
+
+    // 15. CONTENEDOR DE VISTAS
+    // Mantiene las referencias a los componentes de cada tarjeta.
     static class ContenedorGrupo extends RecyclerView.ViewHolder {
 
         TextView txNombre, txAdmin, txCantidadMiembros;
@@ -167,6 +217,7 @@ public class listaDeGruposFamiliares extends RecyclerView.Adapter<listaDeGruposF
         public ContenedorGrupo(@NonNull View itemView) {
             super(itemView);
 
+            // Vincular los componentes del diseño XML.
             txNombre = itemView.findViewById(R.id.tx_nom_grupo);
             txAdmin = itemView.findViewById(R.id.tx_etiq_admin);
             txCantidadMiembros = itemView.findViewById(R.id.tx_cantidad_miembros_grupo);

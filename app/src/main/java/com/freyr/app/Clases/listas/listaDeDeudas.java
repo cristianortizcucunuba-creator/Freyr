@@ -1,6 +1,7 @@
 
 package com.freyr.app.Clases.listas;
 
+// 1. IMPORTACIONES
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,29 +21,42 @@ import com.freyr.app.data.datos.Pago;
 import com.freyr.app.data.datos.Usuario;
 import com.freyr.app.data.repositorio.FreyrRepositorio;
 
+
+// 2. CLASE PRINCIPAL
 public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.ContenedorDeudas> {
 
-    // Interfaz que define las acciones disponibles al seleccionar una deuda.
+    // 3. INTERFAZ DE ACCIONES
+    // Define las acciones disponibles al seleccionar una deuda.
     public interface MonitorDeudas {
+
+        // Abrir los detalles de una deuda.
         void tocDeuda(Deuda debt);
+
+        // Registrar un pago de una deuda.
         void tocPagar(Deuda debt);
     }
 
+
+    // 4. DECLARACIÓN DE ATRIBUTOS
     private final Context contexto;
     private final MonitorDeudas receptor;
 
     // Arreglos que almacenan las deudas, pagos, grupos y usuarios.
-    // Inicialmente, están vacíos y pueden reemplazarse cuando llegan datos.
+    // Inicialmente están vacíos y pueden actualizarse cuando llegan datos.
     private Deuda[] deudas = new Deuda[0];
     private Pago[] todosLosPagos = new Pago[0];
     private Grupofamiliar[] todosLosGrupos = new Grupofamiliar[0];
     private Usuario[] todosLosUsuarios = new Usuario[0];
 
+
+    // 5. CONSTRUCTOR
     public listaDeDeudas(Context context, MonitorDeudas listener) {
         this.contexto = context;
         this.receptor = listener;
     }
 
+
+    // 6. ACTUALIZACIÓN DE DATOS
     // Actualiza el arreglo de deudas y refresca la interfaz.
     public void setDeudas(Deuda[] deudas) {
         this.deudas = deudas != null ? deudas : new Deuda[0];
@@ -67,28 +81,36 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
         notifyDataSetChanged();
     }
 
+
+    // 7. CREACIÓN DE ELEMENTOS DE LA LISTA
     @NonNull
     @Override
     public ContenedorDeudas onCreateViewHolder(
-            @NonNull ViewGroup contPadre, int tipoVista) {
+            @NonNull ViewGroup contPadre,
+            int tipoVista
+    ) {
 
-        // Carga el diseño XML de una tarjeta de deuda.
+        // Cargar el diseño XML de una tarjeta de deuda.
         View vista = LayoutInflater.from(contexto)
                 .inflate(R.layout.item_debt, contPadre, false);
 
         return new ContenedorDeudas(vista);
     }
 
+
+    // 8. ASIGNACIÓN DE DATOS A CADA ELEMENTO
     @Override
     public void onBindViewHolder(
-            @NonNull ContenedorDeudas contenedor, int posicion) {
+            @NonNull ContenedorDeudas contenedor,
+            int posicion
+    ) {
 
-        // Obtiene la deuda correspondiente a esta posición.
+        // Obtener la deuda correspondiente a esta posición.
         Deuda debt = deudas[posicion];
 
         contenedor.tvNombre.setText(debt.getNombre());
 
-        // Muestra la descripción solamente si contiene texto.
+        // Mostrar la descripción solamente si contiene texto.
         if (debt.getDescripcion() != null
                 && !debt.getDescripcion().trim().isEmpty()) {
 
@@ -99,15 +121,18 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
             contenedor.tvDescrip.setVisibility(View.GONE);
         }
 
-        // Construye el texto que identifica el grupo de la deuda.
+
+        // 9. INFORMACIÓN DEL GRUPO Y RESPONSABLE
+        // Construir el texto que identifica el grupo de la deuda.
         StringBuilder contexto = new StringBuilder();
 
         if (debt.getGrupoFamiliarId() != null) {
 
             String nomGrupo = "Grupo Familiar";
 
-            // Busca el grupo familiar asociado a la deuda.
+            // Buscar el grupo familiar asociado a la deuda.
             for (Grupofamiliar group : todosLosGrupos) {
+
                 if (group.getId().equals(debt.getGrupoFamiliarId())) {
                     nomGrupo = group.getNombre();
                     break;
@@ -120,12 +145,14 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
             contexto.append("Deuda Personal");
         }
 
-        // Busca al usuario responsable de la deuda.
+
+        // Buscar al usuario responsable de la deuda.
         if (debt.getIdUsuarioAsignado() != null) {
 
             String nombreResponsable = null;
 
             for (Usuario user : todosLosUsuarios) {
+
                 if (user.getId().equals(debt.getIdUsuarioAsignado())) {
                     nombreResponsable = user.getNomCompl();
                     break;
@@ -139,107 +166,141 @@ public class listaDeDeudas extends RecyclerView.Adapter<listaDeDeudas.Contenedor
 
         contenedor.tvTipoDeuda.setText(contexto.toString());
 
-        // Suma todos los pagos relacionados con esta deuda.
+
+        // 10. CÁLCULO DE LOS PAGOS Y SALDO PENDIENTE
+        // Sumar todos los pagos relacionados con esta deuda.
         double abonado = 0.0;
 
         for (Pago payment : todosLosPagos) {
+
             if (payment.getDeudaId().equals(debt.getId())) {
                 abonado += payment.getMonto();
             }
         }
 
-        // Calcula cuánto dinero queda pendiente.
+        // Calcular cuánto dinero queda pendiente.
         double restante = Math.max(0.0, debt.getMonto() - abonado);
 
+        // Determinar si la deuda ya está pagada.
         boolean estPagada = restante == 0.0
                 || "abonado".equalsIgnoreCase(debt.getEstado());
 
-        // Presenta los valores monetarios.
+
+        // 11. ACTUALIZACIÓN DE VALORES MONETARIOS
         contenedor.tvTotal.setText(
-                FreyrRepositorio.formatearMoneda(debt.getMonto()));
+                FreyrRepositorio.formatearMoneda(debt.getMonto())
+        );
 
         contenedor.tvAbonado.setText(
-                FreyrRepositorio.formatearMoneda(abonado));
+                FreyrRepositorio.formatearMoneda(abonado)
+        );
 
         contenedor.tvRestante.setText(
-                FreyrRepositorio.formatearMoneda(restante));
+                FreyrRepositorio.formatearMoneda(restante)
+        );
 
-        // Actualiza el estado y la barra de progreso.
+
+        // 12. ACTUALIZACIÓN DEL ESTADO Y PROGRESO
         if (estPagada) {
 
+            // Configurar apariencia de una deuda pagada.
             contenedor.tvEstado.setText("Pagado");
 
             contenedor.tvEstado.setTextColor(
                     ContextCompat.getColor(
-                            this.contexto, R.color.freyr_status_paid));
+                            this.contexto,
+                            R.color.freyr_status_paid
+                    )
+            );
 
             contenedor.tvEstado.setBackgroundResource(
-                    R.drawable.bg_status_paid);
+                    R.drawable.bg_status_paid
+            );
 
             contenedor.btnPagar.setVisibility(View.GONE);
             contenedor.barProgreso.setProgress(100);
 
         } else {
 
+            // Configurar apariencia de una deuda pendiente.
             contenedor.tvEstado.setText("Pendiente");
 
             contenedor.tvEstado.setTextColor(
                     ContextCompat.getColor(
-                            this.contexto, R.color.freyr_secondary));
+                            this.contexto,
+                            R.color.freyr_secondary
+                    )
+            );
 
             contenedor.tvEstado.setBackgroundResource(
-                    R.drawable.bg_status_pending);
+                    R.drawable.bg_status_pending
+            );
 
             contenedor.btnPagar.setVisibility(View.VISIBLE);
 
-            // Calcula el porcentaje pagado y evita dividir entre cero.
+            // Calcular el porcentaje pagado y evitar dividir entre cero.
             int porcentaje = debt.getMonto() > 0
                     ? (int) Math.min(
-                    100, (abonado / debt.getMonto()) * 100)
+                    100,
+                    (abonado / debt.getMonto()) * 100
+            )
                     : 0;
 
             contenedor.barProgreso.setProgress(porcentaje);
         }
 
-        // Abre los detalles cuando se pulsa la tarjeta.
+
+        // 13. CONFIGURACIÓN DE EVENTOS
+        // Abrir los detalles cuando se pulsa la tarjeta.
         contenedor.itemView.setOnClickListener(v -> {
+
             if (receptor != null) {
                 receptor.tocDeuda(debt);
             }
         });
 
-        // El botón de historial abre los detalles de la deuda.
+        // El botón de historial también abre los detalles.
         contenedor.btnHistorial.setOnClickListener(v -> {
+
             if (receptor != null) {
                 receptor.tocDeuda(debt);
             }
         });
 
-        // Solicita registrar un pago.
+        // Solicitar el registro de un pago.
         contenedor.btnPagar.setOnClickListener(v -> {
+
             if (receptor != null) {
                 receptor.tocPagar(debt);
             }
         });
     }
 
+
+    // 14. CANTIDAD DE ELEMENTOS
     @Override
     public int getItemCount() {
+
         // Los arreglos utilizan length para indicar su tamaño.
         return deudas.length;
     }
 
-    // Conserva las referencias a las vistas de cada tarjeta.
+
+    // 15. CONTENEDOR DE VISTAS
+    // Conserva las referencias a los componentes de cada tarjeta.
     static class ContenedorDeudas extends RecyclerView.ViewHolder {
 
         TextView tvNombre, tvTipoDeuda, tvDescrip, tvEstado;
         TextView tvTotal, tvAbonado, tvRestante;
+
         ProgressBar barProgreso;
+
         Button btnHistorial, btnPagar;
 
         public ContenedorDeudas(@NonNull View vistaObj) {
             super(vistaObj);
 
+            // Vincular los componentes del diseño XML.
             tvNombre = vistaObj.findViewById(R.id.tx_nombre_deuda);
             tvTipoDeuda = vistaObj.findViewById(R.id.tx_deuda_ambito);
             tvDescrip = vistaObj.findViewById(R.id.tx_descript_deuda);

@@ -1,6 +1,7 @@
 
 package com.freyr.app.Clases.listas;
 
+// 1. IMPORTACIONES
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,26 +17,34 @@ import com.freyr.app.data.datos.Grupofamiliar;
 import com.freyr.app.data.datos.Invitacion;
 import com.freyr.app.data.datos.Usuario;
 
+
+// 2. CLASE PRINCIPAL
 public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitaciones.ContenedorInvitacion> {
 
-    // Define las acciones que se ejecutan al aceptar o rechazar una invitación.
+    // 3. INTERFAZ PARA LAS ACCIONES DE LAS INVITACIONES
     public interface AccionesRespuestaInvitacion {
         void Aceptar(Invitacion invitacion);
         void Rechazar(Invitacion invitacion);
     }
 
+    // 4. ATRIBUTOS
     private final Context contexto;
     private final AccionesRespuestaInvitacion accionRespuesta;
 
-    // Arreglos que almacenan las invitaciones, grupos familiares y usuarios.
+    // Arreglos que almacenan las invitaciones, grupos y usuarios.
     private Invitacion[] invitaciones = new Invitacion[0];
     private Grupofamiliar[] todosLosGrupos = new Grupofamiliar[0];
     private Usuario[] todosLosUsuarios = new Usuario[0];
 
+
+    // 5. CONSTRUCTOR
     public listaDeInvitaciones(Context context, AccionesRespuestaInvitacion accionRespuesta) {
         this.contexto = context;
         this.accionRespuesta = accionRespuesta;
     }
+
+
+    // 6. ACTUALIZACIÓN DE DATOS
 
     // Actualiza las invitaciones que se mostrarán en pantalla.
     public void setInvitaciones(Invitacion[] invitaciones) {
@@ -61,6 +70,8 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
         notifyDataSetChanged();
     }
 
+
+    // 7. CREACIÓN DE LAS VISTAS DE CADA INVITACIÓN
     @NonNull
     @Override
     public ContenedorInvitacion onCreateViewHolder(
@@ -73,6 +84,8 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
         return new ContenedorInvitacion(vista);
     }
 
+
+    // 8. ASIGNACIÓN DE DATOS A CADA INVITACIÓN
     @Override
     public void onBindViewHolder(
             @NonNull ContenedorInvitacion contenedor, int posicion) {
@@ -80,7 +93,8 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
         // Obtiene la invitación correspondiente a la posición actual.
         Invitacion invitacion = invitaciones[posicion];
 
-        // Busca el nombre del grupo familiar al que pertenece la invitación.
+
+        // 8.1. BUSCAR EL NOMBRE DEL GRUPO
         String nombreGrupo = "Grupo Familiar";
 
         for (Grupofamiliar group : todosLosGrupos) {
@@ -92,7 +106,8 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
 
         contenedor.txNombreGrupo.setText(nombreGrupo);
 
-        // Busca al usuario que envió la invitación.
+
+        // 8.2. BUSCAR AL USUARIO QUE ENVIÓ LA INVITACIÓN
         String nombreRemitente = "Un miembro familiar";
 
         for (Usuario user : todosLosUsuarios) {
@@ -106,14 +121,16 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
         // Muestra quién envió la invitación.
         contenedor.txRemitente.setText("Invitado por " + nombreRemitente);
 
-        // Ejecuta la acción correspondiente al aceptar la invitación.
+
+        // 8.3. CONFIGURAR EL BOTÓN PARA ACEPTAR
         contenedor.btnAceptar.setOnClickListener(v -> {
             if (accionRespuesta != null) {
                 accionRespuesta.Aceptar(invitacion);
             }
         });
 
-        // Ejecuta la acción correspondiente al rechazar la invitación.
+
+        // 8.4. CONFIGURAR EL BOTÓN PARA RECHAZAR
         contenedor.btnRechazar.setOnClickListener(v -> {
             if (accionRespuesta != null) {
                 accionRespuesta.Rechazar(invitacion);
@@ -121,13 +138,16 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
         });
     }
 
+
+    // 9. CANTIDAD DE ELEMENTOS
     @Override
     public int getItemCount() {
-        // Devuelve la cantidad de invitaciones almacenadas en el arreglo.
+        // Devuelve la cantidad de invitaciones almacenadas.
         return invitaciones.length;
     }
 
-    // Mantiene las referencias a las vistas de cada invitación.
+
+    // 10. CONTENEDOR DE VISTAS
     static class ContenedorInvitacion extends RecyclerView.ViewHolder {
 
         TextView txNombreGrupo, txRemitente;
@@ -136,6 +156,7 @@ public class listaDeInvitaciones extends RecyclerView.Adapter<listaDeInvitacione
         public ContenedorInvitacion(@NonNull View itemView) {
             super(itemView);
 
+            // Relaciona los componentes de Java con los elementos del XML.
             txNombreGrupo = itemView.findViewById(R.id.tx_nombre_grupo_invitacion);
             txRemitente = itemView.findViewById(R.id.tx_remitente_invitacion);
 
