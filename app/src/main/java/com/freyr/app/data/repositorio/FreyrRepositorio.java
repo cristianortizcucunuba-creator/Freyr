@@ -25,7 +25,7 @@ public class FreyrRepositorio {
     public FreyrRepositorio(Context context) {
         this.database = FreyrDatabase.getDatabase(context);
         this.prefs = context.getSharedPreferences("freyr_prefs", Context.MODE_PRIVATE);
-        this.idUsuarioActualObservable.setValue(prefs.getString("current_user_id", null));
+        this.idUsuarioActualObservable.setValue(prefs.getString("id_usuario_actual", null));
     }
 
     public LiveData<String> getIdUsuarioActualObservable() {
@@ -34,7 +34,7 @@ public class FreyrRepositorio {
 
 
     public String obtenerIdUsuarioActual() {
-        return prefs.getString("id_usuario_actual", "usuario-juan");
+        return prefs.getString("id_usuario_actual", null);
     }
 
     public void setLoggedInUser(String idUsuario) {
@@ -43,6 +43,7 @@ public class FreyrRepositorio {
         } else {
             prefs.edit().remove("id_usuario_actual").apply();
         }
+
         idUsuarioActualObservable.postValue(idUsuario);
     }
 

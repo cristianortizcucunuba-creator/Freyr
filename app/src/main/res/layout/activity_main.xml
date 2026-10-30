@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/main_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,39 +9,42 @@
     android:background="@color/freyr_background">
 
     <!-- Top App Bar -->
+
+    <!-- Fragment container -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:orientation="horizontal"
+        android:layout_height="35dp"
+        android:background="@color/freyr_background"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="@color/freyr_background">
+        android:paddingEnd="16dp">
 
         <FrameLayout
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="@drawable/bg_button_primary">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="F"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_gravity="center" />
+                android:textStyle="bold" />
         </FrameLayout>
 
         <TextView
             android:id="@+id/tv_app_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:text="Freyr"
             android:textColor="@color/freyr_primary"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="10dp" />
+            android:textStyle="bold" />
 
         <!-- User profile icon / switch account -->
         <FrameLayout
@@ -49,31 +54,32 @@
             android:background="@drawable/bg_button_secondary"
             android:clickable="true"
             android:focusable="true">
+
             <TextView
                 android:id="@+id/tv_user_initials"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="JP"
                 android:textColor="@color/freyr_primary"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_gravity="center" />
+                android:textStyle="bold" />
         </FrameLayout>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/freyr_secondary" />
-
-    <!-- Fragment container -->
+    <!-- Bottom Navigation -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
 
-    <!-- Bottom Navigation -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/freyr_secondary" />
+    </FrameLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

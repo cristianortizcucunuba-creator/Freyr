@@ -9,6 +9,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import com.freyr.app.data.datos.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.freyr.app.FreyrApp;
@@ -49,6 +53,23 @@ public class ActividadPrincipal extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+        ViewCompat.setOnApplyWindowInsetsListener(
+                findViewById(R.id.main_root), (view, windowInsets) -> {
+
+                    Insets systemBars = windowInsets.getInsets(
+                            WindowInsetsCompat.Type.statusBars()
+                    );
+
+                    view.setPadding(
+                            view.getPaddingLeft(),
+                            systemBars.top,
+                            view.getPaddingRight(),
+                            view.getPaddingBottom()
+                    );
+
+                    return windowInsets;
+                }
+        );
 
         initViews();
         setupNavigation();
@@ -103,25 +124,37 @@ public class ActividadPrincipal extends AppCompatActivity {
 
     private void observeUser() {
         repository.observarTodosLosUsuarios().observe(this, users -> {
-            if (users != null) {
-                // El repositorio entrega una lista; la convertimos a arreglo.
-                allUsers = users.toArray(new Usuario[0]);
 
-                String currentUid = repository.obtenerIdUsuarioActual();
+            if (users == null) {
+                return;
+            }
 
-                for (Usuario user : allUsers) {
-                    if (user.getId().equals(currentUid)) {
-                        currentUser = user;
+            allUsers = users.toArray(new Usuario[0]);
 
-                        String fullName = user.getNomCompl();
-                        String initials = fullName != null && fullName.length() >= 2
-                                ? fullName.substring(0, 2).toUpperCase()
-                                : "U";
+            String currentUid = repository.obtenerIdUsuarioActual();
 
-                        tvUserInitials.setText(initials);
-                        break;
-                    }
+            currentUser = null;
+
+            for (Usuario user : allUsers) {
+
+                if (user.getId() != null && user.getId().equals(currentUid)) {
+
+                    currentUser = user;
+
+                    String fullName = user.getNomCompl();
+
+                    String initials = fullName != null && fullName.length() >= 2
+                            ? fullName.substring(0, 2).toUpperCase()
+                            : "U";
+
+                    tvUserInitials.setText(initials);
+
+                    break;
                 }
+            }
+
+            if (currentUser == null) {
+                tvUserInitials.setText("U");
             }
         });
     }
@@ -132,8 +165,7 @@ public class ActividadPrincipal extends AppCompatActivity {
      */
     private void showAccountDialog() {
         if (currentUser == null) {
-            return;
-        }
+            return;        }
 
         // Reserva una opción para cada usuario, una para Ver perfil y otra para cerrar sesión.
         CharSequence[] userOptions = new CharSequence[allUsers.length + 2];
