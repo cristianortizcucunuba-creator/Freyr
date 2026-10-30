@@ -292,8 +292,10 @@ public class ActividadPrincipal extends AppCompatActivity {
             }
             if (btnProfileAvatar != null) {
                 btnProfileAvatar.setBackgroundResource(R.drawable.ic_avatar_ciruela);
+            }
+
             // Si no encuentra al usuario, muestra una inicial predeterminada.
-            if (currentUser == null) {
+            if (currentUser == null && tvUserInitials != null) {
                 tvUserInitials.setText("U");
             }
         });
@@ -338,25 +340,8 @@ public class ActividadPrincipal extends AppCompatActivity {
             row.setClickable(true);
             row.setFocusable(true);
 
-
-        // Reserva una opción para cada usuario,
-        // otra para ver el perfil y otra para cerrar sesión.
-        CharSequence[] userOptions = new CharSequence[allUsers.length + 2];
             boolean isCurrent = user.getId() != null && user.getId().equals(currentUser.getId());
 
-
-        // -------------------------------------------------
-        // 10.1. CONSTRUCCIÓN DE LAS OPCIONES DE USUARIO
-        // -------------------------------------------------
-
-        for (int i = 0; i < allUsers.length; i++) {
-
-            Usuario user = allUsers[i];
-
-            String label = user.getNomCompl()
-                    + " (@"
-                    + user.getNomUsuario()
-                    + ")";
             TextView tvUser = new TextView(this);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
             tvUser.setLayoutParams(lp);
@@ -387,9 +372,6 @@ public class ActividadPrincipal extends AppCompatActivity {
             root.addView(row);
         }
 
-        // Opciones adicionales del diálogo.
-        userOptions[allUsers.length] = "Ver perfil";
-        userOptions[allUsers.length + 1] = "Cerrar sesión";
         // Línea divisoria suave
         View divider = new View(this);
         LinearLayout.LayoutParams divLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 2);
@@ -398,77 +380,6 @@ public class ActividadPrincipal extends AppCompatActivity {
         divider.setBackgroundColor(Color.parseColor("#F0E8EB"));
         root.addView(divider);
 
-
-        // -------------------------------------------------
-        // 10.2. CONFIGURACIÓN DEL DIÁLOGO
-        // -------------------------------------------------
-
-        new AlertDialog.Builder(this)
-                .setTitle("Cambiar cuenta / Opciones")
-
-                .setItems(userOptions, (dialog, which) -> {
-
-                    // -------------------------------------
-                    // 10.2.1. CERRAR SESIÓN
-                    // -------------------------------------
-
-                    if (which == allUsers.length + 1) {
-
-                        // Limpia la sesión guardada en SharedPreferences.
-                        repository.setLoggedInUser(null);
-
-                        // Redirige al inicio de sesión y borra
-                        // el historial de actividades anteriores.
-                        Intent intent = new Intent(
-                                ActividadPrincipal.this,
-                                LoguearUsuario.class
-                        );
-
-                        intent.setFlags(
-                                Intent.FLAG_ACTIVITY_NEW_TASK
-                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        );
-
-                        startActivity(intent);
-                        finish();
-
-                        // -------------------------------------
-                        // 10.2.2. VER PERFIL
-                        // -------------------------------------
-
-                    } else if (which == allUsers.length) {
-
-                        startActivity(
-                                new Intent(
-                                        ActividadPrincipal.this,
-                                        VerPerfilActivity.class
-                                )
-                        );
-
-                        // -------------------------------------
-                        // 10.2.3. CAMBIAR DE CUENTA
-                        // -------------------------------------
-
-                    } else if (which >= 0 && which < allUsers.length) {
-
-                        // Obtiene el usuario seleccionado.
-                        Usuario selectedUser = allUsers[which];
-
-                        // Actualiza la cuenta activa.
-                        repository.setLoggedInUser(selectedUser.getId());
-
-                        // Regresa al panel principal.
-                        loadFragment(new RecapMesFinancieroFragment());
-
-                        // Selecciona la pestaña del panel principal.
-                        bottomNav.setSelectedItemId(R.id.nav_dashboard);
-                    }
-                })
-
-                // Botón para cerrar el diálogo sin realizar cambios.
-                .setNegativeButton("Cancelar", null)
-
-                .show();
         // Opción: Ver perfil
         TextView btnProfile = new TextView(this);
         btnProfile.setText("Ver perfil");
