@@ -40,6 +40,13 @@ public class ActividadPrincipal extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setStatusBarColor(
+                getResources().getColor(R.color.freyr_background)
+        );
+        getWindow().setStatusBarColor(
+                getResources().getColor(R.color.freyr_background)
+        );
+        getWindow().getDecorView().setSystemUiVisibility(0);
 
         repository = ((FreyrApp) getApplication()).getRepositorio();
 
@@ -57,7 +64,7 @@ public class ActividadPrincipal extends AppCompatActivity {
                 findViewById(R.id.main_root), (view, windowInsets) -> {
 
                     Insets systemBars = windowInsets.getInsets(
-                            WindowInsetsCompat.Type.statusBars()
+                            WindowInsetsCompat.Type.systemBars()
                     );
 
                     view.setPadding(
